@@ -172,13 +172,24 @@ describe('Evergage', function () {
     beforeEach(function (done) {
       evergage.once('load', function () {
         window.Evergage.init = sinon.spy();
+        window._aaq.push = sinon.spy();
         done();
       });
       evergage.initialize();
     });
 
-    it('should call pageview', function () {
+    it('should send a page view', function () {
       evergage.page();
+      assert(window._aaq.push.calledWith(['namePage', undefined]));
+      assert(window.Evergage.init.calledWith(true));
+    });
+
+    it('should send page properties', function () {
+      evergage.page('category', 'name', {
+        pageAttribute: 'pageAttributeValue'
+      });
+      assert(window._aaq.push.calledWith(['setCustomField', 'pageAttribute', 'pageAttributeValue', 'page']));
+      assert(window._aaq.push.calledWith(['namePage', 'name']));
       assert(window.Evergage.init.calledWith(true));
     });
   });
