@@ -25,6 +25,7 @@ describe('ChurnBee', function(){
   it('should have the correct options', function(){
     test(churnbee)
     .name('ChurnBee')
+    .assumesPageView()
     .readyOnLoad()
     .global('_cbq')
     .global('ChurnBee')
