@@ -79,23 +79,27 @@ describe('Woopra', function () {
     });
 
     it('should send a page view', function () {
-      woopra.page();
+      test(woopra).page();
       assert(window.woopra.track.calledWith('pv', {}));
     });
 
     it('should send a title', function () {
-      woopra.page(null, null, { title: 'title' });
+      test(woopra).page(null, null, { title: 'title' });
       assert(window.woopra.track.calledWith('pv', { title: 'title' }));
     });
 
     it('should prefer a name', function () {
-      woopra.page(null, 'name', { title: 'title' });
-      assert(window.woopra.track.calledWith('pv', { title: 'name' }));
+      test(woopra).page(null, 'name', { title: 'title' });
+      assert(window.woopra.track.calledWith('pv', { title: 'name', name: 'name' }));
     });
 
     it('should prefer a category and name', function () {
-      woopra.page('category', 'name', { title: 'title' });
-      assert(window.woopra.track.calledWith('pv', { title: 'category name' }));
+      test(woopra).page('category', 'name', { title: 'title' });
+      assert(window.woopra.track.calledWith('pv', {
+        title: 'category name',
+        category: 'category',
+        name: 'name'
+      }));
     });
   });
 
@@ -107,17 +111,17 @@ describe('Woopra', function () {
     });
 
     it('should send an id', function () {
-      woopra.identify('id');
+      test(woopra).identify('id');
       assert(window.woopra.identify.calledWith({ id: 'id' }));
     });
 
     it('should send traits', function () {
-      woopra.identify(null, { trait: true });
+      test(woopra).identify(null, { trait: true });
       assert(window.woopra.identify.calledWith({ trait: true }));
     });
 
     it('should send an id and traits', function () {
-      woopra.identify('id', { trait: true });
+      test(woopra).identify('id', { trait: true });
       assert(window.woopra.identify.calledWith({ id: 'id', trait: true }));
     });
   });
@@ -129,12 +133,12 @@ describe('Woopra', function () {
     });
 
     it('should send an event', function () {
-      woopra.track('event');
+      test(woopra).track('event');
       assert(window.woopra.track.calledWith('event'));
     });
 
     it('should send properties', function () {
-      woopra.track('event', { property: 'Property' });
+      test(woopra).track('event', { property: 'Property' });
       assert(window.woopra.track.calledWith('event', { property: 'Property' }));
     });
   });

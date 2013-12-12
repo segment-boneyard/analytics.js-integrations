@@ -84,23 +84,29 @@ describe('awe.sm', function () {
     });
 
     it('should convert an event to a goal', function () {
-      awesm.track('Test', {});
-      assert(window.AWESM.convert.calledWith('goal_1', 0));
+      test(awesm)
+      .track('Test', {})
+      .called(window.AWESM.convert)
+      .with('goal_1', 0);
     });
 
     it('should not convert an unknown event', function () {
-      awesm.track('Unknown', {});
+      test(awesm).track('Unknown', {});
       assert(!window.AWESM.convert.called);
     });
 
     it('should accept a value property', function () {
-      awesm.track('Test', { value: 1 });
-      assert(window.AWESM.convert.calledWith('goal_1', 1));
+      test(awesm)
+      .track('Test', { value: 1 })
+      .called(window.AWESM.convert)
+      .with('goal_1', 1);
     });
 
     it('should prefer a revenue property', function () {
-      awesm.track('Test', { value: 1, revenue: 42.99 });
-      assert(window.AWESM.convert.calledWith('goal_1', 4299));
+      test(awesm)
+      .track('Test', { value: 1, revenue: '$42.99' })
+      .called(window.AWESM.convert)
+      .with('goal_1', 4299);
     });
   });
 

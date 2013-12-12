@@ -81,48 +81,56 @@ describe('Preact', function () {
     });
 
     it('should send an id', function () {
-      preact.identify('id');
-      assert(window._lnq.push.calledWith(['_setPersonData', {
-        uid: 'id',
-        email: undefined,
-        name: undefined,
-        properties: {}
-      }]));
+      test(preact)
+        .identify('id')
+        .called(window._lnq.push)
+        .with(['_setPersonData', {
+          properties: { id: 'id' },
+          email: undefined,
+          name: undefined,
+          uid: 'id',
+        }]);
     });
 
     it('shouldnt send just traits', function () {
-      preact.identify(null, { trait: true });
+      test(preact).identify(null, { trait: true });
       assert(!window._lnq.push.called);
     });
 
     it('should send an id and traits', function () {
-      preact.identify('id', { trait: true });
-      assert(window._lnq.push.calledWith(['_setPersonData', {
-        uid: 'id',
-        email: undefined,
-        name: undefined,
-        properties: { trait: true }
-      }]));
+      test(preact)
+        .identify('id', { trait: true })
+        .called(window._lnq.push)
+        .with(['_setPersonData', {
+          properties: { trait: true, id: 'id' },
+          email: undefined,
+          name: undefined,
+          uid: 'id',
+        }]);
     });
 
     it('should send an email', function () {
-      preact.identify('id', { email: 'name@example.com' });
-      assert(window._lnq.push.calledWith(['_setPersonData', {
-        uid: 'id',
-        email: 'name@example.com',
-        name: undefined,
-        properties: { email: 'name@example.com' }
-      }]));
+      test(preact)
+        .identify('id', { email: 'name@example.com' })
+        .called(window._lnq.push)
+        .with(['_setPersonData', {
+          properties: { email: 'name@example.com', id: 'id' },
+          email: 'name@example.com',
+          name: undefined,
+          uid: 'id',
+        }]);
     });
 
     it('should send a name', function () {
-      preact.identify('id', { name: 'name' });
-      assert(window._lnq.push.calledWith(['_setPersonData', {
-        uid: 'id',
-        email: undefined,
-        name: 'name',
-        properties: { name: 'name' }
-      }]));
+      test(preact)
+        .identify('id', { name: 'name' })
+        .called(window._lnq.push)
+        .with(['_setPersonData', {
+          properties: { name: 'name', id: 'id' },
+          email: undefined,
+          name: 'name',
+          uid: 'id',
+        }]);
     });
   });
 
@@ -133,12 +141,12 @@ describe('Preact', function () {
     });
 
     it('should send an id', function () {
-      preact.group('id');
+      test(preact).group('id');
       assert(window._lnq.push.calledWith(['_setAccount', { id: 'id' }]));
     });
 
     it('should send an id and properties', function () {
-      preact.group('id', { property: true });
+      test(preact).group('id', { property: true });
       assert(window._lnq.push.calledWith(['_setAccount', {
         id: 'id',
         property: true
@@ -153,17 +161,17 @@ describe('Preact', function () {
     });
 
     it('should send an event', function () {
-      preact.track('event');
+      test(preact).track('event');
       assert(window._lnq.push.calledWith(['_logEvent', { name: 'event' }, {}]));
     });
 
     it('should send an event and properties', function () {
-      preact.track('event', { property: true });
+      test(preact).track('event', { property: true });
       assert(window._lnq.push.calledWith(['_logEvent', { name: 'event' }, { property: true }]));
     });
 
     it('should special case a revenue property', function () {
-      preact.track('event', { revenue: 9.99 });
+      test(preact).track('event', { revenue: 9.99 });
       assert(window._lnq.push.calledWith(['_logEvent', {
         name: 'event',
         revenue: 999
@@ -171,7 +179,7 @@ describe('Preact', function () {
     });
 
     it('should special case a note property', function () {
-      preact.track('event', { note: 'note' });
+      test(preact).track('event', { note: 'note' });
       assert(window._lnq.push.calledWith(['_logEvent', {
         name: 'event',
         note: 'note'

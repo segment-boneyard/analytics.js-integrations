@@ -74,17 +74,17 @@ describe('Sentry', function () {
     });
 
     it('should send an id', function () {
-      sentry.identify('id');
+      test(sentry).identify('id');
       assert(window.Raven.setUser.calledWith({ id: 'id' }));
     });
 
     it('should send traits', function () {
-      sentry.identify(null, { trait: true });
+      test(sentry).identify(null, { trait: true });
       assert(window.Raven.setUser.calledWith({ trait: true }));
     });
 
     it('should send an id and traits', function () {
-      sentry.identify('id', { trait: true });
+      test(sentry).identify('id', { trait: true });
       assert(window.Raven.setUser.calledWith({ id: 'id', trait: true }));
     });
   });

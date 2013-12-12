@@ -73,25 +73,31 @@ describe('KISSmetrics', function () {
     });
 
     it('should track named pages by default', function () {
-      kissmetrics.page(null, 'Name');
-      assert(window._kmq.push.calledWith(['record', 'Viewed Name Page', {}]));
+      test(kissmetrics).page(null, 'Name');
+      assert(window._kmq.push.calledWith(['record', 'Viewed Name Page', { name: 'Name' }]));
     });
 
     it('should track named pages with categories', function () {
-      kissmetrics.page('Category', 'Name');
-      assert(window._kmq.push.calledWith(['record', 'Viewed Category Name Page', {}]));
+      test(kissmetrics).page('Category', 'Name');
+      assert(window._kmq.push.calledWith(['record', 'Viewed Category Name Page', {
+        category: 'Category',
+        name: 'Name'
+      }]));
     });
 
     it('should track categorized pages by default', function () {
-      kissmetrics.page('Category', 'Name');
-      assert(window._kmq.push.calledWith(['record', 'Viewed Category Page', {}]));
+      test(kissmetrics).page('Category', 'Name');
+      assert(window._kmq.push.calledWith(['record', 'Viewed Category Page', {
+        category: 'Category',
+        name: 'Name'
+      }]));
     });
 
     it('should not track a named or categorized page when the option is off', function () {
       kissmetrics.options.trackNamedPages = false;
       kissmetrics.options.trackCategorizedPages = false;
-      kissmetrics.page(null, 'Name');
-      kissmetrics.page('Category', 'Name');
+      test(kissmetrics).page(null, 'Name');
+      test(kissmetrics).page('Category', 'Name');
       assert(!window._kmq.push.called);
     });
   });
@@ -102,19 +108,19 @@ describe('KISSmetrics', function () {
     });
 
     it('should send an id', function () {
-      kissmetrics.identify('id');
+      test(kissmetrics).identify('id');
       assert(window._kmq.push.calledWith(['identify', 'id']));
     });
 
     it('should send traits', function () {
-      kissmetrics.identify(null, { trait: true });
+      test(kissmetrics).identify(null, { trait: true });
       assert(window._kmq.push.calledWith(['set', { trait: true }]));
     });
 
     it('should send an id and traits', function () {
-      kissmetrics.identify('id', { trait: true });
+      test(kissmetrics).identify('id', { trait: true });
       assert(window._kmq.push.calledWith(['identify', 'id']));
-      assert(window._kmq.push.calledWith(['set', { trait: true }]));
+      assert(window._kmq.push.calledWith(['set', { trait: true, id: 'id' }]));
     });
   });
 
@@ -124,17 +130,17 @@ describe('KISSmetrics', function () {
     });
 
     it('should send an event', function () {
-      kissmetrics.track('event');
+      test(kissmetrics).track('event');
       assert(window._kmq.push.calledWith(['record', 'event', {}]));
     });
 
     it('should send an event and properties', function () {
-      kissmetrics.track('event', { property: true });
+      test(kissmetrics).track('event', { property: true });
       assert(window._kmq.push.calledWith(['record', 'event', { property: true }]));
     });
 
     it('should alias revenue to "Billing Amount"', function () {
-      kissmetrics.track('event', { revenue: 9.99 });
+      test(kissmetrics).track('event', { revenue: 9.99 });
       assert(window._kmq.push.calledWith(['record', 'event', { 'Billing Amount': 9.99 }]));
     });
   });
@@ -145,12 +151,12 @@ describe('KISSmetrics', function () {
     });
 
     it('should send a new id', function () {
-      kissmetrics.alias('new');
+      test(kissmetrics).alias('new');
       assert(window._kmq.push.calledWith(['alias', 'new', undefined]));
     });
 
     it('should send a new and old id', function () {
-      kissmetrics.alias('new', 'old');
+      test(kissmetrics).alias('new', 'old');
       assert(window._kmq.push.calledWith(['alias', 'new', 'old']));
     });
   });

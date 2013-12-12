@@ -93,45 +93,45 @@ describe('trak.io', function () {
     });
 
     it('should call page_view', function () {
-      trakio.page();
+      test(trakio).page();
       assert(window.trak.io.page_view.called);
     });
 
     it('should send a path and title', function () {
-      trakio.page(null, null, { path: '/path', title: 'title' });
+      test(trakio).page(null, null, { path: '/path', title: 'title' });
       assert(window.trak.io.page_view.calledWith('/path', 'title'));
     });
 
     it('should prefer a name', function () {
-      trakio.page(null, 'name', { title: 'title' });
+      test(trakio).page(null, 'name', { title: 'title' });
       assert(window.trak.io.page_view.calledWith(undefined, 'name'));
     });
 
     it('should prefer a category and name', function () {
-      trakio.page('category', 'name', { title: 'title' });
+      test(trakio).page('category', 'name', { title: 'title' });
       assert(window.trak.io.page_view.calledWith(undefined, 'category name'));
     });
 
     it('should track named pages by default', function () {
-      trakio.page(null, 'Name');
+      test(trakio).page(null, 'Name');
       assert(window.trak.io.track.calledWith('Viewed Name Page'));
     });
 
     it('should track named pages with categories', function () {
-      trakio.page('Category', 'Name');
+      test(trakio).page('Category', 'Name');
       assert(window.trak.io.track.calledWith('Viewed Category Name Page'));
     });
 
     it('should track categorized pages by default', function () {
-      trakio.page('Category', 'Name');
+      test(trakio).page('Category', 'Name');
       assert(window.trak.io.track.calledWith('Viewed Category Page'));
     });
 
     it('should not track named or categorized pages if the option is off', function () {
       trakio.options.trackNamedPages = false;
       trakio.options.trackCategorizedPages = false;
-      trakio.page(null, 'Name');
-      trakio.page('Category', 'Name');
+      test(trakio).page(null, 'Name');
+      test(trakio).page('Category', 'Name');
       assert(!window.trak.io.track.called);
     });
   });
@@ -146,22 +146,26 @@ describe('trak.io', function () {
     });
 
     it('should send id', function () {
-      trakio.identify('id');
-      assert(window.trak.io.identify.calledWith('id', {}));
+      test(trakio)
+        .identify('id')
+        .called(window.trak.io.identify)
+        .with('id', { id: 'id' });
     });
 
     it('should send traits', function () {
-      trakio.identify(null, { trait: true });
+      test(trakio).identify(null, { trait: true });
       assert(window.trak.io.identify.calledWith({ trait: true }));
     });
 
     it('should send an id and traits', function () {
-      trakio.identify('id', { trait: true });
-      assert(window.trak.io.identify.calledWith('id', { trait: true }));
+      test(trakio)
+        .identify('id', { trait: true })
+        .called(window.trak.io.identify)
+        .with('id', { trait: true, id: 'id' });
     });
 
     it('should alias traits', function () {
-      trakio.identify(null, {
+      test(trakio).identify(null, {
         avatar: 'avatar',
         firstName: 'first',
         lastName: 'last'
@@ -184,12 +188,12 @@ describe('trak.io', function () {
     });
 
     it('should send an event', function () {
-      trakio.track('event');
+      test(trakio).track('event');
       assert(window.trak.io.track.calledWith('event'));
     });
 
     it('should send an event and properties', function () {
-      trakio.track('event', { property: true });
+      test(trakio).track('event', { property: true });
       assert(window.trak.io.track.calledWith('event', { property: true }));
     });
   });
@@ -207,12 +211,12 @@ describe('trak.io', function () {
     });
 
     it('should send a new id', function () {
-      trakio.alias('new');
+      test(trakio).alias('new');
       assert(window.trak.io.alias.calledWith('new'));
     });
 
     it('should send a new id and an original id', function () {
-      trakio.alias('another', 'original');
+      test(trakio).alias('another', 'original');
       assert(window.trak.io.alias.calledWith('original', 'another'));
     });
   });

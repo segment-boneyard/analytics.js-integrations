@@ -99,17 +99,17 @@ describe('Rollbar', function () {
     });
 
     it('should add an id to metadata', function () {
-      rollbar.identify('id');
+      test(rollbar).identify('id');
       assert(equal(window._rollbar.extraParams, { person: { id: 'id' } }));
     });
 
     it('should add traits to person data', function () {
-      rollbar.identify(null, { trait: true });
+      test(rollbar).identify(null, { trait: true });
       assert(equal(window._rollbar.extraParams, { person: { trait: true } }));
     });
 
     it('should add an id and traits to person data', function () {
-      rollbar.identify('id', { trait: true });
+      test(rollbar).identify('id', { trait: true });
       assert(equal(window._rollbar.extraParams, {
         person: {
           id: 'id',
@@ -120,7 +120,7 @@ describe('Rollbar', function () {
 
     it('should not add to person data when identify option is false', function () {
       rollbar.options.identify = false;
-      rollbar.identify('id');
+      test(rollbar).identify('id');
       assert(equal(window._rollbar.extraParams, {}));
     });
   });

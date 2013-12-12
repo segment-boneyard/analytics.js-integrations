@@ -81,23 +81,24 @@ describe('USERcycle', function () {
     });
 
     it('should send an id', function () {
-      usercycle.identify('id');
+      test(usercycle).identify('id');
       assert(window._uc.push.calledWith(['uid', 'id']));
-      assert(window._uc.push.calledWith(['action', 'came_back', undefined]));
+      assert(window._uc.push.calledWith(['action', 'came_back', { id: 'id' }]));
     });
 
     it('should send traits', function () {
-      usercycle.identify(null, { trait: true });
+      test(usercycle).identify(null, { trait: true });
       assert(window._uc.push.calledWith(['action', 'came_back', {
         trait: true
       }]));
     });
 
     it('should send an id and traits', function () {
-      usercycle.identify('id', { trait: true });
+      test(usercycle).identify('id', { trait: true });
       assert(window._uc.push.calledWith(['uid', 'id']));
       assert(window._uc.push.calledWith(['action', 'came_back', {
-        trait: true
+        trait: true,
+        id: 'id'
       }]));
     });
   });
@@ -109,12 +110,12 @@ describe('USERcycle', function () {
     });
 
     it('should send an event', function () {
-      usercycle.track('event');
-      assert(window._uc.push.calledWith(['action', 'event', undefined]));
+      test(usercycle).track('event');
+      assert(window._uc.push.calledWith(['action', 'event', {}]));
     });
 
     it('should send an event and properties', function () {
-      usercycle.track('event', { property: true });
+      test(usercycle).track('event', { property: true });
       assert(window._uc.push.calledWith(['action', 'event', {
         property: true
       }]));

@@ -2,6 +2,7 @@
 describe('Optimizely', function () {
 
   var Optimizely = require('integrations/lib/optimizely');
+  var test = require('integration-tester');
   var analytics = require('analytics');
   var assert = require('assert');
   var sinon = require('sinon');
@@ -69,19 +70,19 @@ describe('Optimizely', function () {
     });
 
     it('should send an event', function () {
-      optimizely.track('event');
+      test(optimizely).track('event');
       assert(window.optimizely.push.calledWith(['trackEvent', 'event', {}]));
     });
 
     it('should send an event and properties', function () {
-      optimizely.track('event', { property: true });
+      test(optimizely).track('event', { property: true });
       assert(window.optimizely.push.calledWith(['trackEvent', 'event', {
         property: true
       }]));
     });
 
     it('should change revenue to cents', function () {
-      optimizely.track('event', { revenue: 9.99 });
+      test(optimizely).track('event', { revenue: 9.99 });
       assert(window.optimizely.push.calledWith(['trackEvent', 'event', {
         revenue: 999
       }]));
@@ -95,13 +96,20 @@ describe('Optimizely', function () {
     });
 
     it('should send an event for a named page', function () {
-      optimizely.page('Home');
-      assert(window.optimizely.push.calledWith(['trackEvent', 'Viewed Home Page', {}]));
+      test(optimizely)
+      .page(null, 'Home')
+      .called(window.optimizely.push)
+      .with(['trackEvent', 'Viewed Home Page', { name: 'Home' }]);
     });
 
     it('should send an event for a named and categorized page', function () {
-      optimizely.page('Blog', 'New Integration');
-      assert(window.optimizely.push.calledWith(['trackEvent', 'Viewed Blog New Integration Page', {}]));
+      test(optimizely)
+      .page('Blog', 'New Integration')
+      .called(window.optimizely.push)
+      .with(['trackEvent', 'Viewed Blog New Integration Page', {
+        category: 'Blog',
+        name: 'New Integration'
+      }]);
     });
   });
 

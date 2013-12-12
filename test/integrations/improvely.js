@@ -99,9 +99,14 @@ describe('Improvely', function () {
     });
 
     it('should send an id', function () {
-      improvely.identify('id');
+      test(improvely).identify('id');
       assert(window.improvely.label.calledWith('id'));
     });
+
+    it('should not send if id is empty', function(){
+      test(improvely).identify();
+      assert(!window.improvely.label.called);
+    })
   });
 
   describe('#track', function () {
@@ -114,12 +119,12 @@ describe('Improvely', function () {
     });
 
     it('should send an event', function () {
-      improvely.track('event');
+      test(improvely).track('event');
       assert(window.improvely.goal.calledWith({ type: 'event' }));
     });
 
     it('should send an event and properties', function () {
-      improvely.track('event', { property: true });
+      test(improvely).track('event', { property: true });
       assert(window.improvely.goal.calledWith({
         type: 'event',
         property: true
@@ -127,7 +132,7 @@ describe('Improvely', function () {
     });
 
     it('should alias revenue to amount', function () {
-      improvely.track('event', { revenue: 42.99 });
+      test(improvely).track('event', { revenue: 42.99 });
       assert(window.improvely.goal.calledWith({
         type: 'event',
         amount: 42.99

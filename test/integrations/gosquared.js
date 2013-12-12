@@ -54,13 +54,6 @@ describe('GoSquared', function () {
       assert('number' === typeof window._gstc_lt);
     });
 
-    it('should identify an existing user', function () {
-      analytics.user().identify('id', { trait: true });
-      gosquared.identify = sinon.spy();
-      gosquared.initialize();
-      assert(gosquared.identify.calledWith('id', { trait: true }));
-    });
-
     it('should call #load', function () {
       gosquared.initialize();
       assert(gosquared.load.called);
@@ -102,17 +95,17 @@ describe('GoSquared', function () {
     });
 
     it('should send a path and title', function () {
-      gosquared.page(null, null, { path: '/path', title: 'title' });
+      test(gosquared).page(null, null, { path: '/path', title: 'title' });
       assert(window.GoSquared.q.push.calledWith(['TrackView', '/path', 'title']));
     });
 
     it('should prefer a name', function () {
-      gosquared.page(null, 'name', { path: '/path', title: 'title' });
+      test(gosquared).page(null, 'name', { path: '/path', title: 'title' });
       assert(window.GoSquared.q.push.calledWith(['TrackView', '/path', 'name']));
     });
 
     it('should prefer a name and category', function () {
-      gosquared.page('category', 'name', { path: '/path', title: 'title' });
+      test(gosquared).page('category', 'name', { path: '/path', title: 'title' });
       assert(window.GoSquared.q.push.calledWith(['TrackView', '/path', 'category name']));
     });
   });
@@ -124,25 +117,25 @@ describe('GoSquared', function () {
     });
 
     it('should set an id', function () {
-      gosquared.identify('id');
+      test(gosquared).identify('id');
       assert(window.GoSquared.UserName == 'id');
       assert(window.GoSquared.VisitorName == 'id');
     });
 
     it('should set traits', function () {
-      gosquared.identify(null, { trait: true });
+      test(gosquared).identify(null, { trait: true });
       assert(equal(window.GoSquared.Visitor, { trait: true }));
     });
 
     it('should set an id and traits', function () {
-      gosquared.identify('id', { trait: true });
+      test(gosquared).identify('id', { trait: true });
       assert(window.GoSquared.UserName == 'id');
       assert(window.GoSquared.VisitorName == 'id');
-      assert(equal(window.GoSquared.Visitor, { userID: 'id', trait: true }));
+      assert(equal(window.GoSquared.Visitor, { userID: 'id', trait: true, id: 'id' }));
     });
 
     it('should prefer an email for visitor name', function () {
-      gosquared.identify('id', {
+      test(gosquared).identify('id', {
         email: 'email@example.com',
         username: 'username'
       });
@@ -150,7 +143,7 @@ describe('GoSquared', function () {
     });
 
     it('should also prefer a username for visitor name', function () {
-      gosquared.identify('id', { username: 'username' });
+      test(gosquared).identify('id', { username: 'username' });
       assert(window.GoSquared.VisitorName == 'username');
     });
   });
@@ -165,12 +158,12 @@ describe('GoSquared', function () {
     });
 
     it('should send an event', function () {
-      gosquared.track('event');
-      assert(window.GoSquared.q.push.calledWith(['TrackEvent', 'event', undefined]));
+      test(gosquared).track('event');
+      assert(window.GoSquared.q.push.calledWith(['TrackEvent', 'event', {}]));
     });
 
     it('should send an event and properties', function () {
-      gosquared.track('event', { property: true });
+      test(gosquared).track('event', { property: true });
       assert(window.GoSquared.q.push.calledWith(['TrackEvent', 'event', { property: true }]));
     });
   });

@@ -76,24 +76,32 @@ describe('Intercom', function () {
 
     it('should call boot the first time and update the second', function () {
       var app = settings.appId;
-      intercom.identify('id');
-      assert(window.Intercom.calledWith('boot', { app_id: app, user_id: 'id' }));
-      intercom.identify('id');
-      assert(window.Intercom.calledWith('update', { app_id: app, user_id: 'id' }));
+      test(intercom)
+        .identify('id')
+        .called(window.Intercom)
+        .with('boot', { app_id: app, user_id: 'id', id: 'id' });
+
+      test(intercom)
+        .identify('id')
+        .called(window.Intercom)
+        .with('update', { app_id: app, user_id: 'id', id: 'id' });
     });
 
     it('should send an id and traits', function () {
-      intercom.identify('id', { email: 'email@example.com' });
-      assert(window.Intercom.calledWith('boot', {
-        app_id: settings.appId,
-        email: 'email@example.com',
-        user_id: 'id'
-      }));
+      test(intercom)
+        .identify('id', { email: 'email@example.com' })
+        .called(window.Intercom)
+        .with('boot', {
+          email: 'email@example.com',
+          app_id: settings.appId,
+          user_id: 'id',
+          id: 'id'
+        });
     });
 
     it('should convert dates', function () {
       var date = new Date();
-      intercom.identify('id', {
+      test(intercom).identify('id', {
         created: date,
         company: { created: date }
       });
@@ -101,12 +109,13 @@ describe('Intercom', function () {
         app_id: settings.appId,
         user_id: 'id',
         created_at: Math.floor(date / 1000),
-        company: { created_at: Math.floor(date / 1000) }
+        company: { created_at: Math.floor(date / 1000) },
+        id: 'id'
       }));
     });
 
     it('should allow passing a user hash', function () {
-      intercom.identify('id', {}, {
+      test(intercom).identify('id', {}, {
         Intercom: {
           userHash: 'x'
         }
@@ -114,12 +123,13 @@ describe('Intercom', function () {
       assert(window.Intercom.calledWith('boot', {
         app_id: settings.appId,
         user_id: 'id',
-        user_hash: 'x'
+        user_hash: 'x',
+        id: 'id'
       }));
     });
 
     it('should allow passing increments', function () {
-      intercom.identify('id', {}, {
+      test(intercom).identify('id', {}, {
         Intercom: {
           increments: { number: 42 }
         }
@@ -127,16 +137,18 @@ describe('Intercom', function () {
       assert(window.Intercom.calledWith('boot', {
         app_id: settings.appId,
         user_id: 'id',
-        increments: { number: 42 }
+        increments: { number: 42 },
+        id: 'id'
       }));
     });
 
     it('should send inbox settings', function () {
       intercom.options.inbox = true;
-      intercom.identify('id');
+      test(intercom).identify('id');
       assert(window.Intercom.calledWith('boot', {
         app_id: settings.appId,
         user_id: 'id',
+        id: 'id',
         widget: {
           activator: '#IntercomDefaultWidget',
           use_counter: true
@@ -147,10 +159,11 @@ describe('Intercom', function () {
     it('should allow overriding default activator', function () {
       intercom.options.inbox = true;
       intercom.options.activator = '#Intercom';
-      intercom.identify('id');
+      test(intercom).identify('id');
       assert(window.Intercom.calledWith('boot', {
         app_id: settings.appId,
         user_id: 'id',
+        id: 'id',
         widget: {
           activator: '#Intercom',
           use_counter: true
@@ -165,12 +178,12 @@ describe('Intercom', function () {
     });
 
     it('should send an id', function () {
-      intercom.group('id');
+      test(intercom).group('id');
       assert(window.Intercom.calledWith('update', { company: { id: 'id' }}));
     });
 
     it('should send an id and properties', function () {
-      intercom.group('id', { name: 'Name' });
+      test(intercom).group('id', { name: 'Name' });
       assert(window.Intercom.calledWith('update', {
         company: {
           id: 'id',

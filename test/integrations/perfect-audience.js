@@ -84,12 +84,12 @@ describe('Perfect Audience', function () {
     });
 
     it('should send an event', function () {
-      pa.track('event');
-      assert(window._pa.track.calledWith('event', undefined));
+      test(pa).track('event');
+      assert(window._pa.track.calledWith('event', {}));
     });
 
     it('should send an event and properties', function () {
-      pa.track('event', { property: true });
+      test(pa).track('event', { property: true });
       assert(window._pa.track.calledWith('event', { property: true }));
     });
   });

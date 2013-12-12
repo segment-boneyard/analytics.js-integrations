@@ -87,23 +87,23 @@ describe('Qualaroo', function () {
     });
 
     it('should send an id', function () {
-      qualaroo.identify('id');
+      test(qualaroo).identify('id');
       assert(window._kiq.push.calledWith(['identify', 'id']));
     });
 
     it('should send traits', function () {
-      qualaroo.identify(null, { trait: true });
+      test(qualaroo).identify(null, { trait: true });
       assert(window._kiq.push.calledWith(['set', { trait: true }]));
     });
 
     it('should send an id and traits', function () {
-      qualaroo.identify('id', { trait: true });
+      test(qualaroo).identify('id', { trait: true });
       assert(window._kiq.push.calledWith(['identify', 'id']));
-      assert(window._kiq.push.calledWith(['set', { trait: true }]));
+      assert(window._kiq.push.calledWith(['set', { trait: true, id: 'id' }]));
     });
 
     it('should prefer an email', function () {
-      qualaroo.identify('id', { email: 'name@example.com' });
+      test(qualaroo).identify('id', { email: 'name@example.com' });
       assert(window._kiq.push.calledWith(['identify', 'name@example.com']));
     });
   });
@@ -115,13 +115,13 @@ describe('Qualaroo', function () {
     });
 
     it('should not send anything by default', function () {
-      qualaroo.track('event');
+      test(qualaroo).track('event');
       assert(!window._kiq.push.called);
     });
 
     it('should set an event trait', function () {
       qualaroo.options.track = true;
-      qualaroo.track('event');
+      test(qualaroo).track('event');
       assert(window._kiq.push.calledWith(['set', { 'Triggered: event': true }]));
     });
   });

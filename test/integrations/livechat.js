@@ -88,24 +88,26 @@ describe('LiveChat', function () {
     });
 
     it('should send an id', function () {
-      livechat.identify('id');
+      test(livechat).identify('id');
       assert(window.LC_API.set_custom_variables.calledWith([
+        { name: 'id', value: 'id' },
         { name: 'User ID', value: 'id' }
       ]));
     });
 
     it('should send traits', function () {
-      livechat.identify(null, { trait: true });
+      test(livechat).identify(null, { trait: true });
       assert(window.LC_API.set_custom_variables.calledWith([
         { name: 'trait', value: true }
       ]));
     });
 
     it('should send an id and traits', function () {
-      livechat.identify('id', { trait: true });
+      test(livechat).identify('id', { trait: true });
       assert(window.LC_API.set_custom_variables.calledWith([
         { name: 'trait', value: true },
-        { name: 'User ID', value: 'id' }
+        { name: 'id', value: 'id' },
+        { name: 'User ID',value: 'id' }
       ]));
     });
   });

@@ -48,13 +48,6 @@ describe('Clicky', function () {
       assert(equal(window.clicky_site_ids, [settings.siteId]));
     });
 
-    it('should set custom data', function () {
-      analytics.user().identify('id', { trait: true });
-      clicky.identify = sinon.spy();
-      clicky.initialize();
-      assert(clicky.identify.calledWith('id', { trait: true }));
-    });
-
     it('should call #load', function () {
       clicky.initialize();
       assert(clicky.load.called);
@@ -95,18 +88,24 @@ describe('Clicky', function () {
     });
 
     it('should send a path and title', function () {
-      clicky.page(null, null, { path: '/path', title: 'title' });
-      assert(window.clicky.log.calledWith('/path', 'title'));
+      test(clicky)
+      .page(null, null, { path: '/path', title: 'title' })
+      .called(window.clicky.log)
+      .with('/path', 'title');
     });
 
     it('should prefer a name', function () {
-      clicky.page(null, 'name', { path: '/path', title: 'title' });
-      assert(window.clicky.log.calledWith('/path', 'name'));
+      test(clicky)
+      .page(null, 'name', { path: '/path', title: 'title' })
+      .called(window.clicky.log)
+      .with('/path', 'name');
     });
 
     it('should prefer a name and category', function () {
-      clicky.page('category', 'name', { path: '/path', title: 'title' });
-      assert(window.clicky.log.calledWith('/path', 'category name'));
+      test(clicky)
+      .page('category', 'name', { path: '/path', title: 'title' })
+      .called(window.clicky.log)
+      .with('/path', 'category name');
     });
   });
 
@@ -117,17 +116,17 @@ describe('Clicky', function () {
     });
 
     it('should set an id', function () {
-      clicky.identify('id', {});
+      test(clicky).identify('id', {});
       assert(equal(window.clicky_custom.session, { id: 'id' }));
     });
 
     it('should set traits', function () {
-      clicky.identify(null, { trait: true });
+      test(clicky).identify(null, { trait: true });
       assert(equal(window.clicky_custom.session, { trait: true }));
     });
 
     it('should set an id and traits', function () {
-      clicky.identify('id', { trait: true });
+      test(clicky).identify('id', { trait: true });
       assert(equal(window.clicky_custom.session, { id: 'id', trait: true }));
     });
   });
@@ -138,13 +137,17 @@ describe('Clicky', function () {
     });
 
     it('should send an event', function () {
-      clicky.track('event', {});
-      assert(window.clicky.goal.calledWith('event'));
+      test(clicky)
+      .track('event', {})
+      .called(window.clicky.goal)
+      .with('event');
     });
 
     it('should send revenue', function () {
-      clicky.track('event', { revenue: 42.99 });
-      assert(window.clicky.goal.calledWith('event', 42.99));
+      test(clicky)
+      .track('event', { revenue: 42.99 })
+      .called(window.clicky.goal)
+      .with('event', 42.99);
     });
   });
 

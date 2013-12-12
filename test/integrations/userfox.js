@@ -1,5 +1,5 @@
 
-describe('userfox', function () {
+describe('', function () {
 
   var analytics = require('analytics');
   var assert = require('assert');
@@ -80,7 +80,7 @@ describe('userfox', function () {
     });
 
     it('should initialize the library with an email', function () {
-      userfox.identify('id', { email: 'name@example.com' });
+      test(userfox).identify('id', { email: 'name@example.com' });
       assert(window._ufq.push.calledWith(['init', {
         clientId: settings.clientId,
         email: 'name@example.com'
@@ -88,7 +88,7 @@ describe('userfox', function () {
     });
 
     it('should send traits', function () {
-      userfox.identify(null, { email: 'name@example.com', trait: true });
+      test(userfox).identify(null, { email: 'name@example.com', trait: true });
       assert(window._ufq.push.calledWith(['track', {
         email: 'name@example.com',
         trait: true
@@ -97,7 +97,7 @@ describe('userfox', function () {
 
     it('should convert dates to a format userfox supports', function () {
       var date = new Date();
-      userfox.identify(null, {
+      test(userfox).identify(null, {
         email: 'name@example.com',
         date: date
       });
@@ -109,7 +109,7 @@ describe('userfox', function () {
 
     it('should alias a created trait to signup_date', function () {
       var date = new Date();
-      userfox.identify(null, {
+      test(userfox).identify(null, {
         email: 'name@example.com',
         created: date
       });

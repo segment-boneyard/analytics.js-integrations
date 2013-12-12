@@ -86,23 +86,23 @@ describe('Customer.io', function () {
     });
 
     it('should send an id', function () {
-      customerio.identify('id', {});
+      test(customerio).identify('id', {});
       assert(window._cio.identify.calledWith({ id: 'id' }));
     });
 
     it('should not send only traits', function () {
-      customerio.identify(null, { trait: true });
+      test(customerio).identify(null, { trait: true });
       assert(!window._cio.identify.called);
     });
 
     it('should send an id and traits', function () {
-      customerio.identify('id', { trait: true });
+      test(customerio).identify('id', { trait: true });
       assert(window._cio.identify.calledWith({ id: 'id', trait: true }));
     });
 
     it('should convert dates', function () {
       var date = new Date();
-      customerio.identify('id', { date: date });
+      test(customerio).identify('id', { date: date });
       assert(window._cio.identify.calledWith({
         id: 'id',
         date: Math.floor(date / 1000)
@@ -111,7 +111,7 @@ describe('Customer.io', function () {
 
     it('should alias created to created_at', function () {
       var date = new Date();
-      customerio.identify('id', { created: date });
+      test(customerio).identify('id', { created: date });
       assert(window._cio.identify.calledWith({
         id: 'id',
         created_at: Math.floor(date / 1000)
@@ -130,17 +130,17 @@ describe('Customer.io', function () {
     });
 
     it('should send an id', function () {
-      customerio.group('id', {});
+      test(customerio).group('id', {});
       assert(window._cio.identify.calledWith({ id: 'id', 'Group id': 'id' }));
     });
 
     it('should send traits', function () {
-      customerio.group(null, { trait: true });
+      test(customerio).group(null, { trait: true });
       assert(window._cio.identify.calledWith({ id: 'id', 'Group trait': true }));
     });
 
     it('should send an id and traits', function () {
-      customerio.group('id', { trait: true });
+      test(customerio).group('id', { trait: true });
       assert(window._cio.identify.calledWith({
         id: 'id',
         'Group id': 'id',
@@ -150,7 +150,7 @@ describe('Customer.io', function () {
 
     it('should convert dates', function () {
       var date = new Date();
-      customerio.group(null, { date: date });
+      test(customerio).group(null, { date: date });
       assert(window._cio.identify.calledWith({
         id: 'id',
         'Group date': Math.floor(date / 1000)
@@ -168,18 +168,18 @@ describe('Customer.io', function () {
     });
 
     it('should send an event', function () {
-      customerio.track('event', {});
+      test(customerio).track('event', {});
       assert(window._cio.track.calledWith('event'));
     });
 
     it('should send an event and properties', function () {
-      customerio.track('event', { property: true });
+      test(customerio).track('event', { property: true });
       assert(window._cio.track.calledWith('event', { property: true }));
     });
 
     it('should convert dates', function () {
       var date = new Date();
-      customerio.track('event', { date: date });
+      test(customerio).track('event', { date: date });
       assert(window._cio.track.calledWith('event', {
         date: Math.floor(date / 1000)
       }));

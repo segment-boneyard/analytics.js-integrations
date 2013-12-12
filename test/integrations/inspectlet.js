@@ -92,7 +92,7 @@ describe('Inspectlet', function () {
     });
 
     it('should tag the session', function () {
-      inspectlet.track('event');
+      test(inspectlet).track('event');
       assert(window.__insp.push.calledWith(['tagSession', 'event']));
     });
   });

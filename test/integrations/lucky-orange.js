@@ -88,9 +88,9 @@ describe('LuckyOrange', function () {
     });
 
     it('should send an id and traits', function () {
-      lucky.identify('id', { trait: true });
+      test(lucky).identify('id', { trait: true });
       assert(window._loq.push.calledWith(['identify', 'id']));
-      assert(window._loq.push.calledWith(['set', { trait: true }]));
+      assert(window._loq.push.calledWith(['set', { trait: true, id: 'id' }]));
     });
   });
 

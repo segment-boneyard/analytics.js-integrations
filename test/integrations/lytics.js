@@ -87,7 +87,7 @@ describe('Lytics', function () {
     });
 
     it('should call send', function () {
-      lytics.page(null, null, { property: true });
+      test(lytics).page(null, null, { property: true });
       assert(window.jstag.send.calledWith({ property: true }));
     });
   });
@@ -99,18 +99,18 @@ describe('Lytics', function () {
     });
 
     it('should send an id', function () {
-      lytics.identify('id');
-      assert(window.jstag.send.calledWith({ _uid: 'id' }));
+      test(lytics).identify('id');
+      assert(window.jstag.send.calledWith({ _uid: 'id', id: 'id' }));
     });
 
     it('should send traits', function () {
-      lytics.identify(null, { trait: true });
+      test(lytics).identify(null, { trait: true });
       assert(window.jstag.send.calledWith({ trait: true }));
     });
 
     it('should send an id and traits', function () {
-      lytics.identify('id', { trait: true });
-      assert(window.jstag.send.calledWith({ _uid: 'id', trait: true }));
+      test(lytics).identify('id', { trait: true });
+      assert(window.jstag.send.calledWith({ _uid: 'id', trait: true, id: 'id' }));
     });
   });
 
@@ -121,12 +121,12 @@ describe('Lytics', function () {
     });
 
     it('should send an event', function () {
-      lytics.track('event');
+      test(lytics).track('event');
       assert(window.jstag.send.calledWith({ _e: 'event' }));
     });
 
     it('should send an event and properties', function () {
-      lytics.track('event', { property: true });
+      test(lytics).track('event', { property: true });
       assert(window.jstag.send.calledWith({ _e: 'event', property: true }));
     });
   });

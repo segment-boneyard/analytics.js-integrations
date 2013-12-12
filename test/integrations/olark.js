@@ -72,14 +72,14 @@ describe('Olark', function () {
     });
 
     it('should not send an event when the chat isnt open', function () {
-      olark.page();
+      test(olark).page();
       assert(!window.olark.called);
     });
 
     it('should not send a message without a name or url', function (done) {
       expandThen(function () {
         window.olark.reset();
-        olark.page();
+        test(olark).page();
         assert(!window.olark.called);
         done();
       });
@@ -87,7 +87,7 @@ describe('Olark', function () {
 
     it('should send a page name', function (done) {
       expandThen(function () {
-        olark.page(null, 'Name');
+        test(olark).page(null, 'Name');
         assert(window.olark.calledWith('api.chat.sendNotificationToOperator', {
           body: 'looking at name page'
         }));
@@ -97,7 +97,7 @@ describe('Olark', function () {
 
     it('should send a page category and name', function (done) {
       expandThen(function () {
-        olark.page('Category', 'Name');
+        test(olark).page('Category', 'Name');
         assert(window.olark.calledWith('api.chat.sendNotificationToOperator', {
           body: 'looking at category name page'
         }));
@@ -107,7 +107,7 @@ describe('Olark', function () {
 
     it('should send a page url', function (done) {
       expandThen(function () {
-        olark.page(null, null, { url: 'url' });
+        test(olark).page(null, null, { url: 'url' });
         assert(window.olark.calledWith('api.chat.sendNotificationToOperator', {
           body: 'looking at url'
         }));
@@ -119,7 +119,7 @@ describe('Olark', function () {
       olark.options.page = false;
       expandThen(function () {
         window.olark.reset();
-        olark.page();
+        test(olark).page();
         assert(!window.olark.called);
         done();
       });
@@ -137,21 +137,21 @@ describe('Olark', function () {
     });
 
     it('should send an id', function () {
-      olark.identify('id');
+      test(olark).identify('id');
       assert(window.olark.calledWith('api.visitor.updateCustomFields', {
         id: 'id'
       }));
     });
 
     it('should send traits', function () {
-      olark.identify(undefined, { trait: true });
+      test(olark).identify(undefined, { trait: true });
       assert(window.olark.calledWith('api.visitor.updateCustomFields', {
         trait: true
       }));
     });
 
     it('should send an id and traits', function () {
-      olark.identify('id', { trait: true });
+      test(olark).identify('id', { trait: true });
       assert(window.olark.calledWith('api.visitor.updateCustomFields', {
         id: 'id',
         trait: true
@@ -159,31 +159,31 @@ describe('Olark', function () {
     });
 
     it('should send an email', function () {
-      olark.identify(undefined, { email: 'name@example.com' });
+      test(olark).identify(undefined, { email: 'name@example.com' });
       assert(window.olark.calledWith('api.visitor.updateEmailAddress', {
         emailAddress: 'name@example.com'
       }));
     });
 
     it('shouldnt send an empty email', function () {
-      olark.identify('id');
+      test(olark).identify('id');
       assert(!window.olark.calledWith('api.visitor.updateEmailAddress'));
     });
 
     it('should send a name', function () {
-      olark.identify(undefined, { name: 'first last' });
+      test(olark).identify(undefined, { name: 'first last' });
       assert(window.olark.calledWith('api.visitor.updateFullName', {
         fullName: 'first last'
       }));
     });
 
     it('shouldnt send an empty name', function () {
-      olark.identify('id');
+      test(olark).identify('id');
       assert(!window.olark.calledWith('api.visitor.updateFullName'));
     });
 
     it('should fallback to sending first and last name', function () {
-      olark.identify(undefined, {
+      test(olark).identify(undefined, {
         firstName: 'first',
         lastName: 'last'
       });
@@ -193,40 +193,42 @@ describe('Olark', function () {
     });
 
     it('should fallback to sending only a first name', function () {
-      olark.identify(undefined, { firstName: 'first' });
+      test(olark).identify(undefined, { firstName: 'first' });
       assert(window.olark.calledWith('api.visitor.updateFullName', {
         fullName: 'first'
       }));
     });
 
     it('should send a phone number', function () {
-      olark.identify(undefined, { phone: 'phone' });
+      test(olark).identify(undefined, { phone: 'phone' });
       assert(window.olark.calledWith('api.visitor.updatePhoneNumber', {
         phoneNumber: 'phone'
       }));
     });
 
     it('shouldnt send an empty phone number', function () {
-      olark.identify('id');
+      test(olark).identify('id');
       assert(!window.olark.calledWith('api.visitor.updatePhoneNumber'));
     });
 
     it('should us an id as a nickname', function () {
-      olark.identify('id');
-      assert(window.olark.calledWith('api.chat.updateVisitorNickname', {
-        snippet: 'id'
-      }));
+      test(olark)
+        .identify('id')
+        .called(window.olark)
+        .with('api.chat.updateVisitorNickname', {
+          snippet: 'id'
+        });
     });
 
     it('should prefer a username as a nickname', function () {
-      olark.identify('id', { username: 'username' });
+      test(olark).identify('id', { username: 'username' });
       assert(window.olark.calledWith('api.chat.updateVisitorNickname', {
         snippet: 'username'
       }));
     });
 
     it('should prefer an email as a nickname', function () {
-      olark.identify('id', {
+      test(olark).identify('id', {
         username: 'username',
         email: 'name@example.com'
       });
@@ -236,7 +238,7 @@ describe('Olark', function () {
     });
 
     it('should prefer a name as a nickname', function () {
-      olark.identify('id', {
+      test(olark).identify('id', {
         username: 'username',
         name: 'name'
       });
@@ -246,7 +248,7 @@ describe('Olark', function () {
     });
 
     it('should prefer a name and email as a nickname', function () {
-      olark.identify('id', {
+      test(olark).identify('id', {
         username: 'username',
         name: 'name',
         email: 'name@example.com'
@@ -271,20 +273,20 @@ describe('Olark', function () {
     });
 
     it('should not send an event by default', function () {
-      olark.track('event');
+      test(olark).track('event');
       assert(!window.olark.called);
     });
 
     it('should not send an event when the chat isnt open', function () {
       olark.options.track = true;
-      olark.track('event');
+      test(olark).track('event');
       assert(!window.olark.called);
     });
 
     it('should send an event', function (done) {
       olark.options.track = true;
       expandThen(function () {
-        olark.track('event');
+        test(olark).track('event');
         assert(window.olark.calledWith('api.chat.sendNotificationToOperator', {
           body: 'visitor triggered "event"'
         }));

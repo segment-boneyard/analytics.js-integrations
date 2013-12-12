@@ -89,18 +89,24 @@ describe('Chartbeat', function () {
     });
 
     it('should send a path and title', function () {
-      chartbeat.page(null, null, { path: '/path', title: 'title' });
-      assert(window.pSUPERFLY.virtualPage.calledWith('/path', 'title'));
+      test(chartbeat)
+      .page(null, null, { path: '/path', title: 'title' })
+      .called(window.pSUPERFLY.virtualPage)
+      .with('/path', 'title');
     });
 
     it('should prefer a name', function () {
-      chartbeat.page(null, 'name', { path: '/path', title: 'title' });
-      assert(window.pSUPERFLY.virtualPage.calledWith('/path', 'name'));
+      test(chartbeat)
+      .page(null, 'name', { path: '/path', title: 'title' })
+      .called(window.pSUPERFLY.virtualPage)
+      .with('/path', 'name');
     });
 
     it('should prefer a name and category', function () {
-      chartbeat.page('category', 'name', { path: '/path', title: 'title' });
-      assert(window.pSUPERFLY.virtualPage.calledWith('/path', 'category name'));
+      test(chartbeat)
+      .page('category', 'name', { path: '/path', title: 'title' })
+      .called(window.pSUPERFLY.virtualPage)
+      .with('/path', 'category name');
     });
   });
 

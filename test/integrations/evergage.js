@@ -100,31 +100,42 @@ describe('Evergage', function () {
     });
 
     it('should send an id', function () {
-      evergage.identify('id');
-      assert(window._aaq.push.calledWith(['setUser', 'id']));
+      test(evergage)
+      .identify('id')
+      .called(window._aaq.push)
+      .with(['setUser', 'id']);
     });
 
     it('should not send just traits', function () {
-      evergage.identify(null, { trait: true });
+      test(evergage).identify(null, { trait: true });
       assert(!window._aaq.push.called);
     });
 
     it('should send an id and traits', function () {
-      evergage.identify('id', { trait: true });
-      assert(window._aaq.push.calledWith(['setUserField', 'trait', true, 'page']));
-      assert(window._aaq.push.calledWith(['setUser', 'id']));
+      test(evergage)
+      .identify('id', { trait: true })
+      .called(window._aaq.push)
+      .with(['setUserField', 'trait', true, 'page'])
+      .called(window._aaq.push)
+      .with(['setUser', 'id']);
     });
 
     it('should send an email', function () {
-      evergage.identify('id', { email: 'name@example.com' });
-      assert(window._aaq.push.calledWith(['setUserField', 'userEmail', 'name@example.com', 'page']));
-      assert(window._aaq.push.calledWith(['setUser', 'id']));
+      test(evergage)
+      .identify('id', { email: 'name@example.com' })
+      .called(window._aaq.push)
+      .with(['setUserField', 'userEmail', 'name@example.com', 'page'])
+      .called(window._aaq.push)
+      .with(['setUser', 'id']);
     });
 
     it('should send a name', function () {
-      evergage.identify('id', { name: 'name' });
-      assert(window._aaq.push.calledWith(['setUserField', 'userName', 'name', 'page']));
-      assert(window._aaq.push.calledWith(['setUser', 'id']));
+      test(evergage)
+      .identify('id', { name: 'name' })
+      .called(window._aaq.push)
+      .with(['setUserField', 'userName', 'name', 'page'])
+      .called(window._aaq.push)
+      .with(['setUser', 'id']);
     });
   });
 
@@ -135,19 +146,24 @@ describe('Evergage', function () {
     });
 
     it('should send an id', function () {
-      evergage.group('id');
-      assert(window._aaq.push.calledWith(['setCompany', 'id']));
+      test(evergage)
+      .group('id')
+      .called(window._aaq.push)
+      .with(['setCompany', 'id']);
     });
 
     it('should not send just properties', function () {
-      evergage.group(null, { property: true });
+      test(evergage).group(null, { property: true });
       assert(!window._aaq.push.called);
     });
 
     it('should send an id and properties', function () {
-      evergage.group('id', { property: true });
-      assert(window._aaq.push.calledWith(['setAccountField', 'property', true, 'page']));
-      assert(window._aaq.push.calledWith(['setCompany', 'id']));
+      test(evergage)
+      .group('id', { property: true })
+      .called(window._aaq.push)
+      .with(['setAccountField', 'property', true, 'page'])
+      .called(window._aaq.push)
+      .with(['setCompany', 'id'])
     });
   });
 
@@ -158,13 +174,17 @@ describe('Evergage', function () {
     });
 
     it('should send an event', function () {
-      evergage.track('event');
-      assert(window._aaq.push.calledWith(['trackAction', 'event', undefined]));
+      test(evergage)
+      .track('event')
+      .called(window._aaq.push)
+      .with(['trackAction', 'event', {}]);
     });
 
     it('should send an event and properties', function () {
-      evergage.track('event', { property: true });
-      assert(window._aaq.push.calledWith(['trackAction', 'event', { property: true }]));
+      test(evergage)
+      .track('event', { property: true })
+      .called(window._aaq.push)
+      .with(['trackAction', 'event', { property: true }]);
     });
   });
 
@@ -179,16 +199,18 @@ describe('Evergage', function () {
     });
 
     it('should send a page view', function () {
-      evergage.page();
+      test(evergage).page();
       assert(!window._aaq.push.called);
       assert(window.Evergage.init.calledWith(true));
     });
 
     it('should send page properties', function () {
-      evergage.page('category', 'name', { property: true });
-      assert(window._aaq.push.calledWith(['namePage', 'name']));
-      assert(window._aaq.push.calledWith(['setCustomField', 'property', true, 'page']));
-      assert(window.Evergage.init.calledWith(true));
+      test(evergage)
+      .page('category', 'name', { property: true })
+      .called(window._aaq.push)
+      .with(['namePage', 'name'])
+      .called(window._aaq.push)
+      .with(['setCustomField', 'property', true, 'page']);
     });
   });
 

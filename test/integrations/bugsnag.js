@@ -85,11 +85,10 @@ describe('Bugsnag', function () {
     });
 
     it('should set metadata', function () {
-      bugsnag.identify('id', { trait: true });
-      assert(equal(window.Bugsnag.metaData, {
-        id: 'id',
-        trait: true
-      }));
+      test(bugsnag)
+      .identify('id', { trait: true })
+      .changed(window.Bugsnag.metaData)
+      .to({ id: 'id', trait: true });
     });
   });
 

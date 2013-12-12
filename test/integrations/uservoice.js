@@ -147,7 +147,7 @@ describe('UserVoice', function () {
       });
 
       it('should send an id', function () {
-        uservoice.identify('id');
+        test(uservoice).identify('id');
         assert(window.UserVoice.push.calledWith([
           'identify',
           { id: 'id' }
@@ -155,7 +155,7 @@ describe('UserVoice', function () {
       });
 
       it('should send traits', function () {
-        uservoice.identify(null, { trait: true });
+        test(uservoice).identify(null, { trait: true });
         assert(window.UserVoice.push.calledWith([
           'identify',
           { trait: true }
@@ -163,7 +163,7 @@ describe('UserVoice', function () {
       });
 
       it('should send an id and traits', function () {
-        uservoice.identify(null, { id: 'id', trait: true });
+        test(uservoice).identify(null, { id: 'id', trait: true });
         assert(window.UserVoice.push.calledWith([
           'identify',
           { id: 'id', trait: true }
@@ -172,7 +172,7 @@ describe('UserVoice', function () {
 
       it('should convert a created date', function () {
         var date = new Date();
-        uservoice.identify(null, { created: date });
+        test(uservoice).identify(null, { created: date });
         assert(window.UserVoice.push.calledWith([
           'identify',
           { created_at: unix(date) }
@@ -187,7 +187,8 @@ describe('UserVoice', function () {
       });
 
       it('should send an id', function () {
-        uservoice.group('id');
+        test(uservoice).group('id');
+        console.log(window.UserVoice.push.args);
         assert(window.UserVoice.push.calledWith([
           'identify',
           { account: { id: 'id' }}
@@ -195,7 +196,7 @@ describe('UserVoice', function () {
       });
 
       it('should send properties', function () {
-        uservoice.group(null, { property: true });
+        test(uservoice).group(null, { property: true });
         assert(window.UserVoice.push.calledWith([
           'identify',
           { account: { property: true }}
@@ -203,7 +204,7 @@ describe('UserVoice', function () {
       });
 
       it('should send an id and properties', function () {
-        uservoice.group(null, { id: 'id', property: true });
+        test(uservoice).group(null, { id: 'id', property: true });
         assert(window.UserVoice.push.calledWith([
           'identify',
           { account: { id: 'id', property: true }}
@@ -212,7 +213,7 @@ describe('UserVoice', function () {
 
       it('should convert a created date', function () {
         var date = new Date();
-        uservoice.group(null, { created: date });
+        test(uservoice).group(null, { created: date });
         assert(window.UserVoice.push.calledWith([
           'identify',
           { account: { created_at: unix(date) }}
@@ -328,7 +329,7 @@ describe('UserVoice', function () {
       });
 
       it('should send an id', function () {
-        uservoice.identify('id');
+        test(uservoice).identify('id');
         assert(window.UserVoice.push.calledWith([
           'setCustomFields',
           { id: 'id' }
@@ -336,7 +337,7 @@ describe('UserVoice', function () {
       });
 
       it('should send traits', function () {
-        uservoice.identify(null, { trait: true });
+        test(uservoice).identify(null, { trait: true });
         assert(window.UserVoice.push.calledWith([
           'setCustomFields',
           { trait: true }
@@ -344,7 +345,7 @@ describe('UserVoice', function () {
       });
 
       it('should send an id and traits', function () {
-        uservoice.identify(null, { id: 'id', trait: true });
+        test(uservoice).identify(null, { id: 'id', trait: true });
         assert(window.UserVoice.push.calledWith([
           'setCustomFields',
           { id: 'id', trait: true }

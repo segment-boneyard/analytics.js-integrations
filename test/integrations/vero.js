@@ -84,17 +84,17 @@ describe('Vero', function () {
     });
 
     it('shouldnt send just an id', function () {
-      vero.identify('id');
+      test(vero).identify('id');
       assert(!window._veroq.push.called);
     });
 
     it('shouldnt send without an id', function () {
-      vero.identify(null, { trait: true });
+      test(vero).identify(null, { trait: true });
       assert(!window._veroq.push.called);
     });
 
     it('should send an id and email', function () {
-      vero.identify('id', { email: 'name@example.com' });
+      test(vero).identify('id', { email: 'name@example.com' });
       assert(window._veroq.push.calledWith(['user', {
         id: 'id',
         email: 'name@example.com'
@@ -102,7 +102,7 @@ describe('Vero', function () {
     });
 
     it('should send an id and traits', function () {
-      vero.identify('id', {
+      test(vero).identify('id', {
         email: 'name@example.com',
         trait: true
       });
@@ -124,12 +124,12 @@ describe('Vero', function () {
     });
 
     it('should send an event', function () {
-      vero.track('event');
-      assert(window._veroq.push.calledWith(['track', 'event', undefined]));
+      test(vero).track('event');
+      assert(window._veroq.push.calledWith(['track', 'event', {}]));
     });
 
     it('should send an event and properties', function () {
-      vero.track('event', { property: true });
+      test(vero).track('event', { property: true });
       assert(window._veroq.push.calledWith(['track', 'event', { property: true }]));
     });
   });

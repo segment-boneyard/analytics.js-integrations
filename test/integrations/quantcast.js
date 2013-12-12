@@ -86,20 +86,20 @@ describe('Quantcast', function () {
     });
 
     it('should push a refresh event', function () {
-      quantcast.page();
+      test(quantcast).page();
       var item = window._qevents[1];
       assert(item.event === 'refresh');
     });
 
     it('should push the pCode', function () {
-      quantcast.page();
+      test(quantcast).page();
       var item = window._qevents[1];
       assert(item.qacct === settings.pCode);
     });
 
     it('should push the user id', function () {
       analytics.user().identify('id');
-      quantcast.page();
+      test(quantcast).page();
       var item = window._qevents[1];
       assert(item.uid === 'id');
     });
@@ -111,7 +111,7 @@ describe('Quantcast', function () {
     });
 
     it('should update the user id', function () {
-      quantcast.identify('id');
+      test(quantcast).identify('id');
       assert(window._qevents[0].uid === 'id');
     });
   });
@@ -122,20 +122,20 @@ describe('Quantcast', function () {
     });
 
     it('should push a click event', function () {
-      quantcast.track('event');
+      test(quantcast).track('event');
       var item = window._qevents[1];
       assert(item.event === 'click');
     });
 
     it('should push the pCode', function () {
-      quantcast.track('event');
+      test(quantcast).track('event');
       var item = window._qevents[1];
       assert(item.qacct === settings.pCode);
     });
 
     it('should push the user id', function () {
       analytics.user().identify('id');
-      quantcast.track('event');
+      test(quantcast).track('event');
       var item = window._qevents[1];
       assert(item.uid === 'id');
     });

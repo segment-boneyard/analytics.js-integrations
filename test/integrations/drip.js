@@ -93,13 +93,17 @@ describe('Drip', function () {
     });
 
     it('should send event as the action', function () {
-      drip.track('event');
-      assert(window._dcq.push.calledWith(['track', { action: 'event' }]));
+      test(drip)
+      .track('event')
+      .called(window._dcq.push)
+      .with(['track', { action: 'event' }]);
     });
 
     it('should convert and alias revenue', function () {
-      drip.track('event', { revenue: 9.999 });
-      assert(window._dcq.push.calledWith(['track', { action: 'event', value: 1000 }]));
+      test(drip)
+      .track('event', { revenue: 9.999 })
+      .called(window._dcq.push)
+      .with(['track', { action: 'event', value: 1000 }]);
     });
   });
 

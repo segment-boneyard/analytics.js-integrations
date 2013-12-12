@@ -98,23 +98,29 @@ describe('Errorception', function () {
 
   describe('#identify', function () {
     it('should add an id to metadata', function () {
-      errorception.identify('id');
-      assert(equal(window._errs.meta, { id: 'id' }));
+      test(errorception)
+      .identify('id')
+      .changed(window._errs.meta)
+      .to({ id: 'id' });
     });
 
     it('should add traits to metadata', function () {
-      errorception.identify(null, { trait: true });
-      assert(equal(window._errs.meta, { trait: true }));
+      test(errorception)
+      .identify(null, { trait: true })
+      .changed(window._errs.meta)
+      .to({ trait: true });
     });
 
     it('should add an id and traits to metadata', function () {
-      errorception.identify('id', { trait: true });
-      assert(equal(window._errs.meta, { id: 'id', trait: true }));
+      test(errorception)
+      .identify('id', { trait: true })
+      .changed(window._errs.meta)
+      .to({ id: 'id', trait: true });
     });
 
     it('should not add to metadata when meta option is false', function () {
       errorception.options.meta = false;
-      errorception.identify('id');
+      test(errorception).identify('id');
       assert(!window._errs);
     });
   });

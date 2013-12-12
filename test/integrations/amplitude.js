@@ -84,36 +84,44 @@ describe('Amplitude', function () {
     });
 
     it('should not track unnamed pages by default', function () {
-      amplitude.page();
+      test(amplitude).page();
       assert(!window.amplitude.logEvent.called);
     });
 
     it('should track unnamed pages if enabled', function () {
       amplitude.options.trackAllPages = true;
-      amplitude.page(null, null, {});
-      assert(window.amplitude.logEvent.calledWith('Loaded a Page', {}));
+      test(amplitude)
+      .page()
+      .called(window.amplitude.logEvent)
+      .with('Loaded a Page');
     });
 
     it('should track named pages by default', function () {
-      amplitude.page(null, 'Name', {});
-      assert(window.amplitude.logEvent.calledWith('Viewed Name Page', {}));
+      test(amplitude)
+      .page(null, 'Name')
+      .called(window.amplitude.logEvent)
+      .with('Viewed Name Page');
     });
 
     it('should track named pages with a category added', function () {
-      amplitude.page('Category', 'Name', {});
-      assert(window.amplitude.logEvent.calledWith('Viewed Category Name Page', {}));
+      test(amplitude)
+      .page('Category', 'Name')
+      .called(window.amplitude.logEvent)
+      .with('Viewed Category Name Page');
     });
 
     it('should track categorized pages by default', function () {
-      amplitude.page('Category', 'Name', {});
-      assert(window.amplitude.logEvent.calledWith('Viewed Category Page', {}));
+      test(amplitude)
+      .page('Category', 'Name')
+      .called(window.amplitude.logEvent)
+      .with('Viewed Category Name Page');
     });
 
     it('should not track name or categorized pages if disabled', function () {
       amplitude.options.trackNamedPages = false;
       amplitude.options.trackCategorizedPages = false;
-      amplitude.page(null, 'Name', {});
-      amplitude.page('Category', 'Name', {});
+      test(amplitude).page(null, 'Name');
+      test(amplitude).page('Category', 'Name');
       assert(!window.amplitude.logEvent.called);
     });
   });
@@ -126,19 +134,26 @@ describe('Amplitude', function () {
     });
 
     it('should send an id', function () {
-      amplitude.identify('id');
-      assert(window.amplitude.setUserId.calledWith('id'));
+      test(amplitude)
+      .identify('id')
+      .called(window.amplitude.setUserId)
+      .with('id');
     });
 
     it('should send traits', function () {
-      amplitude.identify(null, { trait: true });
-      assert(window.amplitude.setGlobalUserProperties.calledWith({ trait: true }));
+      test(amplitude)
+      .identify(null, { trait: true })
+      .called(window.amplitude.setGlobalUserProperties)
+      .with({ trait: true})
     });
 
     it('should send an id and traits', function () {
-      amplitude.identify('id', { trait: true });
-      assert(window.amplitude.setUserId.calledWith('id'));
-      assert(window.amplitude.setGlobalUserProperties.calledWith({ trait: true }));
+      test(amplitude)
+      .identify('id', { trait: true })
+      .called(window.amplitude.setUserId)
+      .with('id')
+      .called(window.amplitude.setGlobalUserProperties)
+      .with({ trait: true, id: 'id' });
     });
   });
 
@@ -149,13 +164,17 @@ describe('Amplitude', function () {
     });
 
     it('should send an event', function () {
-      amplitude.track('event');
-      assert(window.amplitude.logEvent.calledWith('event'));
+      test(amplitude)
+      .track('event')
+      .called(window.amplitude.logEvent)
+      .with('event');
     });
 
     it('should send an event and properties', function () {
-      amplitude.track('event', { property: true });
-      assert(window.amplitude.logEvent.calledWith('event', { property: true }));
+      test(amplitude)
+      .track('event', { prop: true })
+      .called(window.amplitude.logEvent)
+      .with('event', { prop: true });
     });
   });
 });

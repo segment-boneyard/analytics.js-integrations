@@ -83,23 +83,23 @@ describe('Tapstream', function () {
     });
 
     it('should track all pages by default', function () {
-      tapstream.page();
+      test(tapstream).page();
       assert(window._tsq.push.calledWith(['fireHit', 'loaded-a-page', [undefined]]));
     });
 
     it('should track named pages by default', function () {
-      tapstream.page(null, 'Name');
+      test(tapstream).page(null, 'Name');
       assert(window._tsq.push.calledWith(['fireHit', 'viewed-name-page', [undefined]]));
     });
 
 
     it('should track named pages with a category', function () {
-      tapstream.page('Category', 'Name');
+      test(tapstream).page('Category', 'Name');
       assert(window._tsq.push.calledWith(['fireHit', 'viewed-category-name-page', [undefined]]));
     });
 
     it('should track categorized pages by default', function () {
-      tapstream.page('Category', 'Name');
+      test(tapstream).page('Category', 'Name');
       assert(window._tsq.push.calledWith(['fireHit', 'viewed-category-page', [undefined]]));
     });
 
@@ -107,8 +107,8 @@ describe('Tapstream', function () {
       tapstream.options.trackAllPages = false;
       tapstream.options.trackNamedPages = false;
       tapstream.options.trackCategorizedPages = false;
-      tapstream.page(null, 'Name');
-      tapstream.page('Category', 'Name');
+      test(tapstream).page(null, 'Name');
+      test(tapstream).page('Category', 'Name');
       assert(!window._tsq.push.called);
     });
   });
@@ -120,7 +120,7 @@ describe('Tapstream', function () {
     });
 
     it('should send an event as a slug', function () {
-      tapstream.track('Event');
+      test(tapstream).track('Event');
       assert(window._tsq.push.calledWith(['fireHit', 'event', [undefined]]));
     });
   });

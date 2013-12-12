@@ -45,8 +45,9 @@
     "ianstormtaylor/assert": "*",
     "ianstormtaylor/sinon": "*",
     "jkroso/equals": "*",
-    "segmentio/analytics.js": "page",
-    "segmentio/analytics.js-integration-tester": "*",
+    "segmentio/analytics.js": "add/facade",
+    "segmentio/facade": "0.2.0",
+    "segmentio/analytics.js-integration-tester": "add/facade",
     "segmentio/when": "*",
     "yields/clear-timeouts": "*",
     "yields/clear-intervals": "*"

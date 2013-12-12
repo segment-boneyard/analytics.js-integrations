@@ -90,25 +90,26 @@ describe('Klaviyo', function () {
     });
 
     it('should send an id', function () {
-      klaviyo.identify('id');
-      assert(window._learnq.push.calledWith(['identify', { $id: 'id' }]));
+      test(klaviyo)
+        .identify('id')
+        .called(window._learnq.push)
+        .with(['identify', { $id: 'id' }]);
     });
 
     it('shouldnt send just traits', function () {
-      klaviyo.identify(null, { trait: true });
+      test(klaviyo).identify(null, { trait: true });
       assert(!window._learnq.push.called);
     });
 
     it('should send an id and traits', function () {
-      klaviyo.identify('id', { trait: true });
-      assert(window._learnq.push.calledWith(['identify', {
-        $id: 'id',
-        trait: true
-      }]));
+      test(klaviyo)
+        .identify('id', { trait: true })
+        .called(window._learnq.push)
+        .with(['identify', { $id: 'id', trait: true }]);
     });
 
     it('should alias traits', function () {
-      klaviyo.identify('id', {
+      test(klaviyo).identify('id', {
         email: 'name@example.com',
         firstName: 'first',
         lastName: 'last',
@@ -133,7 +134,7 @@ describe('Klaviyo', function () {
     });
 
     it('should send a name', function () {
-      klaviyo.group('id', { name: 'name' });
+      test(klaviyo).group('id', { name: 'name' });
       assert(window._learnq.push.calledWith(['identify', { $organization: 'name' }]));
     });
   });
@@ -145,12 +146,12 @@ describe('Klaviyo', function () {
     });
 
     it('should send an event', function () {
-      klaviyo.track('event');
+      test(klaviyo).track('event');
       assert(window._learnq.push.calledWith(['track', 'event', {}]));
     });
 
     it('should send an event and properties', function () {
-      klaviyo.track('event', { property: true });
+      test(klaviyo).track('event', { property: true });
       assert(window._learnq.push.calledWith(['track', 'event', { property: true }]));
     });
   });

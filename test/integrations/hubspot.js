@@ -82,17 +82,17 @@ describe('HubSpot', function () {
     });
 
     it('should not send traits without an email', function () {
-      hubspot.identify('id');
+      test(hubspot).identify('id');
       assert(!window._hsq.push.called);
     });
 
     it('should send traits with an email', function () {
-      hubspot.identify(null, { email: 'name@example.com' });
+      test(hubspot).identify(null, { email: 'name@example.com' });
       assert(window._hsq.push.calledWith(['identify', { email: 'name@example.com' }]));
     });
 
     it('should send an id and traits with an email', function () {
-      hubspot.identify('id', { email: 'name@example.com' });
+      test(hubspot).identify('id', { email: 'name@example.com' });
       assert(window._hsq.push.calledWith(['identify', {
         id: 'id',
         email: 'name@example.com'
@@ -101,7 +101,7 @@ describe('HubSpot', function () {
 
     it('should convert dates to milliseconds', function () {
       var date = new Date();
-      hubspot.identify(null, {
+      test(hubspot).identify(null, {
         email: 'name@example.com',
         date: date
       });
@@ -119,23 +119,27 @@ describe('HubSpot', function () {
     });
 
     it('should send an event', function () {
-      hubspot.track('event');
-      assert(window._hsq.push.calledWith(['trackEvent', 'event', {}]));
+      test(hubspot)
+      .track('event')
+      .called(window._hsq.push)
+      .with(['trackEvent', 'event', {}]);
     });
 
     it('should send an event and properties', function () {
-      hubspot.track('event', { property: true });
-      assert(window._hsq.push.calledWith(['trackEvent', 'event', {
-        property: true
-      }]));
+      test(hubspot)
+      .track('event', { property: true })
+      .called(window._hsq.push)
+      .with(['trackEvent', 'event', { property: true }]);
     });
 
     it('should convert dates to milliseconds', function () {
       var date = new Date();
-      hubspot.track('event', { date: date });
-      assert(window._hsq.push.calledWith(['trackEvent', 'event', {
-        date: date.getTime()
-      }]));
+      var ms = date.getTime();
+
+      test(hubspot)
+      .track('event', { date: date })
+      .called(window._hsq.push)
+      .with(['trackEvent', 'event', { date: ms }]);
     });
   });
 
@@ -145,9 +149,11 @@ describe('HubSpot', function () {
       window._hsq.push = sinon.spy();
     });
 
-    it('should send a page view', function () {
-      hubspot.page();
-      assert(window._hsq.push.calledWith(['_trackPageview']));
+    it('should send a page view', function () {;
+      test(hubspot)
+      .page()
+      .called(window._hsq.push)
+      .with(['_trackPageview']);
     });
   });
 

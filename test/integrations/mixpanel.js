@@ -86,36 +86,36 @@ describe('Mixpanel', function () {
     });
 
     it('should not track anonymous pages by default', function () {
-      mixpanel.page();
+      test(mixpanel).page();
       assert(!window.mixpanel.track.called);
     });
 
     it('should track anonymous pages when the option is on', function () {
       mixpanel.options.trackAllPages = true;
-      mixpanel.page();
+      test(mixpanel).page();
       assert(window.mixpanel.track.calledWith('Loaded a Page'));
     });
 
     it('should track named pages by default', function () {
-      mixpanel.page(null, 'Name');
+      test(mixpanel).page(null, 'Name');
       assert(window.mixpanel.track.calledWith('Viewed Name Page'));
     });
 
     it('should track named pages with categories', function () {
-      mixpanel.page('Category', 'Name');
+      test(mixpanel).page('Category', 'Name');
       assert(window.mixpanel.track.calledWith('Viewed Category Name Page'));
     });
 
     it('should track categorized pages by default', function () {
-      mixpanel.page('Category', 'Name');
+      test(mixpanel).page('Category', 'Name');
       assert(window.mixpanel.track.calledWith('Viewed Category Page'));
     });
 
     it('should not track category pages when the option is off', function () {
       mixpanel.options.trackNamedPages = false;
       mixpanel.options.trackCategorizedPages = false;
-      mixpanel.page(null, 'Name');
-      mixpanel.page('Category', 'Name');
+      test(mixpanel).page(null, 'Name');
+      test(mixpanel).page('Category', 'Name');
       assert(!window.mixpanel.track.called);
     });
   });
@@ -130,33 +130,46 @@ describe('Mixpanel', function () {
     });
 
     it('should send an id', function () {
-      mixpanel.identify('id');
-      assert(window.mixpanel.identify.calledWith('id'));
+      test(mixpanel)
+        .identify('id')
+        .called(window.mixpanel.identify)
+        .with('id')
+        .called(window.mixpanel.register)
+        .with({ id: 'id' });
     });
 
     it('should send traits', function () {
-      mixpanel.identify(null, { trait: true });
-      assert(window.mixpanel.register.calledWith({ trait: true }));
+      test(mixpanel)
+        .identify(null, { trait: true })
+        .called(window.mixpanel.register)
+        .with({ trait: true });
     });
 
     it('should send an id and traits', function () {
-      mixpanel.identify('id', { trait: true });
-      assert(window.mixpanel.identify.calledWith('id'));
-      assert(window.mixpanel.register.calledWith({ trait: true }));
+      test(mixpanel)
+        .identify('id', { trait: true })
+        .called(window.mixpanel.identify)
+        .with('id')
+        .called(window.mixpanel.register)
+        .with({ trait: true, id: 'id' });
     });
 
     it('should use an id as a name tag', function () {
-      mixpanel.identify('id');
-      assert(window.mixpanel.name_tag.calledWith('id'));
+      test(mixpanel)
+        .identify('id')
+        .called(window.mixpanel.name_tag)
+        .with('id');
     });
 
     it('should prefer a username as a name tag', function () {
-      mixpanel.identify('id', { username: 'username' });
-      assert(window.mixpanel.name_tag.calledWith('username'));
+      test(mixpanel)
+        .identify('id', { username: 'username' })
+        .called(window.mixpanel.name_tag)
+        .with('username');
     });
 
     it('should prefer an email as a name tag', function () {
-      mixpanel.identify('id', {
+      test(mixpanel).identify('id', {
         username: 'username',
         email: 'name@example.com'
       });
@@ -165,13 +178,13 @@ describe('Mixpanel', function () {
 
     it('should send traits to Mixpanel People', function () {
       mixpanel.options.people = true;
-      mixpanel.identify(null, { trait: true });
+      test(mixpanel).identify(null, { trait: true });
       assert(window.mixpanel.people.set.calledWith({ trait: true }));
     });
 
     it('should alias traits', function () {
       var date = new Date();
-      mixpanel.identify(null, {
+      test(mixpanel).identify(null, {
         created: date,
         email: 'name@example.com',
         firstName: 'first',
@@ -196,7 +209,7 @@ describe('Mixpanel', function () {
     it('should alias traits to Mixpanel People', function () {
       mixpanel.options.people = true;
       var date = new Date();
-      mixpanel.identify(null, {
+      test(mixpanel).identify(null, {
         created: date,
         email: 'name@example.com',
         firstName: 'first',
@@ -227,24 +240,24 @@ describe('Mixpanel', function () {
     });
 
     it('should send an event', function () {
-      mixpanel.track('event');
+      test(mixpanel).track('event');
       assert(window.mixpanel.track.calledWith('event'));
     });
 
     it('should send an event and properties', function () {
-      mixpanel.track('event', { property: true });
+      test(mixpanel).track('event', { property: true });
       assert(window.mixpanel.track.calledWith('event', { property: true }));
     });
 
     it('should send a revenue property to Mixpanel People', function () {
       mixpanel.options.people = true;
-      mixpanel.track('event', { revenue: 9.99 });
+      test(mixpanel).track('event', { revenue: 9.99 });
       assert(window.mixpanel.people.track_charge.calledWith(9.99));
     });
 
     it('should convert dates to iso strings', function () {
       var date = new Date();
-      mixpanel.track('event', { date: date });
+      test(mixpanel).track('event', { date: date });
       assert(window.mixpanel.track.calledWith('event', { date: iso(date) }));
     });
   });
@@ -256,12 +269,12 @@ describe('Mixpanel', function () {
     });
 
     it('should send a new id', function () {
-      mixpanel.alias('new');
+      test(mixpanel).alias('new');
       assert(window.mixpanel.alias.calledWith('new'));
     });
 
     it('should send a new and old id', function () {
-      mixpanel.alias('new', 'old');
+      test(mixpanel).alias('new', 'old');
       assert(window.mixpanel.alias.calledWith('new', 'old'));
     });
   });

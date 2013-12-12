@@ -93,19 +93,26 @@ describe('ClickTale', function () {
     });
 
     it('should send an id', function () {
-      clicktale.identify('id');
-      assert(window.ClickTaleSetUID.calledWith('id'));
+      test(clicktale)
+      .identify('id')
+      .called(window.ClickTaleSetUID)
+      .with('id');
     });
 
     it('should send traits', function () {
-      clicktale.identify(null, { trait: true });
-      assert(window.ClickTaleField.calledWith('trait', true));
+      test(clicktale)
+      .identify(null, { trait: true })
+      .called(window.ClickTaleField)
+      .with('trait', true);
     });
 
     it('should send an id and traits', function () {
-      clicktale.identify('id', { trait: true });
-      assert(window.ClickTaleSetUID.calledWith('id'));
-      assert(window.ClickTaleField.calledWith('trait', true));
+      test(clicktale)
+      .identify('id', { trait: true })
+      .called(window.ClickTaleSetUID)
+      .with('id')
+      .called(window.ClickTaleField)
+      .with('trait', true);
     });
   });
 
@@ -115,8 +122,10 @@ describe('ClickTale', function () {
     });
 
     it('should send an event', function () {
-      clicktale.track('event');
-      assert(window.ClickTaleEvent.calledWith('event'));
+      test(clicktale)
+      .track('event')
+      .called(window.ClickTaleEvent)
+      .with('event');
     });
   });
 

@@ -82,8 +82,9 @@ describe('Gauges', function () {
     });
 
     it('should send a page view', function () {
-      gauges.page();
-      assert(window._gauges.push.calledWith(['track']));
+      test(gauges)
+      .page()
+      .called(window._gauges.push);
     });
   });
 

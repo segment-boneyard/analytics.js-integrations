@@ -97,36 +97,36 @@ describe('Keen IO', function () {
     });
 
     it('should not track anonymous pages by default', function () {
-      keen.page();
+      test(keen).page();
       assert(!window.Keen.addEvent.called);
     });
 
     it('should track anonymous pages when the option is on', function () {
       keen.options.trackAllPages = true;
-      keen.page();
+      test(keen).page();
       assert(window.Keen.addEvent.calledWith('Loaded a Page'));
     });
 
     it('should track named pages by default', function () {
-      keen.page(null, 'Name');
+      test(keen).page(null, 'Name');
       assert(window.Keen.addEvent.calledWith('Viewed Name Page'));
     });
 
     it('should track named pages with categories', function () {
-      keen.page('Category', 'Name');
+      test(keen).page('Category', 'Name');
       assert(window.Keen.addEvent.calledWith('Viewed Category Name Page'));
     });
 
     it('should track categorized pages by default', function () {
-      keen.page('Category', 'Name');
+      test(keen).page('Category', 'Name');
       assert(window.Keen.addEvent.calledWith('Viewed Category Page'));
     });
 
     it('should not track a named or categorized page when the option is off', function () {
       keen.options.trackNamedPages = false;
       keen.options.trackCategorizedPages = false;
-      keen.page(null, 'Name');
-      keen.page('Category', 'Name');
+      test(keen).page(null, 'Name');
+      test(keen).page('Category', 'Name');
       assert(!window.Keen.addEvent.called);
     });
   });
@@ -138,21 +138,21 @@ describe('Keen IO', function () {
     });
 
     it('should pass an id', function () {
-      keen.identify('id');
+      test(keen).identify('id');
       var user = window.Keen.client.globalProperties().user;
-      assert(equal(user, { userId: 'id', traits: {} }));
+      assert(equal(user, { userId: 'id', traits: { id: 'id' } }));
     });
 
     it('should pass a traits', function () {
-      keen.identify(null, { trait: true });
+      test(keen).identify(null, { trait: true });
       var user = window.Keen.client.globalProperties().user;
       assert(equal(user, { traits: { trait: true }}));
     });
 
     it('should pass an id and traits', function () {
-      keen.identify('id', { trait: true });
+      test(keen).identify('id', { trait: true });
       var user = window.Keen.client.globalProperties().user;
-      assert(equal(user, { userId: 'id', traits: { trait: true }}));
+      assert(equal(user, { userId: 'id', traits: { trait: true, id: 'id' }}));
     });
   });
 
@@ -166,12 +166,12 @@ describe('Keen IO', function () {
     });
 
     it('should pass an event', function () {
-      keen.track('event');
+      test(keen).track('event');
       assert(window.Keen.addEvent.calledWith('event'));
     });
 
     it('should pass an event and properties', function () {
-      keen.track('event', { property: true });
+      test(keen).track('event', { property: true });
       assert(window.Keen.addEvent.calledWith('event', { property: true }));
     });
   });
