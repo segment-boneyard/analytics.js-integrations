@@ -29,8 +29,14 @@ describe('GoSquared', function () {
       .name('GoSquared')
       .assumesPageview()
       .readyOnLoad()
-      .global('GoSquared')
-      .option('siteToken', '');
+      .global('_gs')
+      .option('siteToken', '')
+      .option('anonymizeIP', false)
+      .option('cookieDomain', null)
+      .option('useCookies', true)
+      .option('trackHash', false)
+      .option('trackLocal', false)
+      .option('trackParams', true);
   });
 
   describe('#initialize', function () {
@@ -38,20 +44,10 @@ describe('GoSquared', function () {
       gosquared.load = sinon.spy();
     });
 
-    it('should initialize the gosquared globals', function () {
-      assert(!window.GoSquared);
+    it('should initialize the _gs global', function () {
+      assert(!window._gs);
       gosquared.initialize();
-      assert(equal(window.GoSquared, {
-        acct: settings.siteToken,
-        q: [],
-        Visitor: {}
-      }));
-    });
-
-    it('should store the load time', function () {
-      assert(!window._gstc_lt);
-      gosquared.initialize();
-      assert('number' === typeof window._gstc_lt);
+      assert(typeof window._gs === 'function');
     });
 
     it('should call #load', function () {
@@ -61,9 +57,9 @@ describe('GoSquared', function () {
   });
 
   describe('#loaded', function () {
-    it('should test window._gs', function () {
+    it('should test window._gs.v', function () {
       assert(!gosquared.loaded());
-      window._gs = {};
+      window._gs = { v: 'version-here' };
       assert(gosquared.loaded());
     });
   });
@@ -89,24 +85,24 @@ describe('GoSquared', function () {
     beforeEach(function (done) {
       gosquared.initialize();
       gosquared.once('load', function () {
-        window.GoSquared.q.push = sinon.spy();
+        window._gs = sinon.spy();
         done();
       });
     });
 
     it('should send a path and title', function () {
       test(gosquared).page(null, null, { path: '/path', title: 'title' });
-      assert(window.GoSquared.q.push.calledWith(['TrackView', '/path', 'title']));
+      assert(window._gs.calledWith('track', '/path', 'title'));
     });
 
     it('should prefer a name', function () {
       test(gosquared).page(null, 'name', { path: '/path', title: 'title' });
-      assert(window.GoSquared.q.push.calledWith(['TrackView', '/path', 'name']));
+      assert(window._gs.calledWith('track', '/path', 'name'));
     });
 
     it('should prefer a name and category', function () {
       test(gosquared).page('category', 'name', { path: '/path', title: 'title' });
-      assert(window.GoSquared.q.push.calledWith(['TrackView', '/path', 'category name']));
+      assert(window._gs.calledWith('track', '/path', 'category name'));
     });
   });
 
@@ -118,20 +114,20 @@ describe('GoSquared', function () {
 
     it('should set an id', function () {
       test(gosquared).identify('id');
-      assert(window.GoSquared.UserName == 'id');
-      assert(window.GoSquared.VisitorName == 'id');
+      assert(window._gs('get', 'visitorID') == 'id');
+      assert(window._gs('get', 'visitorName') == 'id');
     });
 
     it('should set traits', function () {
       test(gosquared).identify(null, { trait: true });
-      assert(equal(window.GoSquared.Visitor, { trait: true }));
+      assert(equal(window._gs('get', 'visitor'), { trait: true }));
     });
 
     it('should set an id and traits', function () {
       test(gosquared).identify('id', { trait: true });
-      assert(window.GoSquared.UserName == 'id');
-      assert(window.GoSquared.VisitorName == 'id');
-      assert(equal(window.GoSquared.Visitor, { userID: 'id', trait: true, id: 'id' }));
+      assert(window._gs('get', 'visitorID') == 'id');
+      assert(window._gs('get', 'visitorName') == 'id');
+      assert(equal(window._gs('get', 'visitor'), { userID: 'id', trait: true, id: 'id' }));
     });
 
     it('should prefer an email for visitor name', function () {
@@ -139,12 +135,12 @@ describe('GoSquared', function () {
         email: 'email@example.com',
         username: 'username'
       });
-      assert(window.GoSquared.VisitorName == 'email@example.com');
+      assert(window._gs('get', 'visitorName') == 'email@example.com');
     });
 
     it('should also prefer a username for visitor name', function () {
       test(gosquared).identify('id', { username: 'username' });
-      assert(window.GoSquared.VisitorName == 'username');
+      assert(window._gs('get', 'visitorName') == 'username');
     });
   });
 
@@ -152,19 +148,19 @@ describe('GoSquared', function () {
     beforeEach(function (done) {
       gosquared.initialize();
       gosquared.once('load', function () {
-        window.GoSquared.q.push = sinon.spy();
+        window._gs = sinon.spy();
         done();
       });
     });
 
     it('should send an event', function () {
       test(gosquared).track('event');
-      assert(window.GoSquared.q.push.calledWith(['TrackEvent', 'event', {}]));
+      assert(window._gs.calledWith('event', 'event', {}));
     });
 
     it('should send an event and properties', function () {
       test(gosquared).track('event', { property: true });
-      assert(window.GoSquared.q.push.calledWith(['TrackEvent', 'event', { property: true }]));
+      assert(window._gs.calledWith('event', 'event', { property: true }));
     });
   });
 
