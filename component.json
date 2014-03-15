@@ -41,7 +41,8 @@
     "yields/slug": "1.1.0",
     "visionmedia/batch": "0.5.0",
     "visionmedia/debug": "0.7.4",
-    "segmentio/load-pixel": "0.1.1"
+    "segmentio/load-pixel": "0.1.1",
+    "segmentio/replace-document-write": "1.0.0"
   },
   "development": {
     "component/jquery": "*",

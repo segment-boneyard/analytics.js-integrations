@@ -14,7 +14,7 @@ describe('Curebit', function(){
   var curebit;
   var settings = {
     siteId: 'curebit-87ab995d-736b-45ba-ac41-71f4dbb5c74a',
-    server: ''
+    server: 'https://api.segment.io/track'
   };
 
   beforeEach(function(){
@@ -56,7 +56,7 @@ describe('Curebit', function(){
         .changed(window._curebitq[0])
         .to(['init', {
           site_id: settings.siteId,
-          server: ''
+          server: 'https://api.segment.io/track'
         }]);
     })
 
