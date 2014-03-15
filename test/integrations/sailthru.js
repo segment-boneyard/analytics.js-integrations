@@ -29,7 +29,11 @@ describe('SailThru Horizon', function () {
       .assumesPageview()
       .readyOnInitialize()
       .global('Sailthru')
-      .option('domain', null);
+      .option('domain', null)
+      .option('concierge', null)
+      .option('cookieDomain', null)
+      .option('useStoredTags', null)
+      .option('tags', null);
     });
 
   describe('#initialize', function () {
@@ -39,6 +43,20 @@ describe('SailThru Horizon', function () {
 
     it('should add metatags', function () {
       sailthru.initialize();
+      var properties = sailthru.page.properties();
+      if (properties) {
+        var metas = document.getElementsByTagName('meta');
+        for (var name in properties) {
+          var found = false;
+          for (i=0; i<metas.length; i++) {
+            if (metas[i].getAttribute("name") == 'sailthru.'+name && metas[i].getAttribute('content') == properties[name]) {
+              found = true;
+              break;
+            }
+          }
+          assert(found);
+        }
+      }
     });
 
     it('should call #load', function () {
@@ -68,6 +86,32 @@ describe('SailThru Horizon', function () {
         assert(sailthru.loaded());
         return done();
       });
+    });
+  });
+  
+  describe('#page', function () {
+    beforeEah(function () {
+      sinon.stub(sailthru, 'page');
+      sailthru.initialize();
+      sailthru.load.restore();
+    });
+  
+    it('should add metatags', function () {
+      sailthru.initialize();
+      var properties = sailthru.page.properties();
+      if (properties) {
+        var metas = document.getElementsByTagName('meta');
+        for (var name in properties) {
+          var found = false;
+          for (i=0; i<metas.length; i++) {
+            if (metas[i].getAttribute("name") == 'sailthru.'+name && metas[i].getAttribute('content') == properties[name]) {
+              found = true;
+              break;
+            }
+          }
+          assert(found);
+        }
+      }
     });
   });
 });
