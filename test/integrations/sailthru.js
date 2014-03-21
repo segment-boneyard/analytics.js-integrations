@@ -97,7 +97,7 @@ describe('SailThru Horizon', function () {
     });
   
     it('should add metatags', function () {
-      var properties = sailthru.page.properties();
+      var properties = {date: (new Date()).toString()};
       sailthru.initialize({properties: properties});
       if (properties) {
         var metas = document.getElementsByTagName('meta');
