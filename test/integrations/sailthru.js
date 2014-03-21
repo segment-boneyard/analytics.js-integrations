@@ -29,7 +29,7 @@ describe('SailThru Horizon', function () {
       .assumesPageview()
       .readyOnInitialize()
       .global('Sailthru')
-      .option('domain', null)
+      .option('domain')
       .option('concierge', null)
       .option('cookieDomain', null)
       .option('useStoredTags', null)
@@ -42,8 +42,8 @@ describe('SailThru Horizon', function () {
     });
 
     it('should add metatags', function () {
-      sailthru.initialize();
-      var properties = sailthru.page.properties();
+      var properties = {date: (new Date()).toString()};
+      sailthru.initialize({properties: properties});
       if (properties) {
         var metas = document.getElementsByTagName('meta');
         for (var name in properties) {
@@ -68,7 +68,7 @@ describe('SailThru Horizon', function () {
   describe('#loaded', function () {
     it('should test window.Sailthru', function () {
       window.Sailthru = {};
-      assert(!sailthru.loaded());
+      assert(sailthru.loaded());
     });
   });
 
@@ -97,8 +97,8 @@ describe('SailThru Horizon', function () {
     });
   
     it('should add metatags', function () {
-      sailthru.initialize();
       var properties = sailthru.page.properties();
+      sailthru.initialize({properties: properties});
       if (properties) {
         var metas = document.getElementsByTagName('meta');
         for (var name in properties) {
