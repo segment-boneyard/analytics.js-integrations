@@ -42,8 +42,9 @@ describe('SailThru Horizon', function () {
     });
 
     it('should add metatags', function () {
-      var properties = {date: (new Date()).toString()};
+      var properties = function(){ return {date: (new Date()).toString()}; }
       sailthru.initialize({properties: properties});
+      properties = properties();
       if (properties) {
         var metas = document.getElementsByTagName('meta');
         for (var name in properties) {
@@ -97,8 +98,9 @@ describe('SailThru Horizon', function () {
     });
   
     it('should add metatags', function () {
-      var properties = {date: (new Date()).toString()};
+      var properties = function(){ return {date: (new Date()).toString()}; }
       sailthru.initialize({properties: properties});
+      properties = properties();
       if (properties) {
         var metas = document.getElementsByTagName('meta');
         for (var name in properties) {
