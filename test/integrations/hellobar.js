@@ -36,7 +36,7 @@ describe('hellobar.com', function() {
       sinon.spy(hellobar, 'load');
     });
 
-    it('should create the window,_hbq object', function () {
+    it('should create the window._hbq object', function () {
       assert(typeof(window._hbq) === 'undefined');
       hellobar.initialize();
       assert(window._hbq);
