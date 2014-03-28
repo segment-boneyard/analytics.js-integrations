@@ -126,7 +126,8 @@
     "lib/visual-website-optimizer.js",
     "lib/webengage.js",
     "lib/woopra.js",
-    "lib/yandex-metrica.js"
+    "lib/yandex-metrica.js",
+    "lib/hellobar.js"
   ],
   "json": [
     "lib/slugs.json"
