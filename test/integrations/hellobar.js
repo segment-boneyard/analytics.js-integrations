@@ -1,4 +1,4 @@
-describe('hellobar.com', function() {
+describe('Hellobar', function() {
 
   var analytics = require('analytics');
   var test = require('integration-tester');
@@ -23,7 +23,7 @@ describe('hellobar.com', function() {
 
   it('should have the right settings', function () {
     test(hellobar)
-      .name('hellobar.com')
+      .name('Hellobar')
       .assumesPageview()
       .readyOnInitialize()
       .global('_hbq')

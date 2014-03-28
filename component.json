@@ -88,6 +88,7 @@
     "lib/google-tag-manager.js",
     "lib/gosquared.js",
     "lib/heap.js",
+    "lib/hellobar.js",
     "lib/hittail.js",
     "lib/hubspot.js",
     "lib/improvely.js",
@@ -126,8 +127,7 @@
     "lib/visual-website-optimizer.js",
     "lib/webengage.js",
     "lib/woopra.js",
-    "lib/yandex-metrica.js",
-    "lib/hellobar.js"
+    "lib/yandex-metrica.js"
   ],
   "json": [
     "lib/slugs.json"

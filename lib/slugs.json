@@ -27,6 +27,7 @@
   "google-tag-manager",
   "gosquared",
   "heap",
+  "hellobar",
   "hittail",
   "hubspot",
   "improvely",
@@ -65,6 +66,5 @@
   "visual-website-optimizer",
   "webengage",
   "woopra",
-  "yandex-metrica",
-  "hellobar"
+  "yandex-metrica"
 ]
