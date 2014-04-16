@@ -52,6 +52,12 @@ describe('Google Analytics', function () {
         ga.load = sinon.spy();
       });
 
+      it('should require "displayfeatures" if .doubleClick option is `true`', function(){
+        ga.options.doubleClick = true;
+        ga.initialize();
+        assert(equal(window.ga.q[1], ['require', 'displayfeatures']));
+      })
+
       it('should create window.GoogleAnalyticsObject', function () {
         assert(!window.GoogleAnalyticsObject);
         ga.initialize();

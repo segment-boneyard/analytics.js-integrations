@@ -97,4 +97,47 @@ describe('AdRoll', function () {
     });
   });
 
+  describe('#track', function(){
+    beforeEach(function(){
+      window.__adroll.record_user = sinon.spy();
+    })
+
+    it('should send events', function(){
+      test(adroll).track('event', {});
+      assert(window.__adroll.record_user.calledWith({
+        adroll_segments: 'event',
+        adroll_conversion_value_in_dollars: 0,
+        order_id: 0
+      }));
+    })
+
+    it('should track Completed Order', function(){
+      test(adroll).track('Completed Order', { total: 1.99, orderId: 1 });
+      assert(window.__adroll.record_user.calledWith({
+        adroll_segments: 'Completed Order',
+        adroll_conversion_value_in_dollars: 1.99,
+        order_id: 1
+      }));
+    })
+
+    it('should pass .revenue as conversion value', function(){
+      test(adroll).track('purchase', { revenue: 2.99 });
+      assert(window.__adroll.record_user.calledWith({
+        adroll_segments: 'purchase',
+        adroll_conversion_value_in_dollars: 2.99,
+        order_id: 0
+      }));
+    })
+
+    it('should respect .events option', function(){
+      adroll.options.events = { event: 'segment' };
+      test(adroll).track('event', { revenue: 3.99 });
+      assert(window.__adroll.record_user.calledWith({
+        adroll_segments: 'segment',
+        adroll_conversion_value_in_dollars: 3.99,
+        order_id: 0
+      }));
+    })
+  })
+
 });

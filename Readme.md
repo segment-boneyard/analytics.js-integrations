@@ -56,6 +56,7 @@ If you ever need any help, feel free to email [friends@segment.io](mailto:friend
 - [Optimizely](https://www.optimizely.com/)
 - [Perfect Audience](https://www.perfectaudience.com/)
 - [Pingdom](https://www.pingdom.com/)
+- [Piwik](https://www.piwik.org)
 - [Preact](http://www.preact.io/)
 - [Qualaroo](https://qualaroo.com/)
 - [Quantcast](https://www.quantcast.com/)

@@ -26,7 +26,7 @@ describe('Mojn', function(){
     test(mojn)
       .name('Mojn')
       .readyOnInitialize()
-      .global('_agTrack')
+      .global('_mojnTrack')
       .option('customerCode', '');
   });
 
@@ -41,19 +41,19 @@ describe('Mojn', function(){
     });
 
     it('should pass customerCode to tracker script', function() {
-      window._agTrack = { push: sinon.spy() };
+      window._mojnTrack = { push: sinon.spy() };
       mojn.initialize();
-      assert(window._agTrack.push.calledWith({ cid: settings.customerCode }));
+      assert(window._mojnTrack.push.calledWith({ cid: settings.customerCode }));
     });
   });
 
   describe('#loaded', function() {
-    it('tests array-ness of _agTrack', function() {
-      delete window._agTrack;
+    it('tests array-ness of _mojnTrack', function() {
+      delete window._mojnTrack;
       assert(!mojn.loaded());
-      window._agTrack = [];
+      window._mojnTrack = [];
       assert(!mojn.loaded());
-      window._agTrack = {};
+      window._mojnTrack = {};
       assert(mojn.loaded());
     });
   });
@@ -65,7 +65,7 @@ describe('Mojn', function(){
     });
 
     it('should change loaded state', function(done){
-      delete window._agTrack;
+      delete window._mojnTrack;
       test(mojn).loads(done);
     });
   });
@@ -73,7 +73,7 @@ describe('Mojn', function(){
   describe('#track', function(){
     beforeEach(function(){
       sinon.spy(mojn, 'track');
-      window._agTrack = { push: sinon.spy() };
+      window._mojnTrack = { push: sinon.spy() };
     });
 
     afterEach(function(){
@@ -82,17 +82,17 @@ describe('Mojn', function(){
 
     it('should ignore if revenue is not set', function(){
       test(mojn).track('some sale', {});
-      assert(!window._agTrack.push.called);
+      assert(!window._mojnTrack.push.called);
     });
 
     it('should track if revenue is set (no currency)', function(){
       test(mojn).track('some sale', { revenue: 42 });
-      assert(window._agTrack.push.calledWith({ conv: '42' }));
+      assert(window._mojnTrack.push.calledWith({ conv: '42' }));
     });
 
     it('should track if revenue is set (with currency)', function(){
       test(mojn).track('some sale', { revenue: 42, currency: 'DKK' });
-      assert(window._agTrack.push.calledWith({ conv: 'DKK42' }));
+      assert(window._mojnTrack.push.calledWith({ conv: 'DKK42' }));
     });
   });
 

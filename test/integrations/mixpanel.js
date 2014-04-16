@@ -7,6 +7,8 @@ describe('Mixpanel', function () {
   var Mixpanel = require('integrations/lib/mixpanel');
   var sinon = require('sinon');
   var test = require('integration-tester');
+  var equal = require('equals');
+  var iso = require('to-iso-string');
 
   var mixpanel;
   var settings = {
@@ -51,6 +53,12 @@ describe('Mixpanel', function () {
       mixpanel.initialize();
       assert(mixpanel.load.called);
     });
+
+    it('should lowercase increments', function(){
+      mixpanel.options.increments = ['A', 'b', 'c_'];
+      mixpanel.initialize();
+      assert(equal(mixpanel.options.increments, ['a', 'b', 'c_']));
+    })
   });
 
   describe('#loaded', function () {
@@ -236,6 +244,8 @@ describe('Mixpanel', function () {
     beforeEach(function () {
       mixpanel.initialize();
       window.mixpanel.track = sinon.spy();
+      window.mixpanel.people.increment = sinon.spy();
+      window.mixpanel.people.set = sinon.spy();
       window.mixpanel.people.track_charge = sinon.spy();
     });
 
@@ -260,6 +270,21 @@ describe('Mixpanel', function () {
       test(mixpanel).track('event', { date: date });
       assert(window.mixpanel.track.calledWith('event', { date: iso(date) }));
     });
+
+    it('should increment events that are in .increments option', function(){
+      mixpanel.options.increments = [0, 'my event', 1];
+      mixpanel.options.people = true;
+      test(mixpanel).track('my event');
+      assert(window.mixpanel.people.increment.calledWith('my event'));
+    })
+
+    it('should should update people property if the event is in .increments', function(){
+      mixpanel.options.increments = ['event'];
+      mixpanel.options.people = true;
+      test(mixpanel).track('event');
+      assert(window.mixpanel.people.increment.calledWith('event'));
+      assert(window.mixpanel.people.set.calledWith('Last event', new Date));
+    })
   });
 
   describe('#alias', function () {

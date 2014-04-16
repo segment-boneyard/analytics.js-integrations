@@ -88,6 +88,7 @@
   <script src="test/integrations/optimizely.js"></script>
   <script src="test/integrations/perfect-audience.js"></script>
   <script src="test/integrations/pingdom.js"></script>
+  <script src="test/integrations/piwik.js"></script>
   <script src="test/integrations/preact.js"></script>
   <script src="test/integrations/qualaroo.js"></script>
   <script src="test/integrations/quantcast.js"></script>
@@ -112,7 +113,7 @@
       require('debug').disable();
       mochaPhantomJS.run();
     } else {
-      require('debug').enable('*');
+      // require('debug').enable('*');
       mocha.run();
     }
   </script>

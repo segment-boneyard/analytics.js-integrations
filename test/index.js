@@ -1,4 +1,3 @@
-
 describe('integrations', function () {
 
   var assert = require('assert');
