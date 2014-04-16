@@ -84,6 +84,7 @@
     "lib/evergage.js",
     "lib/facebook-ads.js",
     "lib/foxmetrics.js",
+    "lib/frontleaf.js",
     "lib/gauges.js",
     "lib/get-satisfaction.js",
     "lib/google-analytics.js",

@@ -31,6 +31,7 @@ If you ever need any help, feel free to email [friends@segment.io](mailto:friend
 - [Evergage](http://www.evergage.com/)
 - [Facebook Ads](https://www.facebook.com/advertising)
 - [FoxMetrics](http://foxmetrics.com/)
+- [Frontleaf](http://www.frontleaf.com/)
 - [Gauges](http://gaug.es/)
 - [Get Satisfaction](https://getsatisfaction.com)
 - [Google Analytics](http://www.google.com/analytics/)
