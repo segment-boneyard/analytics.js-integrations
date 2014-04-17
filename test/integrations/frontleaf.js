@@ -117,7 +117,6 @@ describe('Frontleaf', function () {
 
     it('should call setUser', function () {
       test(frontleaf).identify('id');
-      console.log(frontleaf._push.args[0]);
       assert(frontleaf._push.calledWith('setUser', {
         id: 'id',
         name: undefined,
