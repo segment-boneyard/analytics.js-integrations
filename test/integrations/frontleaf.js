@@ -117,8 +117,12 @@ describe('Frontleaf', function () {
 
     it('should call setUser', function () {
       test(frontleaf).identify('id');
-      assert(frontleaf._push.calledWith('setUser',
-          sinon.match.has('id', 'id').and(sinon.match.has('data', {}))));
+      console.log(frontleaf._push.args[0]);
+      assert(frontleaf._push.calledWith('setUser', {
+        id: 'id',
+        name: undefined,
+        data: {}
+      }));
 
       // token and stream calls occur prior to spy
       assert(window._fl.push.calledOnce, 'Incorrect call count');
@@ -126,24 +130,38 @@ describe('Frontleaf', function () {
 
     it('should send traits', function () {
       test(frontleaf).identify('id2', { email: 'test+segmentio@frontleaf.com' });
-      assert(frontleaf._push.calledWith('setUser',
-          sinon.match.has('id', 'id2').and(sinon.match.has('data', {
-            email: 'test+segmentio@frontleaf.com'
-          }))));
+      assert(frontleaf._push.calledWith('setUser', {
+        id: 'id2',
+        name: undefined,
+        data: {
+          email: 'test+segmentio@frontleaf.com'
+        }
+      }));
     });
 
     it('should send name', function () {
       test(frontleaf).identify('id3', { firstName: 'Missy', lastName: 'Tester' });
-      assert(frontleaf._push.calledWith('setUser',
-          sinon.match.has('id', 'id3').and(sinon.match.has('name', 'Missy Tester'))));
+      assert(frontleaf._push.calledWith('setUser', {
+        id: 'id3',
+        name: 'Missy Tester',
+        data: {}
+      }));
 
       test(frontleaf).identify('id4', { name: 'Missy Tester' });
-      assert(frontleaf._push.calledWith('setUser',
-          sinon.match.has('id', 'id4').and(sinon.match.has('name', 'Missy Tester'))));
+      assert(frontleaf._push.calledWith('setUser', {
+        id: 'id4',
+        name: 'Missy Tester',
+        data: {}
+      }));
 
       test(frontleaf).identify('id4', { username: 'Missy_Tester' });
-      assert(frontleaf._push.calledWith('setUser',
-          sinon.match.has('id', 'id4').and(sinon.match.has('name', 'Missy_Tester'))));
+      assert(frontleaf._push.calledWith('setUser', {
+        id: 'id4',
+        name: 'Missy_Tester',
+        data: {
+          username: 'Missy_Tester'
+        }
+      }));
     });
   });
 
@@ -162,8 +180,11 @@ describe('Frontleaf', function () {
 
     it('should call setAccount', function () {
       test(frontleaf).group('id');
-      assert(frontleaf._push.calledWith('setAccount',
-          sinon.match.has('id', 'id').and(sinon.match.has('data', {}))));
+      assert(frontleaf._push.calledWith('setAccount', {
+        id: 'id',
+        name: undefined,
+        data: {}
+      }));
 
       // token and stream calls occur prior to spy
       assert(window._fl.push.calledOnce, 'Incorrect call count');
@@ -171,16 +192,22 @@ describe('Frontleaf', function () {
 
     it('should send traits', function () {
       test(frontleaf).group('id2', { industry: 'transportation' });
-      assert(frontleaf._push.calledWith('setAccount',
-          sinon.match.has('id', 'id2').and(sinon.match.has('data', {
-            industry: 'transportation'
-          }))));
+      assert(frontleaf._push.calledWith('setAccount', {
+        id: 'id2',
+        name: undefined,
+        data: {
+          industry: 'transportation'
+        }
+      }));
     });
 
     it('should send name', function () {
       test(frontleaf).group('id4', { name: 'Zipcar' });
-      assert(frontleaf._push.calledWith('setAccount',
-          sinon.match.has('id', 'id4').and(sinon.match.has('name', 'Zipcar'))));
+      assert(frontleaf._push.calledWith('setAccount', {
+        id: 'id4',
+        name: 'Zipcar',
+        data: {}
+      }));
     });
   });
 
