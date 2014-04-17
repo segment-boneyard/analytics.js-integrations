@@ -103,14 +103,11 @@ describe('Frontleaf', function () {
   });
 
   describe('#identify', function () {
-    beforeEach(function (done) {
+    beforeEach(function () {
       frontleaf.initialize();
-      frontleaf.load(function (err) {
-        if (err) return done(err);
-        sinon.spy(frontleaf, '_push');
-        window._fl.push = sinon.spy();
-        done();
-      });
+
+      sinon.spy(frontleaf, '_push');
+      window._fl.push = sinon.spy();
     });
 
     it('should not send without an id', function () {
@@ -151,14 +148,11 @@ describe('Frontleaf', function () {
   });
 
   describe('#group', function () {
-    beforeEach(function (done) {
+    beforeEach(function () {
       frontleaf.initialize();
-      frontleaf.load(function (err) {
-        if (err) return done(err);
-        sinon.spy(frontleaf, '_push');
-        window._fl.push = sinon.spy();
-        done();
-      });
+
+      sinon.spy(frontleaf, '_push');
+      window._fl.push = sinon.spy();
     });
 
     it('should not send without an id', function () {
@@ -191,14 +185,11 @@ describe('Frontleaf', function () {
   });
 
   describe('#track', function () {
-    beforeEach(function (done) {
+    beforeEach(function () {
       frontleaf.initialize();
-      frontleaf.load(function (err) {
-        if (err) return done(err);
-        sinon.spy(frontleaf, '_push');
-        window._fl.push = sinon.spy();
-        done();
-      });
+
+      sinon.spy(frontleaf, '_push');
+      window._fl.push = sinon.spy();
     });
 
     it('should not send without an event (text)', function () {
