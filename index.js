@@ -1,6 +1,6 @@
 
-var integrations = require('./lib/slugs');
 var each = require('each');
+var integrations = require('./integrations.json');
 
 /**
  * Expose the integrations, using their own `name` from their `prototype`.
