@@ -309,6 +309,19 @@ describe('Google Analytics', function () {
           nonInteraction: true
         }));
       });
+
+      it('should send social options', function () {
+        test(ga).track('social', {}, { 'Google Analytics': {
+            socialNetwork: 'facebook',
+            socialAction: 'like',
+            socialTarget: '/path'
+        }});
+        assert(window.ga.calledWith('send', 'social', {
+          socialNetwork: 'facebook',
+          socialAction: 'like',
+          socialTarget: '/path'
+        }));
+      });
     });
 
     describe('ecommerce', function(){
