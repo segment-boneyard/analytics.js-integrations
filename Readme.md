@@ -65,6 +65,7 @@ If you ever need any help, feel free to email [friends@segment.io](mailto:friend
 - [SnapEngage](http://snapengage.com/)
 - [Spinnakr](http://spinnakr.com/)
 - [Tapstream](https://tapstream.com/)
+- [Trackduck.com](http://trackduck.com/)
 - [trak.io](http://trak.io/)
 - [Twitter Ads](http://ads.twitter.com/)
 - [USERcycle](http://usercycle.com/)
