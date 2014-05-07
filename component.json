@@ -5,7 +5,7 @@
   "version": "0.6.0",
   "license": "MIT",
   "main": "./index.js",
-  "integrations": "./integrations.json",
+  "integrations": "./integrations.js",
   "dependencies": {
     "avetisk/defaults": "0.0.1",
     "component/clone": "0.1.1",
@@ -60,6 +60,7 @@
   },
   "scripts": [
     "index.js",
+    "integrations.js",
     "lib/adroll/index.js",
     "lib/adwords/index.js",
     "lib/alexa/index.js",
@@ -133,9 +134,6 @@
     "lib/webengage/index.js",
     "lib/woopra/index.js",
     "lib/yandex-metrica/index.js"
-  ],
-  "json": [
-    "integrations.json"
   ],
   "remotes": [
     "https://raw.githubusercontent.com/"

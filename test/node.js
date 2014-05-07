@@ -11,7 +11,6 @@ var resolve = require('path').resolve;
 var folder = resolve(__dirname, '../lib');
 var folders = readdir(folder);
 var component = require('../component.json');
-var integrations = require('../integrations.json');
 
 /**
  * Make sure each folder is added to component.json and integrations.json.
@@ -23,11 +22,6 @@ folders.forEach(function(folder){
       var file = format('lib/%s/index.js', folder);
       var msg = format('Expected "%s" to be in component.json');
       assert(~component.scripts.indexOf(file), msg);
-    });
-
-    it('should be in integrations.json', function(){
-      var msg = format('Expected "%s" to be in integrations.json', folder);
-      assert(~integrations.indexOf(folder), msg);
     });
   });
 });

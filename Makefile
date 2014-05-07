@@ -8,11 +8,14 @@ PHANTOM= $(BIN)/mocha-phantomjs \
 	--setting local-to-remote-url-access=true \
 	--setting web-security=false
 
-build: node_modules components $(SRC)
+build: node_modules components $(SRC) integrations.js
 	@$(C) build --dev
 
 components: component.json
 	@$(C) install --dev
+
+integrations.js:
+	@node bin/integrations
 
 kill:
 	-@test -e test/pid.txt \
@@ -42,6 +45,6 @@ test-style: node_modules
 	@$(BIN)/jscs lib/**/index.js --config=test/style.json
 
 clean:
-	rm -rf components build
+	rm -rf components build integrations.js
 
 .PHONY: clean kill server test test-node test-browser test-coverage
