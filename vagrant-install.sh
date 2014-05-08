@@ -4,7 +4,7 @@
 sudo su
 # Update and begin installing some utility tools
 apt-get -y update
-apt-get install -y python-software-properties git curl wget build-essential
+apt-get install -y python-software-properties git curl wget build-essential fontconfig
 
 # Add nodejs repo
 add-apt-repository -y ppa:chris-lea/node.js
