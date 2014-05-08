@@ -30,6 +30,11 @@ server: build kill
 test: build server test-node
 	@$(PHANTOM) $(TEST)
 
+test-node-vagrant:
+	vagrant up
+	vagrant ssh -c "cd /vagrant && make test"
+	vagrant halt
+
 test-node: node_modules
 	@node_modules/.bin/mocha -R spec test/node.js
 
