@@ -40,7 +40,7 @@ test-node-vagrant:
 
 test-browser-vagrant:
 	vagrant up
-	vagrant ssh -c "cd /vagrant && make build && echo \"Running server on 10.0.33.34:4202\" && make server-sync"
+	vagrant ssh -c "cd /vagrant && make build && printf \"\e[1;34mRunning server on 10.0.33.34:4202\n\e[0m\" && make server-sync"
 	vagrant halt
 
 test-node: node_modules
