@@ -27,12 +27,20 @@ server: build kill
 	@tests=$(tests) node test/server &
 	@sleep 1
 
+server-sync: build kill
+	@tests=$(tests) node test/server
+
 test: build server test-node
 	@$(PHANTOM) $(TEST)
 
 test-node-vagrant:
 	vagrant up
 	vagrant ssh -c "cd /vagrant && make test"
+	vagrant halt
+
+test-browser-vagrant:
+	vagrant up
+	vagrant ssh -c "cd /vagrant && make build && echo \"Running server on 10.0.33.34:4202\" && make server-sync"
 	vagrant halt
 
 test-node: node_modules
