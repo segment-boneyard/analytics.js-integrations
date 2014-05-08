@@ -27,8 +27,21 @@ server: build kill
 	@tests=$(tests) node test/server &
 	@sleep 1
 
+server-sync: build kill
+	@tests=$(tests) node test/server
+
 test: build server test-node
 	@$(PHANTOM) $(TEST)
+
+test-node-vagrant:
+	vagrant up
+	vagrant ssh -c "cd /vagrant && make test"
+	vagrant halt
+
+test-browser-vagrant:
+	vagrant up
+	vagrant ssh -c "cd /vagrant && make build && printf \"\e[1;34mRunning server on 10.0.33.34:4202\n\e[0m\" && make server-sync"
+	vagrant halt
 
 test-node: node_modules
 	@node_modules/.bin/mocha -R spec test/node.js
