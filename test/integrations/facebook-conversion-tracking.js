@@ -1,7 +1,7 @@
 
-describe('Facebook Ads', function(){
+describe('Facebook Conversion Tracking', function(){
 
-  var Facebook = require('integrations/lib/facebook-ads');
+  var Facebook = require('integrations/lib/facebook-conversion-tracking');
   var test = require('integration-tester');
   var analytics = require('analytics');
   var assert = require('assert');
@@ -24,7 +24,7 @@ describe('Facebook Ads', function(){
 
   it('should have the correct settings', function(){
     test(facebook)
-      .name('Facebook Ads')
+      .name('Facebook Conversion Tracking')
       .readyOnInitialize()
       .option('currency', 'USD')
       .option('events', {});
