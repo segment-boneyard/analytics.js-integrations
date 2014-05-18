@@ -178,20 +178,27 @@ describe('KISSmetrics', function () {
 
     it('should track viewed product', function(){
       test(kissmetrics)
-        .track('viewed product', { sku: 1, name: 'item', price: 9 })
+        .track('viewed product', { sku: 1, name: 'item', category: 'category', price: 9 })
         .called(window._kmq.push)
-        .with(['record', 'Product Viewed', { SKU: 1, Name: 'item', Price: 9, Quantity: 1 }]);
+        .with(['record', 'viewed product', {
+          'viewed product - SKU': 1,
+          'viewed product - Name': 'item',
+          'viewed product - Category': 'category',
+          'viewed product - Price': 9,
+          'viewed product - Quantity': 1
+        }]);
     })
 
     it('should track added product', function(){
       test(kissmetrics)
-        .track('added product', { sku: 1, name: 'item', price: 9, quantity: 2 })
+        .track('added product', { sku: 1, name: 'item', category: 'category', price: 9, quantity: 2 })
         .called(window._kmq.push)
-        .with(['record', 'Product Added', {
-          SKU: 1,
-          Name: 'item',
-          Price: 9,
-          Quantity: 2
+        .with(['record', 'added product', {
+          'added product - SKU': 1,
+          'added product - Name': 'item',
+          'added product - Category': 'category',
+          'added product - Price': 9,
+          'added product - Quantity': 2
         }])
     })
 
@@ -199,7 +206,7 @@ describe('KISSmetrics', function () {
       test(kissmetrics)
         .track('completed order', {
           orderId: '12074d48',
-          total: 150,
+          tax: 16,
           products: [{
             sku: '40bcda73',
             name: 'my-product',
@@ -213,9 +220,10 @@ describe('KISSmetrics', function () {
           }]
         });
 
-      assert(window._kmq.push.args[0], ['record', 'Purchased', {
-        'Order ID': '12074d48',
-        'Order Total': 150
+      assert(window._kmq.push.args[0], ['record', 'completed order', {
+        'completed order - ID': '12074d48',
+        'completed order - Subtotal': 150,
+        'completed order - Total': 166
       }]);
     })
 
@@ -223,15 +231,17 @@ describe('KISSmetrics', function () {
       test(kissmetrics)
         .track('completed order', {
           orderId: '12074d48',
-          total: 150,
+          tax: 16,
           products: [{
             sku: '40bcda73',
             name: 'my-product',
+            category: 'my-category',
             price: 75,
             quantity: 1
           }, {
             sku: '64346fc6',
             name: 'other-product',
+            category: 'my-other-category',
             price: 75,
             quantity: 1
           }]
@@ -243,21 +253,21 @@ describe('KISSmetrics', function () {
       fn();
 
       assert(equals(window.KM.set.args[0][0], {
-        'Order ID': '12074d48',
-        SKU: '40bcda73',
-        Name: 'my-product',
-        Price: 75,
-        Quantity: 1,
+        'completed order - SKU': '40bcda73',
+        'completed order - Name': 'my-product',
+        'completed order - Category': 'my-category',
+        'completed order - Price': 75,
+        'completed order - Quantity': 1,
         _t: 0,
         _d: 1
       }));
 
       assert(equals(window.KM.set.args[1][0], {
-        'Order ID': '12074d48',
-        SKU: '64346fc6',
-        Name: 'other-product',
-        Price: 75,
-        Quantity: 1,
+        'completed order - SKU': '64346fc6',
+        'completed order - Name': 'other-product',
+        'completed order - Category': 'my-other-category',
+        'completed order - Price': 75,
+        'completed order - Quantity': 1,
         _t: 1,
         _d: 1
       }));
