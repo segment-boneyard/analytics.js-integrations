@@ -22,7 +22,7 @@ describe('Google Analytics', function () {
       .option('doubleClick', false)
       .option('enhancedLinkAttribution', false)
       .option('ignoredReferrers', null)
-      .option('siteSpeedSampleRate', null)
+      .option('siteSpeedSampleRate', 1)
       .option('trackingId', '')
       .option('trackNamedPages', true);
   });
