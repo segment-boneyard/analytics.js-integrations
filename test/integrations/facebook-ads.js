@@ -31,8 +31,12 @@ describe('Facebook Ads', function(){
   })
 
   describe('#track', function(){
-    before(function(){
+    beforeEach(function(){
       sinon.stub(window._fbq, 'push');
+    });
+
+    afterEach(function(){
+      window._fbq = [];
     });
 
     it('should not send if event is not define', function(){
