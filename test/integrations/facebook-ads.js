@@ -41,7 +41,6 @@ describe('Facebook Ads', function(){
     })
 
     it('should send event if found', function(){
-      console.log(_fbq.push[0])
       test(facebook)
         .track('signup', {})
         .called(_fbq.push)
