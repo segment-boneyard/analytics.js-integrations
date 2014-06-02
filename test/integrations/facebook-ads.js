@@ -44,14 +44,14 @@ describe('Facebook Ads', function(){
       test(facebook)
         .track('signup', {})
         .called(_fbq.push)
-        .with([ 'track', 0, { currency: 'USD', value: 0 } ]);
+        .with([ 'track', 0, { currency: 'USD', value: '0.00' } ]);
     })
 
     it('should send revenue', function(){
       test(facebook)
         .track('login', { revenue: '$50' })
         .called(_fbq.push)
-        .with([ 'track', 1, { value: 50, currency: 'USD' } ]);
+        .with([ 'track', 1, { value: '50.00', currency: 'USD' } ]);
     })
   })
 
