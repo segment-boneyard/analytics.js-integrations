@@ -87,7 +87,7 @@
     "lib/drip.js",
     "lib/errorception.js",
     "lib/evergage.js",
-    "lib/facebook-ads.js",
+    "lib/facebook-conversion-tracking.js",
     "lib/foxmetrics.js",
     "lib/frontleaf.js",
     "lib/gauges.js",
