@@ -48,24 +48,24 @@ describe('Facebook Ads', function(){
       test(facebook)
         .track('signup', {})
         .called(Facebook.load)
-        .with({ id: 0, currency: 'USD', value: 0 });
+        .with({ ev: 0, 'cd[currency]': 'USD', 'cd[value]': 0 });
     })
 
     it('should send revenue', function(){
       test(facebook)
         .track('login', { revenue: '$50' })
         .called(Facebook.load)
-        .with({ id: 1, value: 50, currency: 'USD' });
+        .with({ ev: 1, 'cd[value]': 50, 'cd[currency]': 'USD' });
     })
 
     it('should send correctly', function(){
       test(facebook).track('play', { revenue: 90 });
       var img = Facebook.load.returnValues[0];
       assert(img);
-      assert(img.src == 'http://www.facebook.com/offsite_event.php'
-        + '?currency=USD'
-        + '&value=90'
-        + '&id=2');
+      assert.equal(img.src, encodeURI('http://www.facebook.com/tr/'
+        + '?cd[currency]=USD'
+        + '&cd[value]=90'
+        + '&ev=2'));
     })
   })
 
