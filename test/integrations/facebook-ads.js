@@ -32,40 +32,27 @@ describe('Facebook Ads', function(){
 
   describe('#track', function(){
     before(function(){
-      sinon.spy(Facebook, 'load');
-    })
-
-    afterEach(function(){
-      Facebook.load.reset();
-    })
+      sinon.stub(window._fbq, 'push');
+    });
 
     it('should not send if event is not define', function(){
       test(facebook).track('toString', {});
-      assert(!Facebook.load.called);
+      assert(!_fbq.push.called);
     })
 
     it('should send event if found', function(){
+      console.log(_fbq.push[0])
       test(facebook)
         .track('signup', {})
-        .called(Facebook.load)
-        .with({ ev: 0, 'cd[currency]': 'USD', 'cd[value]': 0 });
+        .called(_fbq.push)
+        .with([ 'track', 0, { currency: 'USD', value: 0 } ]);
     })
 
     it('should send revenue', function(){
       test(facebook)
         .track('login', { revenue: '$50' })
-        .called(Facebook.load)
-        .with({ ev: 1, 'cd[value]': 50, 'cd[currency]': 'USD' });
-    })
-
-    it('should send correctly', function(){
-      test(facebook).track('play', { revenue: 90 });
-      var img = Facebook.load.returnValues[0];
-      assert(img);
-      assert.equal(img.src, encodeURI('http://www.facebook.com/tr/'
-        + '?cd[currency]=USD'
-        + '&cd[value]=90'
-        + '&ev=2'));
+        .called(_fbq.push)
+        .with([ 'track', 1, { value: 50, currency: 'USD' } ]);
     })
   })
 
