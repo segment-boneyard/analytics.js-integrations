@@ -25,6 +25,8 @@ describe('AdWords', function(){
     test(adwords)
       .name('AdWords')
       .readyOnLoad()
+      .option('conversionId', '')
+      .option('remarketing', false)
       .option('events', {});
   })
 
@@ -67,6 +69,29 @@ describe('AdWords', function(){
         assert(write == document.write);
         done();
       });
+    })
+  })
+
+  describe('#page', function(){
+    beforeEach(function(done){
+      adwords.on('ready', done);
+      sinon.spy(adwords, 'remarketing');
+      adwords.initialize();
+    })
+
+    afterEach(function(){
+      adwords.options.remarketing = false;
+    });
+
+    it('should not load remarketing if option is not on', function(){
+      test(adwords).page();
+      assert(!adwords.remarketing.called);
+    })
+
+    it('should load remarketing if option is on', function(){
+      adwords.options.remarketing = true;
+      test(adwords).page();
+      assert(adwords.remarketing.calledOnce);
     })
   })
 
