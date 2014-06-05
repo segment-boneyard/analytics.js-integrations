@@ -35,9 +35,7 @@ describe('Appcues', function() {
       .readyOnLoad()
       .global('Appcues')
       .global('AppcuesIdentity')
-      .option('appcuesId', '')
-      .option('userId', '')
-      .option('userEmail', '');
+      .option('appcuesId', '');
   });
 
 
