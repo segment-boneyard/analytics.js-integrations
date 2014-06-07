@@ -1,46 +1,130 @@
 
-SRC= $(wildcard index.js lib/*.js)
+#
+# args
+#
+
+COMPONENT = $(BINS)/component
+TEST = http://localhost:4202
+BINS = node_modules/.bin
+SRC = $(wildcard index.js lib/*.js)
+PHANTOM = $(BINS)/mocha-phantomjs $(IS_REMOTE) $(IS_SECURE)
+IS_REMOTE = --setting local-to-remote-url-access=true
+IS_SECURE = --setting web-security=false
+PID = test/pid.txt
 tests ?= *
-BINS= node_modules/.bin
-C= $(BINS)/component
-TEST= http://localhost:4202
-PHANTOM= $(BINS)/mocha-phantomjs \
-	--setting local-to-remote-url-access=true \
-	--setting web-security=false
 
+#
+# build
+#
 
-build: node_modules components $(SRC)
-	@$(C) build --dev
+build: build-node build-browser $(SRC)
 
-components: component.json
-	@$(C) install --dev
+#
+# build node
+#
 
-kill:
-	-@test -e test/pid.txt \
-		&& kill `cat test/pid.txt` \
-		&& rm -f test/pid.txt
+build-node: install-node
 
-node_modules: package.json
+#
+# build browser
+#
+
+build-browser:
+	@$(COMPONENT) build --dev
+
+#
+# clean
+#
+
+clean: clean-node clean-browser
+
+#
+# clean node
+#
+
+clean-node:
+	@-rm -rf node_modules
+	@npm cache clean
+
+#
+# clean browser
+#
+
+clean-browser:
+	@-rm -rf components build
+
+#
+# install
+#
+
+install: install-node install-browser
+
+#
+# install node
+#
+
+install-node: package.json
 	@npm install
 
-server: build kill
+#
+# install browser
+#
+
+install-browser: component.json
+	@$(COMPONENT) install --dev
+
+#
+# kill
+#
+
+kill:
+	@-test -e $(PID) \
+		&& kill `cat $(PID)` \
+		&& rm -f $(PID) \
+		||:
+
+#
+# test
+#
+
+test: build test-server test-node
+	@$(PHANTOM) $(TEST)
+
+#
+# test node
+#
+
+test-node: build-node
+	@node_modules/.bin/mocha -R spec test/node.js
+
+#
+# test browser
+#
+
+test-browser: build test-server
+	@open $(TEST)
+
+#
+# test coverage
+#
+
+test-coverage: build test-server
+	@open $(TEST)/coverage
+
+#
+# test server
+#
+
+test-server: build kill
 	@tests=$(tests) node test/server &
 	@sleep 1
 
-test: build server test-node
-	@$(PHANTOM) $(TEST)
+#
+# meta targets
+#
 
-test-node: node_modules
-	@node_modules/.bin/mocha -R spec test/node.js
-
-test-browser: build server
-	@open $(TEST)
-
-test-coverage: build server
-	@open $(TEST)/coverage
-
-clean:
-	rm -rf components build
-
-.PHONY: clean server test test-browser
-.PHONY: test-sauce test-coverage
+.PHONY: clean
+.PHONY: kill
+.PHONY: test
+.PHONY: test-browser
+.PHONY: test-server
