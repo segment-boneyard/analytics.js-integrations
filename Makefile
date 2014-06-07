@@ -10,6 +10,7 @@ SRC = $(wildcard index.js lib/*.js)
 PHANTOM = $(BINS)/mocha-phantomjs $(IS_REMOTE) $(IS_SECURE)
 IS_REMOTE = --setting local-to-remote-url-access=true
 IS_SECURE = --setting web-security=false
+PID = test/pid.txt
 tests ?= *
 
 #
@@ -52,9 +53,10 @@ install-browser: component.json
 #
 
 kill:
-	@-test -e test/pid.txt \
-		&& kill `cat test/pid.txt` \
-		&& rm -f test/pid.txt
+	@-test -e $(PID) \
+		&& kill `cat $(PID)` \
+		&& rm -f $(PID) \
+		||:
 
 #
 # test
