@@ -79,4 +79,12 @@ test-server: build kill
 	@tests=$(tests) node test/server &
 	@sleep 1
 
-.PHONY: clean test-server test test-browser
+#
+# meta targets
+#
+
+.PHONY: clean
+.PHONY: kill
+.PHONY: test
+.PHONY: test-browser
+.PHONY: test-server
