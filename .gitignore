@@ -4,3 +4,4 @@ node_modules
 components
 build
 test/pid.txt
+*.log

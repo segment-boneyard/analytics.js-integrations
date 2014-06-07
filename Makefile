@@ -1,46 +1,79 @@
 
-SRC= $(wildcard index.js lib/*.js)
+#
+# args
+#
+
+COMPONENT = $(BINS)/component
+TEST = http://localhost:4202
+BINS = node_modules/.bin
+SRC = $(wildcard index.js lib/*.js)
+PHANTOM = $(BINS)/mocha-phantomjs $(IS_REMOTE) $(IS_SECURE)
+IS_REMOTE = --setting local-to-remote-url-access=true
+IS_SECURE = --setting web-security=false
 tests ?= *
-BINS= node_modules/.bin
-C= $(BINS)/component
-TEST= http://localhost:4202
-PHANTOM= $(BINS)/mocha-phantomjs \
-	--setting local-to-remote-url-access=true \
-	--setting web-security=false
 
+#
+# build
+#
 
-build: node_modules components $(SRC)
-	@$(C) build --dev
+build: build-node build-browser $(SRC)
 
-components: component.json
-	@$(C) install --dev
+build-node: install-node
+
+build-browser:
+	@$(COMPONENT) build --dev
+
+#
+# clean
+#
+
+clean: clean-node clean-browser
+
+clean-node:
+	@-rm -rf node_modules
+
+clean-browser:
+	@-rm -rf components build
+
+#
+# install
+#
+
+install: install-node install-browser
+
+install-node: package.json
+	@npm install
+
+install-browser: component.json
+	@$(COMPONENT) install --dev
+
+#
+# kill
+#
 
 kill:
-	-@test -e test/pid.txt \
+	@-test -e test/pid.txt \
 		&& kill `cat test/pid.txt` \
 		&& rm -f test/pid.txt
 
-node_modules: package.json
-	@npm install
+#
+# test
+#
 
-server: build kill
+test: build test-server test-node
+	@$(PHANTOM) $(TEST)
+
+test-node: build-node
+	@node_modules/.bin/mocha -R spec test/node.js
+
+test-browser: build test-server
+	@open $(TEST)
+
+test-coverage: build test-server
+	@open $(TEST)/coverage
+
+test-server: build kill
 	@tests=$(tests) node test/server &
 	@sleep 1
 
-test: build server test-node
-	@$(PHANTOM) $(TEST)
-
-test-node: node_modules
-	@node_modules/.bin/mocha -R spec test/node.js
-
-test-browser: build server
-	@open $(TEST)
-
-test-coverage: build server
-	@open $(TEST)/coverage
-
-clean:
-	rm -rf components build
-
-.PHONY: clean server test test-browser
-.PHONY: test-sauce test-coverage
+.PHONY: clean test-server test test-browser
