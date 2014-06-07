@@ -32,6 +32,7 @@ clean: clean-node clean-browser
 
 clean-node:
 	@-rm -rf node_modules
+	@npm cache clean
 
 clean-browser:
 	@-rm -rf components build
