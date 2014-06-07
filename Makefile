@@ -19,7 +19,15 @@ tests ?= *
 
 build: build-node build-browser $(SRC)
 
+#
+# build node
+#
+
 build-node: install-node
+
+#
+# build browser
+#
 
 build-browser:
 	@$(COMPONENT) build --dev
@@ -30,9 +38,17 @@ build-browser:
 
 clean: clean-node clean-browser
 
+#
+# clean node
+#
+
 clean-node:
 	@-rm -rf node_modules
 	@npm cache clean
+
+#
+# clean browser
+#
 
 clean-browser:
 	@-rm -rf components build
@@ -43,8 +59,16 @@ clean-browser:
 
 install: install-node install-browser
 
+#
+# install node
+#
+
 install-node: package.json
 	@npm install
+
+#
+# install browser
+#
 
 install-browser: component.json
 	@$(COMPONENT) install --dev
@@ -66,14 +90,30 @@ kill:
 test: build test-server test-node
 	@$(PHANTOM) $(TEST)
 
+#
+# test node
+#
+
 test-node: build-node
 	@node_modules/.bin/mocha -R spec test/node.js
+
+#
+# test browser
+#
 
 test-browser: build test-server
 	@open $(TEST)
 
+#
+# test coverage
+#
+
 test-coverage: build test-server
 	@open $(TEST)/coverage
+
+#
+# test server
+#
 
 test-server: build kill
 	@tests=$(tests) node test/server &
