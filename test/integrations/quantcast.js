@@ -32,8 +32,9 @@ describe('Quantcast', function () {
       .global('__qc')
       .option('pCode', null)
       .option('advertise', false)
-      .option('includeDefaultLabels', true)
-      .option('labels', '');
+      .option('pageLabels', true)
+      .option('eventLabels', true)
+      .option('globalLabels', []);
   });
 
   describe('#initialize', function () {
@@ -67,7 +68,7 @@ describe('Quantcast', function () {
     });
 
     it('should incude global labels with page labels', function() {
-      quantcast.options.labels = 'GlobalLabel';
+      quantcast.options.globalLabels = ['GlobalLabel'];
       quantcast.page = sinon.spy();
       quantcast.initialize(test.types.page('category', 'name'));
       var pushed = window._qevents[0];
@@ -76,14 +77,35 @@ describe('Quantcast', function () {
       assert('GlobalLabel,page.category.name' == pushed.labels);     
     });
 
-    it('should push "refresh" without labels with options.includeDefaultLabels === false', function(){
+    it('should incude multiple global labels with page labels', function() {
+      quantcast.options.globalLabels = ['GlobalLabel1', 'GlobalLabel2'];
       quantcast.page = sinon.spy();
-      quantcast.options.includeDefaultLabels = false;
+      quantcast.initialize(test.types.page('category', 'name'));
+      var pushed = window._qevents[0];
+      assert(settings.pCode == pushed.qacct);
+      assert(null == pushed.event);
+      assert('GlobalLabel1,GlobalLabel2,page.category.name' == pushed.labels);     
+    });
+
+    it('should push "refresh" without labels with options.pageLabels === false', function(){
+      quantcast.page = sinon.spy();
+      quantcast.options.pageLabels = false;
       quantcast.initialize(test.types.page());
       var pushed = window._qevents[0];
       assert(settings.pCode == pushed.qacct);
       assert(null == pushed.event);
       assert('' == pushed.labels);
+    });
+
+    it('should push "refresh" with global labels with options.pageLabels === false', function(){
+      quantcast.page = sinon.spy();
+      quantcast.options.globalLabels = ['GlobalLabel1', 'GlobalLabel2'];
+      quantcast.options.pageLabels = false;
+      quantcast.initialize(test.types.page('category','name'));
+      var pushed = window._qevents[0];
+      assert(settings.pCode == pushed.qacct);
+      assert(null == pushed.event);
+      assert('GlobalLabel1,GlobalLabel2' == pushed.labels);
     });
   });
 
@@ -154,22 +176,30 @@ describe('Quantcast', function () {
     });
 
     it('should push options.label as labels with no page name', function () {
-      quantcast.options.labels = 'GlobalLabels';
+      quantcast.options.globalLabels = ['GlobalLabels'];
       test(quantcast).page();
       var item = window._qevents[1];
       assert(item.labels === ('GlobalLabels'));
     });
 
     it('should push options.label and page category and name as labels', function () {
-      quantcast.options.labels = 'GlobalLabels';
+      quantcast.options.globalLabels = ['GlobalLabels'];
       test(quantcast).page('Category', 'Page');
       var item = window._qevents[1];
       assert(item.labels === ('GlobalLabels,page.Category.Page'));
     });
 
-    it('should push options.label and not page category and name as labels when includeDefaultLabels === false', function () {
-      quantcast.options.labels = 'GlobalLabels';
-      quantcast.options.includeDefaultLabels = false;
+    it('should push options.label and page category and name as labels when eventLabels === false', function () {
+      quantcast.options.globalLabels = ['GlobalLabels'];
+      quantcast.options.eventLabels = false;
+      test(quantcast).page('Category', 'Page');
+      var item = window._qevents[1];
+      assert(item.labels === ('GlobalLabels,page.Category.Page'));
+    });
+
+    it('should push options.label and not page category and name as labels when pageLabels === false', function () {
+      quantcast.options.globalLabels = ['GlobalLabels'];
+      quantcast.options.pageLabels = false;
       test(quantcast).page('Category', 'Page');
       var item = window._qevents[1];
       assert(item.labels === ('GlobalLabels'));
@@ -213,10 +243,18 @@ describe('Quantcast', function () {
 
       it('should send options.labels plus category and name', function(){
         quantcast.options.advertise = true;
-        quantcast.options.labels = 'GlobalLabel';
+        quantcast.options.globalLabels = ['GlobalLabel'];
         test(quantcast).page('Category Name', 'Page Name');
         var item = window._qevents[1];
         assert(item.labels == 'GlobalLabel,_fp.event.Category Name Page Name');
+      });
+
+      it('should not send labels when pageLabels === false', function(){
+        quantcast.options.advertise = true;
+        quantcast.options.pageLabels = false;
+        test(quantcast).page('Category Name', 'Page Name');
+        var item = window._qevents[1];
+        assert(item.labels == '');
       });
     });
   });
@@ -249,22 +287,29 @@ describe('Quantcast', function () {
       assert(item.labels === 'event.event');
     });
 
-    it('should not push a label when options.includeDefaultLabels === false', function () {
-      quantcast.options.includeDefaultLabels = false;
+    it('should not push a label when options.eventLabels === false', function () {
+      quantcast.options.eventLabels = false;
       test(quantcast).track('event');
       var item = window._qevents[1];
       assert(item.labels === '');
     });
 
+    it('should push a label when options.pageLabels === false', function () {
+      quantcast.options.pageLabels = false;
+      test(quantcast).track('event');
+      var item = window._qevents[1];
+      assert(item.labels === 'event.event');
+    });
+
     it('should push options.label as labels', function () {
-      quantcast.options.labels = 'GlobalLabels';
+      quantcast.options.globalLabels = ['GlobalLabels'];
       test(quantcast).track();
       var item = window._qevents[1];
       assert(item.labels === ('GlobalLabels'));
     });
 
     it('should push options.label and event name as labels', function () {
-      quantcast.options.labels = 'GlobalLabels';
+      quantcast.options.globalLabels = ['GlobalLabels'];
       test(quantcast).track('event');
       var item = window._qevents[1];
       assert(item.labels === ('GlobalLabels,event.event'));
@@ -331,7 +376,7 @@ describe('Quantcast', function () {
 
       it('should prefix with _fp.event and include options.labels', function(){
         quantcast.options.advertise = true;
-        quantcast.options.labels = 'GlobalLabel';
+        quantcast.options.globalLabels = ['GlobalLabel'];
         test(quantcast).track('event');
         var item = window._qevents[1];
         assert(item.labels == 'GlobalLabel,_fp.event.event');
@@ -363,7 +408,7 @@ describe('Quantcast', function () {
 
       it('should handle completed order events with global labels', function(){
         quantcast.options.advertise = true;
-        quantcast.options.labels = 'GlobalLabel';
+        quantcast.options.globalLabels = ['GlobalLabel'];
         test(quantcast).track('completed order', {
           orderId: '780bc55',
           category: 'tech',
