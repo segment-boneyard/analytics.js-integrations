@@ -71,7 +71,7 @@ describe('Quantcast', function () {
       quantcast.page = sinon.spy();
       quantcast.initialize(test.types.page('category', 'name'));
       var pushed = window._qevents[0];
-      assert('x' == pushed.qacct);
+      assert(settings.pCode == pushed.qacct);
       assert(null == pushed.event);
       assert('GlobalLabel,page.category.name' == pushed.labels);     
     });
@@ -81,7 +81,7 @@ describe('Quantcast', function () {
       quantcast.options.includeDefaultLabels = false;
       quantcast.initialize(test.types.page());
       var pushed = window._qevents[0];
-      assert('x' == pushed.qacct);
+      assert(settings.pCode == pushed.qacct);
       assert(null == pushed.event);
       assert('' == pushed.labels);
     });
