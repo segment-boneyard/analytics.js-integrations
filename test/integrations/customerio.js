@@ -52,9 +52,9 @@ describe('Customer.io', function () {
 
   describe('#loaded', function () {
     it('should test window._cio.pageHasLoaded', function () {
-      window._cio = [];
       assert(!customerio.loaded());
-      window._cio.pageHasLoaded = true;
+      window._cio = [];
+      window._cio.push = function(){};
       assert(customerio.loaded());
     });
   });
