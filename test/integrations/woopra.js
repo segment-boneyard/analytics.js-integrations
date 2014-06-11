@@ -9,7 +9,8 @@ describe('Woopra', function () {
 
   var woopra;
   var settings = {
-    domain: 'x'
+    domain: 'x',
+    outgoingTracking: false
   };
 
   beforeEach(function () {
@@ -83,17 +84,18 @@ describe('Woopra', function () {
       woopra.initialize();
       assert.deepEqual(window.woopra._e, [
         ['config', 'domain', 'x'],
+        ['config', 'outgoing_tracking', false],
         ['config', 'cookie_name', 'wooTracker'],
         ['config', 'cookie_path', '/'],
         ['config', 'ping', true],
         ['config', 'ping_interval', 12000],
         ['config', 'idle_timeout', 300000],
         ['config', 'download_tracking', true],
-        ['config', 'outgoing_tracking', true],
         ['config', 'outgoing_ignore_subdomain', true],
         ['config', 'download_pause', 200],
         ['config', 'outgoing_pause', 400],
         ['config', 'ignore_query_url', true],
+        ['config', 'hide_campaign', false]
       ]);
     })
 
@@ -111,6 +113,7 @@ describe('Woopra', function () {
       opts.downloadPause = '';
       opts.outgoingPause = '';
       opts.ignoreQueryUrl = null;
+      opts.hideCampaign = null;
       woopra.initialize();
       assert.deepEqual([], window.woopra._e);
     })

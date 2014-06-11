@@ -10,6 +10,7 @@ describe('Curebit', function(){
   var timeouts = require('clear-timeouts');
   var intervals = require('clear-intervals');
   var iso = require('to-iso-string');
+  var domify = require('domify');
 
   var curebit;
   var settings = {
@@ -33,16 +34,17 @@ describe('Curebit', function(){
   it('should have the correct settings', function(){
     test(curebit)
       .name('Curebit')
-      .readyOnInitialize()
+      .readyOnLoad()
       .global('_curebitq')
       .global('curebit')
       .option('siteId', '')
       .option('iframeBorder', 0)
+      .option('iframeId', 'curebit_integration')
       .option('iframeHeight', '480')
       .option('iframeWidth', '100%')
       .option('responsive', true)
       .option('device', '')
-      .option('insertIntoId', 'curebit-frame')
+      .option('insertIntoId', '')
       .option('campaigns', {})
       .option('server', 'https://www.curebit.com');
   });
@@ -113,7 +115,7 @@ describe('Curebit', function(){
 
     it('should register affiliate when the url matches', function(){
       curebit.options.campaigns = { '/' : 'share,test' };
-      curebit.options.iframeId = 'curebit-iframe';
+      curebit.options.iframeId = 'curebit_integration';
       curebit.page();
 
       assert(window._curebitq.push.calledWith(['register_affiliate', {
@@ -121,10 +123,10 @@ describe('Curebit', function(){
           device: '',
           campaign_tags : ['share', 'test'],
           iframe: {
-            container: 'curebit-frame',
+            container: '',
             frameborder: 0,
             height: '480',
-            id: 'curebit-iframe',
+            id: 'curebit_integration',
             width: '100%'
           },
       }]));
@@ -138,7 +140,6 @@ describe('Curebit', function(){
       });
 
       curebit.options.campaigns = { '/' : 'share,test' };
-      curebit.options.iframeId = 'curebit-iframe';
       curebit.page();
 
       assert(window._curebitq.push.calledWith(['register_affiliate', {
@@ -146,10 +147,10 @@ describe('Curebit', function(){
         device: '',
         campaign_tags : ['share', 'test'],
         iframe: {
-          container: 'curebit-frame',
+          container: '',
           frameborder: 0,
           width: '100%',
-          id: 'curebit-iframe',
+          id: 'curebit_integration',
           height: '480',
         },
         affiliate_member: {
@@ -159,6 +160,16 @@ describe('Curebit', function(){
           customer_id: 'id'
         }
       }]));
+    });
+
+    it('should throttle', function(){
+      curebit.options.campaigns = { '/' : 'share,test' };
+      curebit.page();
+      curebit.page();
+      curebit.page();
+      curebit.page();
+      curebit.page();
+      assert(1 == window._curebitq.length);
     });
   });
 

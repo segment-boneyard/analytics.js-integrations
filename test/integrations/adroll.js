@@ -49,10 +49,10 @@ describe('AdRoll', function () {
       assert(window.adroll_pix_id === settings.pixId);
     });
 
-    it('should set a user id', function () {
+    it('should not set a user id', function () {
       analytics.user().identify('id');
       adroll.initialize();
-      assert(equal(window.adroll_custom_data, { USER_ID: 'id' }));
+      assert(window.adroll_custom_data == null);
     });
 
     it('should set window.__adroll_loaded', function () {
@@ -112,6 +112,7 @@ describe('AdRoll', function () {
     })
 
     it('should track Completed Order', function(){
+      adroll.options.events = { event: 'segment' };
       test(adroll).track('Completed Order', { total: 1.99, orderId: 1 });
       assert(window.__adroll.record_user.calledWith({
         adroll_segments: 'Completed Order',
@@ -136,6 +137,18 @@ describe('AdRoll', function () {
         adroll_segments: 'segment',
         adroll_conversion_value_in_dollars: 3.99,
         order_id: 0
+      }));
+    })
+
+    it('should include the user_id when available', function(){
+      analytics.user().identify('id');
+      adroll.options.events = { event: 'segment' };
+      test(adroll).track('event', { revenue: 3.99 });
+      assert(window.__adroll.record_user.calledWith({
+        adroll_segments: 'segment',
+        adroll_conversion_value_in_dollars: 3.99,
+        order_id: 0,
+        user_id: 'id'
       }));
     })
   })

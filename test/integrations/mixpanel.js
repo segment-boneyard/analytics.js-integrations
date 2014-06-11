@@ -310,6 +310,17 @@ describe('Mixpanel', function () {
       assert(window.mixpanel.people.increment.calledWith('event'));
       assert(window.mixpanel.people.set.calledWith('Last event', new Date));
     })
+
+    it('should remove mixpanel\'s reserved properties', function(){
+      test(mixpanel).track('event', {
+        distinct_id: 'string',
+        ip: 'string',
+        mp_name_tag: 'string',
+        mp_note: 'string',
+        token: 'string'
+      });
+      assert(window.mixpanel.track.calledWith('event', {}));
+    });
   });
 
   describe('#alias', function () {

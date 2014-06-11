@@ -9,6 +9,7 @@ describe('KISSmetrics', function () {
   var intervals = require('clear-intervals');
   var timeouts = require('clear-timeouts');
   var equals = require('equals');
+  var Page = require('facade').Page;
 
   var kissmetrics;
   var settings = {
@@ -22,23 +23,23 @@ describe('KISSmetrics', function () {
 
     analytics.use(KISSmetrics);
     kissmetrics = new KISSmetrics.Integration(settings);
-    kissmetrics.initialize(); // noop
 
     // initialize only once because kissmetrics has a bunch of timeouts
     kissmetrics.once('load', done);
     kissmetrics.initialize();
+    kissmetrics.page(new Page({}));
   });
 
   afterEach(function(){
     intervals();
     timeouts();
-  })
+  });
 
   it('should have the right settings', function () {
     test(kissmetrics)
       .name('KISSmetrics')
       .assumesPageview()
-      .readyOnInitialize()
+      .readyOnLoad()
       .global('_kmq')
       .global('KM')
       .global('_kmil')
@@ -78,15 +79,39 @@ describe('KISSmetrics', function () {
   });
 
   describe('#page', function () {
+    var originalPageView;
+
     beforeEach(function () {
+      originalPageView = window.KM.pageView;
       window._kmq.push = sinon.spy();
+      window.KM.pageView = sinon.spy();
     });
 
     afterEach(function(){
       // set back to defaults
+      window.KM_SKIP_PAGE_VIEW = 1;
+      window.KM.pageView = originalPageView;
       kissmetrics.options.trackNamedPages = true;
       kissmetrics.options.trackCategorizedPages = true;
       kissmetrics.options.prefixProperties = true;
+    });
+
+    it('should record normal kissmetrics page views when the option is set', function () {
+      window.KM_SKIP_PAGE_VIEW = false;
+      test(kissmetrics).page();
+      assert(!window._kmq.push.called);
+    });
+
+    it('should call `KM.pageView()` when KM_SKIP_PAGE_VIEW is not set', function () {
+      window.KM_SKIP_PAGE_VIEW = false;
+      test(kissmetrics).page();
+      assert(window.KM.pageView.calledOnce);
+    });
+
+    it('should not call `KM.pageView()` when KM_SKIP_PAGE_VIEW is set', function () {
+      window.KM_SKIP_PAGE_VIEW = 1;
+      test(kissmetrics).page();
+      assert(!window.KM.pageView.calledOnce);
     });
 
     it('should track named pages by default', function () {
@@ -111,6 +136,7 @@ describe('KISSmetrics', function () {
       kissmetrics.options.trackNamedPages = false;
       test(kissmetrics).page('Category', 'Name');
       assert(window._kmq.push.calledOnce);
+      assert(window._kmq.push.args[0][0][1] == 'Viewed Category Page');
     });
 
     it('should not track a categorized page when the option is off', function () {
@@ -119,15 +145,18 @@ describe('KISSmetrics', function () {
       assert(!window._kmq.push.called);
     });
 
-    it('should not track a categorized page when the option is off, but should track page', function () {
+    it('should not track a categorized page when the option is off, but should track name', function () {
       kissmetrics.options.trackCategorizedPages = false;
-      test(kissmetrics).page('Category', 'Page');
+      test(kissmetrics).page('Category', 'Name');
       assert(window._kmq.push.calledOnce);
+      assert(window._kmq.push.args[0][0][1] == 'Viewed Category Name Page');
     });
 
     it('should track both named and categorized page when options are on', function () {
-      test(kissmetrics).page('Category', 'Page');
+      test(kissmetrics).page('Category', 'Name');
       assert(window._kmq.push.calledTwice);
+      assert(window._kmq.push.args[0][0][1] == 'Viewed Category Name Page');
+      assert(window._kmq.push.args[1][0][1] == 'Viewed Category Page');
     });
 
     it('should not prefixProperties if option is off', function () {

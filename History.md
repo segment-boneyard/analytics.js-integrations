@@ -1,5 +1,63 @@
 
-0.9.0 / 2014-05-29 
+0.9.8 / 2014-06-05
+==================
+
+ * kenshoo: refactor
+ * mixpanel: delete ip property too
+ * mixpanel: delete reserved properties to avoid conflicts
+ * quantcast: fix exception in identify()
+ * chartbeat: fix issue where Chartbeat script loads and executes before document.body exists
+ * chartbeat: replace obsolete protocol-specific script load URLs with protocol-agnostic URL
+ * chartbeat: Preserve existing _sf_async_config values unless overridden by via settings/defaults
+ * chartbeat: Add useCanonical to options and _sf_async_config with default value true
+
+0.9.7 / 2014-06-04
+==================
+
+ * adwords: fix method name comflict
+
+0.9.6 / 2014-06-04
+==================
+
+ * fix kissmetrics test
+
+0.9.5 / 2014-06-04
+==================
+
+ * kissmetrics: test internal kissmetrics pageView is being called
+ * kissmetrics: fix page calling logic in initialize
+ * kissmetrics: fix kissmetrics to properly handle page views and assumes
+ * woopra: fix woopra config
+ * adwords: add remarketing to adwords
+ * curebit: fix curebit double iframe issue
+ * kissmetrics: fix kissmetrics page tracking
+ * appcues: Adding Appcues integration.
+ * google-analytics: fix custom metrics, remove from page/track/group, closes #177
+
+0.9.4 / 2014-06-03
+==================
+
+ * properly check that facebook is loaded
+
+0.9.3 / 2014-06-02
+==================
+
+ * curebit: make ready on load so iframes have a chance to be rendered
+
+0.9.2 / 2014-06-02
+==================
+
+ * errorception: update testing api key
+ * curebit: debug removing iframe for curebit on multiple .page() calls
+ * curebit: change default for iframeId
+ * facebook ads: migrate facebook ads to new javascript api
+
+0.9.1 / 2014-05-30
+==================
+
+ * adroll: fixing user_id issue and adding tests
+
+0.9.0 / 2014-05-29
 ==================
 
  * errorception: update key
@@ -13,7 +71,7 @@
  * ga: pass through category on track
  * ga: set `siteSpeedSampleRate` to `1`
 
-0.8.2 / 2014-05-21 
+0.8.2 / 2014-05-21
 ==================
 
  * ga-ecommerce: fallback to .revenue()

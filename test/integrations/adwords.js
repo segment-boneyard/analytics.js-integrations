@@ -25,6 +25,8 @@ describe('AdWords', function(){
     test(adwords)
       .name('AdWords')
       .readyOnLoad()
+      .option('conversionId', '')
+      .option('remarketing', false)
       .option('events', {});
   })
 
@@ -42,31 +44,44 @@ describe('AdWords', function(){
         if (/googleadservices/.test(els[i].src)) continue;
         els[i].parentNode.removeChild(els[i]);
       }
+
+      sinon.spy(adwords, 'globalize');
     })
 
     it('should set globals correctly', function(done){
-      adwords.conversion({ conversionId: 1, label: 'baz', value: 9 }, done);
-      assert(1 == window.google_conversion_id);
-      assert('en' == window.google_conversion_language);
-      assert('3' == window.google_conversion_format);
-      assert('ffffff' == window.google_conversion_color);
-      assert('baz' == window.google_conversion_label);
-      assert(9 == window.google_conversion_value);
-      assert(false == window.google_remarketing_only);
-    })
-
-    it('should override document.write', function(done){
-      var write = document.write;
-      adwords.conversion({ conversionId: 1, label: 'baz', value: 9 }, done);
-      assert(write != document.write);
-    });
-
-    it('should restore document.write', function(done){
-      var write = document.write;
       adwords.conversion({ conversionId: 1, label: 'baz', value: 9 }, function(){
-        assert(write == document.write);
+        assert(adwords.globalize.calledWith({
+          google_conversion_id: 1,
+          google_conversion_language: 'en',
+          google_conversion_format: '3',
+          google_conversion_color: 'ffffff',
+          google_conversion_label: 'baz',
+          google_conversion_value: 9,
+          google_remarketing_only: false
+        }));
+
         done();
       });
+    })
+  })
+
+  describe('#page', function(){
+    beforeEach(function(done){
+      adwords.on('ready', done);
+      sinon.spy(adwords, 'remarketing');
+      sinon.spy(adwords, 'globalize');
+      adwords.initialize();
+    })
+
+    it('should not load remarketing if option is not on', function(){
+      test(adwords).page();
+      assert(!adwords.remarketing.called);
+    })
+
+    it('should load remarketing if option is on', function(){
+      adwords.options.remarketing = true;
+      test(adwords).page();
+      assert(adwords.remarketing.calledOnce);
     })
   })
 

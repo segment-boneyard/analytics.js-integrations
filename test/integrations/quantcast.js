@@ -9,7 +9,7 @@ describe('Quantcast', function () {
 
   var quantcast;
   var settings = {
-    pCode: 'x'
+    pCode: 'p-ZDsjJUtp583Se'
   };
 
   beforeEach(function () {
@@ -61,7 +61,7 @@ describe('Quantcast', function () {
       quantcast.page = sinon.spy();
       quantcast.initialize(test.types.page('category', 'name'));
       var pushed = window._qevents[0];
-      assert('x' == pushed.qacct);
+      assert(settings.pCode == pushed.qacct);
       assert(null == pushed.event);
       assert('page.category.name' == pushed.labels);
     });

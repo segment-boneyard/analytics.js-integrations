@@ -110,8 +110,8 @@ describe('Google Analytics', function () {
       })
 
       it('should map custom dimensions & metrics using user.traits()', function(){
-        ga.options.metrics = { metric1: 'firstName', metric2: 'last_name' };
-        ga.options.dimensions = { dimension2: 'Age' };
+        ga.options.metrics = { firstName: 'metric1', last_name: 'metric2' };
+        ga.options.dimensions = { Age: 'dimension2' };
         analytics.user().traits({ firstName: 'John', lastName: 'Doe', age: 20 });
         ga.initialize();
 
@@ -119,19 +119,6 @@ describe('Google Analytics', function () {
           metric1: 'John',
           metric2: 'Doe',
           dimension2: 20
-        }]));
-      })
-
-      it('should map custom dimensions & metrics using group.traits()', function(){
-        ga.options.metrics = { metric2: 'Employees' };
-        ga.options.dimensions = { dimension3: 'industry', dimension4: 'age' };
-        analytics.group().traits({ industry: 'tech', employees: 12, age: 0 });
-        ga.initialize();
-
-        assert(equal(window.ga.q[2], ['set', {
-          metric2: 12,
-          dimension3: 'tech',
-          dimension4: 0
         }]));
       })
 
@@ -248,34 +235,6 @@ describe('Google Analytics', function () {
         test(ga).page('Category', 'Name');
         assert(window.ga.calledTwice);
       });
-
-      it('should map properties to custom dimensions', function(){
-        ga.options.trackNamedPages = false;
-        ga.options.dimensions = { dimension1: 'name', dimension2: 'author' };
-        test(ga).page(null, 'Blog Post', { author: 'John Doe' });
-
-        assert(equal(window.ga.args[0], ['send', 'pageview', {
-          dimension2: 'John Doe',
-          dimension1: 'Blog Post',
-          location: undefined,
-          page: undefined,
-          title: 'Blog Post'
-        }]))
-      })
-
-      it('should map properties to custom metrics', function(){
-        ga.options.trackNamedPages = false;
-        ga.options.metrics = { metric200: 'mymetric', metric9: 'otherMetric' };
-        test(ga).page(null, 'Name', { mymetric: 0, other_metric: 9 });
-
-        assert(equal(window.ga.args[0], ['send', 'pageview', {
-          location: undefined,
-          page: undefined,
-          title: 'Name',
-          metric9: 9,
-          metric200: 0
-        }]));
-      })
     });
 
     describe('#track', function () {
@@ -384,52 +343,6 @@ describe('Google Analytics', function () {
           nonInteraction: true
         }));
       });
-
-      it('should map properties to custom dimensions', function(){
-        ga.options.dimensions = {
-          dimension200: 'userAge',
-          dimension1: 'level'
-        };
-        test(ga).track('level up', {
-          user_age: 28,
-          level: 2
-        });
-
-        assert(equal(window.ga.args[0], ['send', 'event', {
-          dimension1: 2,
-          dimension200: 28,
-          eventAction: 'level up',
-          eventCategory: 'All',
-          nonInteraction: undefined,
-          eventValue: 0,
-          eventLabel: undefined
-        }]));
-      })
-
-      it('should map properties to custom metrics', function(){
-        ga.options.metrics = {
-          metric1: 'user_name',
-          metric2: 'user_age',
-          metric3: 'user level'
-        };
-
-        test(ga).track('level up', {
-          userAge: 20,
-          userLevel: 2,
-          user_name: 'John Doe'
-        });
-
-        assert(equal(window.ga.args[0], ['send', 'event', {
-          eventAction: 'level up',
-          eventCategory: 'All',
-          eventLabel: undefined,
-          eventValue: 0,
-          metric1: 'John Doe',
-          metric2: 20,
-          metric3: 2,
-          nonInteraction: undefined
-        }]));
-      })
     });
 
     describe('ecommerce', function(){
