@@ -8,9 +8,7 @@ describe('Appcues', function() {
 
   var appcues;
   var settings = {
-    appcuesId: 'test',
-    userId: 'test',
-    userEmail: 'test@testification.com'
+    appcuesId: 'test'
   };
 
   // Disable AMD for these browser tests.
@@ -19,6 +17,7 @@ describe('Appcues', function() {
   beforeEach(function() {
     analytics.use(Appcues);
     appcues = new Appcues.Integration(settings);
+    analytics.user().reset();
     appcues.initialize();
     window.define = undefined;
   });
@@ -35,9 +34,7 @@ describe('Appcues', function() {
       .readyOnLoad()
       .global('Appcues')
       .global('AppcuesIdentity')
-      .option('appcuesId', '')
-      .option('userId', '')
-      .option('userEmail', '');
+      .option('appcuesId', '');
   });
 
 
@@ -46,9 +43,19 @@ describe('Appcues', function() {
       sinon.spy(appcues, 'load');
     });
 
-    it('should call #load', function() {
+    it('should call #load if user is known', function() {
+      analytics.user().id('test');
+      analytics.user().traits({
+        email: 'test@segment.io'
+      });
       appcues.initialize();
       assert(appcues.load.called);
+    });
+
+    it('should not call #load if user is unknown', function() {
+      analytics.user().traits({});
+      appcues.initialize();
+      assert(!appcues.load.called);
     });
   });
 
@@ -82,17 +89,35 @@ describe('Appcues', function() {
 
   describe('#identify', function () {
     beforeEach(function (done) {
-      appcues.initialize();
-      appcues.once('load', function () {
+      // Load the Appcues embed script once.
+      appcues.load();
+      sinon.stub(appcues, 'load', function(callback) { callback() });
+      sinon.stub(appcues, 'loaded', function() { return false });
+      appcues.once('load', function() {
+        window.Appcues.init = sinon.spy();
         window.Appcues.identify = sinon.spy();
-        setTimeout(done, 50);
+        done();
       });
     });
 
+    it('should first try to load the JS if it doesn\'t yet exist', function() {
+      test(appcues).identify('id', {});
+      assert(!appcues.identify.called);
+      assert(appcues.load.called);
+    });
+
+    it('should call Appcues#init and #identify after loading the JS', function() {
+      test(appcues).identify('id', {});
+      assert(window.Appcues.init.called);
+      assert(window.Appcues.identify.calledWith({id: 'id'}));
+    });
+
     it('should proxy traits to Appcues#identify', function() {
+      appcues.loaded.restore()
+      sinon.stub(appcues, 'loaded', function() { return true });
       test(appcues).identify('id', {});
       assert(window.Appcues.identify.calledWith({id: 'id'}));
-    })
+    });
 
   });
 });
