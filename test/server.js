@@ -1,8 +1,13 @@
 
+/**
+ * Module dependencies.
+ */
+
 var exec = require('child_process').exec;
-var express = require('express');
-var join = require('path').join;
 var write = require('fs').writeFileSync;
+var express = require('express');
+var fmt = require('util').format;
+var join = require('path').join;
 
 /**
  * App.
@@ -11,6 +16,7 @@ var write = require('fs').writeFileSync;
 var app = express()
   .set('views', __dirname)
   .get('/coverage', coverage)
+  .get('/sauce', sauce)
   .use(rebuild)
   .use(statics)
   .use(tests);
@@ -87,4 +93,14 @@ function coverage(req, res, next){
 
 function tests(req, res, next){
   res.sendfile(__dirname + '/index.html');
+}
+
+/**
+ * Connect to saucelabs.
+ */
+
+function sauce() {
+  var user = process.env.SAUCE_USERNAME;
+  var key = process.env.SAUCE_ACCESS_KEY;
+  // var url = fmt('http://%s:%s@ondemand.saucelabs.com/wd/hub', user, key);
 }

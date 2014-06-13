@@ -42,7 +42,12 @@
     if (window.mochaPhantomJS) {
       mochaPhantomJS.run();
     } else {
-      mocha.run();
+      if (window.location.search.match('?cloud=true')) {
+        var cloud = require('visionmedia/mocha-cloud');
+        cloud(mocha.run());
+      } else {
+        mocha.run(); 
+      }
     }
   </script>
 </body>
