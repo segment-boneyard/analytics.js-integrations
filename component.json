@@ -61,7 +61,7 @@
     "ianstormtaylor/sinon": "duo",
     "jkroso/equals": "*",
     "segmentio/analytics.js": "*",
-    "segmentio/analytics.js-integration-tester": "*",
+    "segmentio/analytics.js-integration-tester": "1.1.0",
     "segmentio/when": "*",
     "visionmedia/mocha": "*",
     "yields/clear-timeouts": "*",
