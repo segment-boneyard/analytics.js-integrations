@@ -13,8 +13,8 @@ browser ?= ie10
 tests = /test
 duo = node_modules/.bin/duo
 phantomjs = node_modules/.bin/duo-test phantomjs $(tests) args: \
-	--setting local-to-remote-url-access=true \
-	--setting web-security=false \
+	--setting localToRemoteUrlAccessEnabled=true \
+	--setting webSecurityEnabled=false \
 	--path node_modules/.bin/phantomjs
 
 #
