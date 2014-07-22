@@ -1,7 +1,7 @@
 
 var assert = require('assert');
 var Integrations = require('../index.js');
-var sandbox = require('./sandbox');
+var sandbox = require('clear-env');
 var object = require('object');
 
 /**
@@ -23,7 +23,7 @@ if ('undefined' != typeof window) {
 
 describe('integrations', function(){
   it('should export our integrations', function(){
-    assert(object.length(Integrations) === 74);
+    assert(object.length(Integrations) === 76);
   });
 });
 
