@@ -2,7 +2,7 @@
   "name": "integrations",
   "repo": "segmentio/analytics.js-integrations",
   "description": "All of the third-party Analytics.js integrations.",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "license": "MIT",
   "dependencies": {
     "avetisk/defaults": "0.0.1",

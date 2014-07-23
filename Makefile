@@ -35,7 +35,9 @@ test-sauce: node_modules build/build.js
 	@node bin/tests
 	@node_modules/.bin/duo-test saucelabs $(tests) \
 		--name analytics.js-integrations \
-		--browser $(browser)
+		--browser $(browser) \
+		--user $(SAUCE_USERNAME) \
+		--key $(SAUCE_ACCESS_KEY)
 
 clean:
 	@rm -rf build components integrations.js node_modules test/tests.js

@@ -1,4 +1,37 @@
 
+1.2.2 / 2014-07-17
+==================
+
+ * deps: remove duo-package@0.2.13
+ * package.json: remove version
+ * bugsnag: use real api key
+
+1.2.1 / 2014-07-16
+==================
+
+ * internet explorer test fixes
+ * twitter-ads: support array events
+ * facebook-ads: support array events
+ * churnbee: support array events
+ * bing-ads: support array events
+ * awesm: suppot array setting
+ * adwords: support array setting
+ * adroll: support array events setting
+ * refactor clear-x code into modules
+ * test and merge insidevault
+ * vero cookie notes
+ * initialize yandex test
+ * try next tick for yandex
+ * fix environment between tests so they reliably pass
+ * fix curebit/kissmetrics paths for tests
+ * merge hublo
+ * only select .js files in make, fixes #342
+ * better doc
+ * make sure the library has loaded - not just the snippet
+ * single line some objects
+ * add InsideVault integration
+ * Hublo integration
+
 1.2.0 / 2014-07-11
 ==================
 
