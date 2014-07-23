@@ -63,6 +63,7 @@ require('../lib/piwik/test.js');
 require('../lib/preact/test.js');
 require('../lib/qualaroo/test.js');
 require('../lib/quantcast/test.js');
+require('../lib/reactor/test.js');
 require('../lib/rollbar/test.js');
 require('../lib/saasquatch/test.js');
 require('../lib/sentry/test.js');
