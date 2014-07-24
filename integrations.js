@@ -29,6 +29,7 @@ module.exports = [
   require('./lib/facebook-ads'),
   require('./lib/foxmetrics'),
   require('./lib/frontleaf'),
+  require('./lib/fullstory'),
   require('./lib/gauges'),
   require('./lib/get-satisfaction'),
   require('./lib/google-analytics'),
