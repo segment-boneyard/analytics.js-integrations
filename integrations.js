@@ -74,7 +74,6 @@ module.exports = [
   require('./lib/trakio'),
   require('./lib/twitter-ads'),
   require('./lib/usercycle'),
-  require('./lib/userfox'),
   require('./lib/uservoice'),
   require('./lib/vero'),
   require('./lib/visual-website-optimizer'),
