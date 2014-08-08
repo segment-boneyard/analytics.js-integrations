@@ -9,6 +9,7 @@ module.exports = [
   require('./lib/alexa'),
   require('./lib/amplitude'),
   require('./lib/appcues'),
+  require('./lib/autosend'),
   require('./lib/awesm'),
   require('./lib/awesomatic'),
   require('./lib/bing-ads'),
