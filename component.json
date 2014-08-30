@@ -31,10 +31,14 @@
     "segmentio/global-queue": "0.0.2",
     "segmentio/is-email": "0.1.1",
     "segmentio/load-date": "0.0.1",
+    "segmentio/load-pixel": "0.1.1",
     "segmentio/load-script": "0.1.2",
+    "segmentio/obj-case": "0.0.11",
+    "component/object": "0.0.3",
     "segmentio/script-onload": "1.0.0",
     "segmentio/on-body": "0.0.1",
     "segmentio/on-error": "0.1.0",
+    "segmentio/replace-document-write": "1.0.1",
     "segmentio/to-iso-string": "0.0.1",
     "segmentio/to-unix-timestamp": "0.0.1",
     "segmentio/use-https": "0.1.0",
@@ -44,11 +48,7 @@
     "yields/slug": "1.1.0",
     "yields/some": "1.0.0",
     "visionmedia/batch": "0.5.0",
-    "visionmedia/debug": "0.7.4",
-    "segmentio/load-pixel": "0.1.1",
-    "segmentio/replace-document-write": "1.0.1",
-    "component/object": "0.0.3",
-    "segmentio/obj-case": "0.0.7"
+    "visionmedia/debug": "0.7.4"
   },
   "development": {
     "component/jquery": "*",
