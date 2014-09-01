@@ -23,7 +23,7 @@ if ('undefined' != typeof window) {
 
 describe('integrations', function(){
   it('should export our integrations', function(){
-    assert.equal(75, object.length(Integrations));
+    assert.equal(76, object.length(Integrations));
   });
 });
 
