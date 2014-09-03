@@ -13,6 +13,9 @@ var readdir = fs.readdirSync;
  * Get all of the slugs from the directory structure itself.
  */
 
+var availableSlugs = readdir(__dirname + '/../lib')
+  .filter(function(slug){ return fs.existsSync(path.join('./lib', slug, 'index.js')); });
+
 write(__dirname + '/../integrations.js', [
   "",
   "/**",
@@ -20,8 +23,7 @@ write(__dirname + '/../integrations.js', [
   " */",
   "",
   "module.exports = [",
-    readdir(__dirname + '/../lib')
-      .filter(function(slug){ return fs.existsSync(path.join('./lib', slug, 'index.js')); })
+    availableSlugs
       .map(function(slug){ return "require('./lib/" + slug + "')"; })
       .join(',\n')
       .replace(/^/gm, '  '),
