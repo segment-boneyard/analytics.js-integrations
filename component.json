@@ -59,6 +59,7 @@
     "segmentio/analytics.js": "*",
     "segmentio/analytics.js-integration-tester": "1.4.x",
     "segmentio/clear-env": "*",
+    "segmentio/location-stub": "*",
     "segmentio/spy": "*",
     "segmentio/when": "*",
     "visionmedia/mocha": "*",
