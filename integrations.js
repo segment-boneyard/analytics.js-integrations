@@ -57,6 +57,7 @@ module.exports = [
   require('./lib/mouseflow'),
   require('./lib/mousestats'),
   require('./lib/navilytics'),
+  require('./lib/nudgespot'),
   require('./lib/olark'),
   require('./lib/optimizely'),
   require('./lib/perfect-audience'),
