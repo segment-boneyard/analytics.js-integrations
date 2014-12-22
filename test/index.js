@@ -21,7 +21,8 @@ mocha.setup({
 
 describe('integrations', function(){
   it('should export our integrations', function(){
-    assert.equal(80, object.length(Integrations));
+    assert.equal(81, object.length(Integrations));
+    assert.equal(75, object.length(Integrations));
   });
 });
 
