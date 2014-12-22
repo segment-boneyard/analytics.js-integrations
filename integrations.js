@@ -47,6 +47,7 @@ module.exports = [
   require('./lib/kenshoo'),
   require('./lib/kissmetrics'),
   require('./lib/klaviyo'),
+  require('./lib/kronosjs'),
   require('./lib/livechat'),
   require('./lib/lucky-orange'),
   require('./lib/lytics'),

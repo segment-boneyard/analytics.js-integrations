@@ -1,4 +1,27 @@
 
+1.3.18 / 2014-12-17
+===================
+
+  * Adroll: added custom data to all calls
+
+1.3.17 / 2014-12-16
+===================
+
+  * Add GitHub IP range to known_hosts to prevent Duo error
+
+1.3.16 / 2014-12-16
+===================
+
+  * Merge pull request #481 from segmentio/fix/duo-installs
+  * Add GitHub IP range to known_hosts to prevent Duo error
+
+1.3.15 / 2014-12-12
+===================
+
+  * Adroll: adding custom params
+  * Google Analytics: add custom dims and metrics to track calls
+  * Chartbeat: adding basic implementation of authors and sections
+
 1.3.14 / 2014-12-11
 ===================
 
