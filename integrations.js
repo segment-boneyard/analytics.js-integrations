@@ -53,6 +53,7 @@ module.exports = [
   require('./lib/livechat'),
   require('./lib/lucky-orange'),
   require('./lib/lytics'),
+  require('./lib/mailchimp'),
   require('./lib/mixpanel'),
   require('./lib/mojn'),
   require('./lib/mouseflow'),
