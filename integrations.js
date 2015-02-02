@@ -77,11 +77,11 @@ module.exports = [
   require('./lib/tapstream'),
   require('./lib/trakio'),
   require('./lib/twitter-ads'),
+  require('./lib/userlike'),
   require('./lib/uservoice'),
   require('./lib/vero'),
   require('./lib/visual-website-optimizer'),
   require('./lib/webengage'),
   require('./lib/woopra'),
-  require('./lib/yandex-metrica'),
-  require('./lib/userlike')
+  require('./lib/yandex-metrica')
 ];
