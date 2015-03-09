@@ -1,0 +1,10 @@
+machine:
+  node:
+    version: 0.11
+dependencies:
+  pre:
+    - echo "github.com,192.30.252.*,192.30.253.*,192.30.254.*,192.30.255.* ssh-rsa $(ssh-keyscan -t rsa github.com | cut -d ' ' -f 3-)" >> ~/.ssh/known_hosts
+    - make
+test:
+  override:
+    - make test

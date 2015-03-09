@@ -1,12 +1,15 @@
 
-# analytics.js-integrations [![Build Status](https://travis-ci.org/segmentio/analytics.js-integrations.png)](https://travis-ci.org/segmentio/analytics.js-integrations)
+# analytics.js-integrations [![Circle CI](https://circleci.com/gh/segmentio/analytics.js-integrations/tree/master.svg?style=svg)](https://circleci.com/gh/segmentio/analytics.js-integrations/tree/master)
 
 This repository houses all of the integrations that get built into [Analytics.js](https://github.com/segmentio/analytics.js).
 
-All new integrations are added by pull requests, just read the [contribution docs](/Contributing.md) to get started and submit your own! If you ever need any help, feel free to email [friends@segment.io](mailto:friends@segment.io).
+## Integrating with Segment
 
+Interested in integrating your service with us? Check out our [Partners page](https://segment.com/partners/) for more details.
 
 ## Developing
+
+All new integrations are added by pull requests, just read the [contribution docs](/Contributing.md) to get started and submit your own! If you ever need any help, feel free to email [friends@segment.com](mailto:friends@segment.com).
 
 This repository relies on a couple dependencies that help make our lives easier while developing. They are:
 
@@ -48,3 +51,12 @@ And if you'd like you debug in the browser, run:
 
 Once your tests pass, you are ready to submit a pull request!
 
+###Notes on Linting
+
+When you're adding an integration's javascript snippet to your integration, we don't want to have to worry about the formatting that they've used. To let JSCS ignore the snippet during linting, use these comments on either side (example code courtesy of the [JSCS readme](https://github.com/jscs-dev/node-jscs#error-suppression)).
+
+```javascript
+// jscs:disable
+var c = d; // all errors on this line will be ignored
+// jscs:enable 
+```

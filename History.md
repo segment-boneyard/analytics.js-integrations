@@ -1,4 +1,557 @@
 
+1.3.47 / 2015-03-04
+===================
+
+  * KISSMetrics: Reference alternative tracker URL
+
+1.3.46 / 2015-03-03
+===================
+
+  * Nudgespot: Remove protocol from tag
+  * Nudgespot: updated identify call to accept id as a param
+  * Google Analytics: remove product impression call, map viewed product to detail view
+  * Frontleaf: update creds
+  * Adwords: Automatically attach custom paramaters for Google AdWords integration
+
+1.3.45 / 2015-02-24
+===================
+
+  * Heap: alias email to _email instead of dropping it entirely
+
+1.3.44 / 2015-02-23
+==================
+
+  * test: update tests to test for .context instead of .options
+  * segment: fix onalias
+
+1.3.43 / 2015-02-19
+===================
+
+  * quantcast: fix generic track orderid capitalization, add tests
+  * Un-minify Heap integration initialize method.
+  * Update Heap integration to new snippet.
+  * Update Amplitude to v2.0.3
+
+1.3.42 / 2015-02-13
+===================
+
+  * Heap: fix  id mess
+  * Adroll: adding custom params
+  * Quantcast: updated to send orderId with generic track event
+  * Drip: updated to new global
+
+1.3.41 / 2015-02-04
+===================
+
+  * update GoSquared integration to send correct traits
+
+1.3.40 / 2015-02-04
+===================
+
+  * GA: Added event name and category for ecommerce
+  * Forward settings for Custom Ticket Fields
+
+1.3.39 / 2015-02-03
+==================
+
+  * segment: add .sentAt
+  * added identify method to google analytics
+
+1.3.38 / 2015-01-29
+===================
+
+  * Update Contributing.md
+  * Heap: remove assumes pageview
+  * Autosend: new integration
+  * Piwik: adding custom variable support
+
+1.3.37 / 2015-01-23
+===================
+
+  * Perfect Audience: quick style change
+
+1.3.36 / 2015-01-22
+===================
+
+  * Quantcast: Adding custom label support
+  * Vero: Implemented #alias
+  * Atatus: new integration.
+  * Satismeter: new integration
+
+1.3.35 / 2015-01-22
+===================
+
+  * Atatus: styling fixes
+
+1.3.34 / 2015-01-22
+===================
+
+  * Merge pull request #506 from segmentio/fix/atatus
+  * Atatus: styling fixes
+  * Merge pull request #461 from satismeter/master
+  * Merge pull request #467 from fizerkhan/integration-atatus
+  * Release 1.3.29
+  * Merge pull request #469 from thomassittig/master
+  * cleanup
+  * update additional-tracking-data-structure and updated tests
+  * fixed integrations-counter and tests
+  * Merge remote-tracking branch 'upstream/master'
+  * added the tracking of basic-custom-data
+  * cleaned up integration- and test-code
+  * initial userlike-integration
+  * Increased length of integrations.
+  * Updated unit testing. Removed UMD.
+  * Added atatus integration.
+  * new integration: satismeter
+
+1.3.33 / 2015-01-22
+===================
+
+  * Merge pull request #506 from segmentio/fix/atatus
+  * Atatus: styling fixes
+  * Merge pull request #461 from satismeter/master
+  * Merge pull request #467 from fizerkhan/integration-atatus
+  * Release 1.3.29
+  * Merge pull request #469 from thomassittig/master
+  * cleanup
+  * update additional-tracking-data-structure and updated tests
+  * fixed integrations-counter and tests
+  * Merge remote-tracking branch 'upstream/master'
+  * added the tracking of basic-custom-data
+  * cleaned up integration- and test-code
+  * initial userlike-integration
+  * Increased length of integrations.
+  * Updated unit testing. Removed UMD.
+  * Added atatus integration.
+  * new integration: satismeter
+
+1.3.32 / 2015-01-22
+===================
+
+  * Merge pull request #506 from segmentio/fix/atatus
+  * Atatus: styling fixes
+  * Merge pull request #461 from satismeter/master
+  * Merge pull request #467 from fizerkhan/integration-atatus
+  * Release 1.3.29
+  * Merge pull request #469 from thomassittig/master
+  * cleanup
+  * update additional-tracking-data-structure and updated tests
+  * fixed integrations-counter and tests
+  * Merge remote-tracking branch 'upstream/master'
+  * added the tracking of basic-custom-data
+  * cleaned up integration- and test-code
+  * initial userlike-integration
+  * Increased length of integrations.
+  * Updated unit testing. Removed UMD.
+  * Added atatus integration.
+  * new integration: satismeter
+
+1.3.31 / 2015-01-22
+===================
+
+  * Merge pull request #506 from segmentio/fix/atatus
+  * Atatus: styling fixes
+  * Merge pull request #461 from satismeter/master
+  * Merge pull request #467 from fizerkhan/integration-atatus
+  * Release 1.3.29
+  * Merge pull request #469 from thomassittig/master
+  * cleanup
+  * update additional-tracking-data-structure and updated tests
+  * fixed integrations-counter and tests
+  * Merge remote-tracking branch 'upstream/master'
+  * added the tracking of basic-custom-data
+  * cleaned up integration- and test-code
+  * initial userlike-integration
+  * Increased length of integrations.
+  * Updated unit testing. Removed UMD.
+  * Added atatus integration.
+  * new integration: satismeter
+
+1.3.30 / 2015-01-22
+===================
+
+  * Merge pull request #506 from segmentio/fix/atatus
+  * Atatus: styling fixes
+  * Merge pull request #461 from satismeter/master
+  * Merge pull request #467 from fizerkhan/integration-atatus
+  * Release 1.3.29
+  * Merge pull request #469 from thomassittig/master
+  * cleanup
+  * update additional-tracking-data-structure and updated tests
+  * fixed integrations-counter and tests
+  * Merge remote-tracking branch 'upstream/master'
+  * added the tracking of basic-custom-data
+  * cleaned up integration- and test-code
+  * initial userlike-integration
+  * Increased length of integrations.
+  * Updated unit testing. Removed UMD.
+  * Added atatus integration.
+  * new integration: satismeter
+
+1.3.29 / 2015-01-21
+===================
+
+  * Userlike integration
+
+1.3.28 / 2015-01-19
+==================
+
+  * mojn: fix tests
+  * changed analytics.gif to identify.gif
+  * mojn: add failing tests
+  * Add Nudgespot integration
+
+1.3.27 / 2015-01-15
+===================
+
+  * Centralize Extole into a single file to fix build error
+
+1.3.26 / 2015-01-15
+===================
+
+  * Merge pull request #497 from segmentio/fix/extole
+
+1.3.25 / 2015-01-15
+===================
+
+  * Extole: fix for subdir name issues
+
+1.3.24 / 2015-01-14
+===================
+
+ * add support for bing ads universal event tracking
+
+1.3.23 / 2015-01-14
+===================
+
+  * Add Extole integration
+  * preact logger now backwards compatible (can log with _lnq or _preactq)
+  * Customerio: Updating test values
+  * Blueshift: shouldnt assume pageview
+
+1.3.22 / 2015-01-08
+===================
+
+  * Fix Intercom date handling
+
+1.3.21 / 2015-01-07
+==================
+
+  * livechat: fix LC_Invite missing, and update key
+  * Removing assumed page view
+
+1.3.20 / 2015-01-05
+==================
+
+  * Update Amplitude integration to v2.0.2
+
+1.3.19 / 2015-01-01
+==================
+
+  * livechat: LC_Invite is never defined
+  * fix: update yields/store
+  * make: depend on build.js before test-style
+  * changed to single quotes and removed toString
+  * fixed blank line
+  * fixing user id
+
+1.3.18 / 2014-12-17
+===================
+
+  * Adroll: added custom data to all calls
+
+1.3.17 / 2014-12-16
+===================
+
+  * Add GitHub IP range to known_hosts to prevent Duo error
+
+1.3.16 / 2014-12-16
+===================
+
+  * Merge pull request #481 from segmentio/fix/duo-installs
+  * Add GitHub IP range to known_hosts to prevent Duo error
+
+1.3.15 / 2014-12-12
+===================
+
+  * Adroll: adding custom params
+  * Google Analytics: add custom dims and metrics to track calls
+  * Chartbeat: adding basic implementation of authors and sections
+
+1.3.14 / 2014-12-11
+===================
+
+  * Leadlander: removing integration
+  * Awesomatic: removing integration
+  * removing travisci and updating badge
+  * tweaking circle.yml
+  * Rollbar: updating to 1.1.0
+
+1.3.13 / 2014-12-04
+==================
+
+  * segment: use text/plain
+  * Styling fixes
+  * Re-adding build.js step to make test
+  * Updating tests with new linting, removing make-lint dependency
+  * Adding last bits of linting fixes
+  * Adding linting
+
+1.3.12 / 2014-11-25
+===================
+
+  * FullStory: added support for custom traits
+
+1.3.11 / 2014-11-22
+===================
+
+  * Amplitude: campaign names
+  * Perfect Audience: track fixes
+
+1.3.10 / 2014-11-21
+==================
+
+  * sentry: update raven, and use .RavenConfig global to initialize
+  * changed to use del module in fullstory
+  * fix for fullstory
+  * Remove errant logfile
+  * Update `yields/store` to 1.0.1
+  * added createdAt as a format in customerio
+
+1.3.9 / 2014-11-13
+==================
+
+  * ga: remove errant parens
+
+1.3.8 / 2014-11-11
+==================
+
+  * deps: bump utm-params
+
+1.3.7 / 2014-11-11
+==================
+
+  * GA: remove parens from campaign params
+
+1.3.6 / 2014-11-06
+==================
+
+  * Amplitude: added setDomain and setGlobalUserProperties to init
+  * Adding documentation link at initialization section
+  * Fixing space issues in bsft test.js
+  * Integration with getblueshift.com
+  * piwik: add event tracking
+
+1.3.5 / 2014-10-28
+==================
+
+ * add GA support for explicitly passed campaign params
+ * Typo, language fixes
+ * add segment
+ * deps: update duo
+
+1.3.4 / 2014-10-25
+==================
+
+  * contributing: segment.io -> segment.com
+  * Removing unnecessary temp variable
+  * update GoSquared w/ `identify` method
+
+1.3.3 / 2014-10-22
+==================
+
+  * fixed intercom to properly set createdAt to created_at
+
+1.3.2 / 2014-10-21
+==================
+
+  * saasquatch: updating tests, removing undefined
+  * uncommenting out the global referral images
+  * Adding unsubscribe capabilities to track
+  * ga: remove es5 filter use
+  * ga: add comments
+  * tests: fix mocha-phantomjs
+  * fixed fullstory integration
+  * Added Enhanced Ecommerce support to GA integration
+  * Fixed nonInteraction option in ga
+
+1.3.1 / 2014-10-17
+==================
+
+ * ga: remove es5 filter use
+ * ga: add comments
+
+1.3.0 / 2014-10-17
+==================
+
+ * Added Enhanced Ecommerce support to GA integration
+ * tests: fix mocha-phantomjs
+
+1.2.22 / 2014-10-10
+==================
+
+  * Perfect Audience: Add support for ecommerce
+  * Added fullstory
+  * Update Amplitude to v1.3
+
+1.2.21 / 2014-10-09
+==================
+
+ * Load Inspectlet's javascript from the CDN
+
+1.2.20 / 2014-10-08
+==================
+
+  * GA: add noninteraction advanced option
+
+1.2.19 / 2014-10-07
+===================
+
+  * Merge pull request #430 from segmentio/fix/comscore
+  * Fix page method comment
+  * add support for SPAs in comscore
+
+1.2.18 / 2014-10-06
+===================
+
+  * Merge pull request #426 from segmentio/fix/inspectlet
+  * Update test.js
+  * Fix test expected method
+  * add support for inspectlet page
+
+1.2.17 / 2014-10-01
+===================
+
+  * Merge pull request #424 from segmentio/keen/addons
+  * Merge pull request #414 from segmentio/insidevault/multiple-events
+  * keen: send addons on .track() too
+  * insidevault: support multiple events
+
+1.2.16 / 2014-09-26
+===================
+
+  * Merge pull request #421 from segmentio/fix/heap
+  * Changed terminology apiKey to appId
+  * Merge pull request #420 from segmentio/fix/google-analytics
+  * Fix: changed default domain to auto
+
+1.2.15 / 2014-09-22
+===================
+
+  * deps: upgrade domify to fix bing-ads on ie8
+
+1.2.14 / 2014-09-17
+===================
+
+  * errorception: update apiKey
+  * Merge pull request #418 from segmentio/fix/bugsnag
+  * bugsnag: use amd when possible
+  * Merge pull request #415 from segmentio/fix/inside-vault
+  * Merge pull request #417 from segmentio/fix/inspectlet
+  * update clear-env to support clear-ajax, which removes ajax requests in process between tests. fixes #416
+  * Fixes to IV
+  * Merge pull request #408 from chiplay/fix/keen
+  * Return cloned props for setGlobalProperties
+
+1.2.13 / 2014-09-04
+===================
+
+  * Merge pull request #401 from segmentio/remove/hublo
+  * only 73 now that we deleted one
+  * removing hublo since theyve pivoted
+
+1.2.12 / 2014-09-02
+===================
+
+  * Merge pull request #399 from segmentio/fix/usercycle
+  * skipping hublo tests
+  * weird tests breaking nonsensically, something changed in facade from 1.4.3 to 1.4.4 to cause nulls to be undefined
+  * removing usercycle
+
+1.2.11 / 2014-08-28
+===================
+
+  * deps: duo 0.7
+  * Merge pull request #396 from segmentio/fix/adwords
+  * Merge pull request #392 from segmentio/olark/phantom-identify
+  * adding new test to prevent remarketing regression
+  * removing remarketing true from conversions
+  * fix olark phantom track/page calls
+
+1.2.10 / 2014-08-22
+==================
+
+ * adwords: pass remarketing option directly to google_remarketing_only
+
+1.2.9 / 2014-08-22
+==================
+
+ * ga: fix ecommerce loading tests
+ * remove amd script for now so that bugsnag tests pass
+ * adwords: work on page load, switch to async version
+ * ga: removing ecommerce.js from require call
+ * deps: depend on duo-test@0.2
+ * deps: upgrade to duo 0.7
+
+1.2.8 / 2014-08-15
+==================
+
+ * fixing mixpanel date object passing
+ * fixing mixpanel array length conversion
+
+1.2.7 / 2014-08-07
+==================
+
+ * re-adding integrations.js
+ * deleting userfox, fixes #257
+
+1.2.6 / 2014-08-07
+==================
+
+ * keen-io: add support for addons! for #358
+ * keen-io: add test for both keen.min.js and keen-tracker.min.js
+ * keen: load keen-tracker by default, otherwise if they have a readKey then load the full 600kb keen
+ * keenio: upgrade to 3.0.5
+
+1.2.5 / 2014-08-07
+==================
+
+ * google-analytics: update userId tests
+ * customer.io: use https endpoint
+ * errorception: new trial key...
+ * twitter-ads: change option name
+ * mixpanel: swap to using ianstormtaylor/is for type checking
+ * google-analytics: add currency support
+ * swap to facade
+ * convert arrays to a number length
+ * remove amplitude assuming a pageview
+ * merging facebook ad rename
+ * Fix userId field
+ * ignore tests
+ * remove tests file
+ * add extra options to yandex metrica
+ * facebook-ads: renaming to conversion-tracking
+ * update livechat to include a name and email
+ * fixing dot notation lookups for traits/properties that have dots in them
+ * twitter-ads: add option to track page views
+ * bronto: remove generic `track` method, for #361
+ * drip: remove email requirement for #identify
+ * drip: retrofit the #track method and add #identify support
+
+1.2.4 / 2014-07-25
+==================
+
+ * Merge pull request #354 from segmentio/update/insidevault
+ * insidevault: add .page and event mapping
+
+1.2.3 / 2014-07-23
+==================
+
+ * force remove duo tmpdir
+ * Merge pull request #352 from segmentio/fix/requires
+ * fix: requires
+ * comment clarity
+
 1.2.2 / 2014-07-17
 ==================
 
