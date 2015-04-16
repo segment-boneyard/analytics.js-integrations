@@ -5,11 +5,11 @@ This repository houses all of the integrations that get built into [Analytics.js
 
 ## Integrating with Segment
 
-Interested in integrating your service with us? Check out our [Partners page](https://segment.com/partners/) for more details.
+Interested in integrating your service with us? Check out our [Partners page](https://segment.com/partners/) for more details and to submit an application!
 
 ## Developing
 
-All new integrations are added by pull requests, just read the [contribution docs](/Contributing.md) to get started and submit your own! If you ever need any help, feel free to email [friends@segment.com](mailto:friends@segment.com).
+Once you've been given the green light from Segment, you can read the [contribution docs](/Contributing.md) to get started! If you ever need any help, feel free to email [friends@segment.com](mailto:friends@segment.com).
 
 This repository relies on a couple dependencies that help make our lives easier while developing. They are:
 
