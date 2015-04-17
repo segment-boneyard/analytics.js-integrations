@@ -61,7 +61,6 @@ module.exports = [
   require('./lib/nudgespot'),
   require('./lib/olark'),
   require('./lib/optimizely'),
-  require('./lib/outbound'),
   require('./lib/perfect-audience'),
   require('./lib/pingdom'),
   require('./lib/piwik'),
