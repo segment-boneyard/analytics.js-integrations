@@ -6,8 +6,46 @@
 
 var fs = require('fs');
 var path = require('path');
+var _ = require('lodash');
 var write = fs.writeFileSync;
 var readdir = fs.readdirSync;
+
+/**
+ * Parse options
+ */
+
+var args = process.argv;
+var onlyArg = "--only";
+var exceptArg = "--except";
+var listArg = "--list";
+
+var listing = false;
+var onlyArgStart = args.indexOf(onlyArg);
+var exceptArgStart = args.indexOf(exceptArg);
+
+if(args.indexOf(listArg) >= 0) {
+  args.slice(args.indexOf(listArg), 1);
+  listing = true;
+}
+
+var slugs = readdir(__dirname + '/../lib')
+  .filter(function(slug){ return fs.existsSync(path.join('./lib', slug, 'index.js')); });
+
+if(onlyArgStart >= 0 && exceptArgStart >= 0) {
+  console.log("Both", onlyArg, "and", exceptArg, "arguments were given, but only one is allowed.");
+  process.exit(1);
+} else if(onlyArgStart >= 0) {
+  var args = args.slice(onlyArgStart + 1);
+  slugs = _.intersection(slugs, args);
+} else if(exceptArgStart >= 0) {
+  var args = args.slice(exceptArgStart + 1);
+  args.unshift(slugs);
+  slugs = _.without.apply(this, args);
+}
+
+if(listing) {
+  console.log(slugs.join("\n"));
+}
 
 /**
  * Get all of the slugs from the directory structure itself.
@@ -20,8 +58,7 @@ write(__dirname + '/../integrations.js', [
   " */",
   "",
   "module.exports = [",
-    readdir(__dirname + '/../lib')
-      .filter(function(slug){ return fs.existsSync(path.join('./lib', slug, 'index.js')); })
+    slugs
       .map(function(slug){ return "require('./lib/" + slug + "')"; })
       .join(',\n')
       .replace(/^/gm, '  '),

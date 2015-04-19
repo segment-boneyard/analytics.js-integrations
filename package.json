@@ -7,7 +7,8 @@
     "mocha-phantomjs": "segmentio/mocha-phantomjs#master",
     "phantomjs": "~1.9.2-2",
     "mocha": "~1.18.2",
-    "jscs": "^1.3.0"
+    "jscs": "^1.3.0",
+    "lodash": "~2.4.1"
   },
   "engines": {
     "node": ">= 0.11"
