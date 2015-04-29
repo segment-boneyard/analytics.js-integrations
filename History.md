@@ -1,4 +1,9 @@
 
+1.3.59 / 2015-04-29
+===================
+
+  * Outbound: library for better identify attribute mapping
+
 1.3.58 / 2015-04-28
 ===================
 
