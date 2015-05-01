@@ -1,4 +1,9 @@
 
+1.3.61 / 2015-05-01
+===================
+
+  * Remove extra script tag and fix attributes names
+
 1.3.60 / 2015-04-29
 ===================
 
