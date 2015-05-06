@@ -17,6 +17,7 @@ module.exports = [
   require('./lib/bronto'),
   require('./lib/bugherd'),
   require('./lib/bugsnag'),
+  require('./lib/chameleon'),
   require('./lib/chartbeat'),
   require('./lib/churnbee'),
   require('./lib/clicktale'),
