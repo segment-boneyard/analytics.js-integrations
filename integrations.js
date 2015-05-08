@@ -19,7 +19,6 @@ module.exports = [
   require('./lib/bugsnag'),
   require('./lib/chameleon'),
   require('./lib/chartbeat'),
-  require('./lib/churnbee'),
   require('./lib/clicktale'),
   require('./lib/clicky'),
   require('./lib/comscore'),
