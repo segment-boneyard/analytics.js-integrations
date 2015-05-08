@@ -18,7 +18,6 @@ module.exports = [
   require('./lib/bugherd'),
   require('./lib/bugsnag'),
   require('./lib/chartbeat'),
-  require('./lib/churnbee'),
   require('./lib/clicktale'),
   require('./lib/clicky'),
   require('./lib/comscore'),
