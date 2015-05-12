@@ -1,83 +1,92 @@
-
-#
-# Helpers to test only a specific `integration` or `browser`, or on a `port`.
-#
-
-integration ?= *
-browser ?= ie10
-
 #
 # Binaries.
 #
 
-src = $(wildcard i*.js lib/*/*.js test/*.js)
-tests = /test
-duo = node_modules/.bin/duo
-phantomjs = node_modules/.bin/duo-test phantomjs $(tests) args: \
-	--setting local-to-remote-url-access=true \
-	--setting web-security=false \
-	--path node_modules/.bin/phantomjs
+NPM_BINS_DIR = ./node_modules/.bin
+DUO = $(NPM_BINS_DIR)/duo
+DUOT = $(NPM_BINS_DIR)/duo-test
+JSCS = $(NPM_BINS_DIR)/jscs
+MOCHA = $(NPM_BINS_DIR)/mocha
 
 #
-# Commands.
+# Files.
 #
 
-default: build.js
-
-test: build.js test-style
-	@node bin/tests
-	@$(phantomjs)
-
-test-browser: build.js
-	@node bin/tests
-	@node_modules/.bin/duo-test browser --commands "make" $(tests)
-
-test-sauce: node_modules build.js
-	@node bin/tests
-	@node_modules/.bin/duo-test saucelabs $(tests) \
-		--name analytics.js-integrations \
-		--browser $(browser) \
-		--user $(SAUCE_USERNAME) \
-		--key $(SAUCE_ACCESS_KEY)
-
-test-cov:
-	@./node_modules/.bin/istanbul cover \
-		node_modules/.bin/_mocha $(TESTS) \
-		--report lcovonly \
-		-- -u exports \
-		--require should \
-		--timeout 20s \
-		--reporter dot
-
-test-style:
-	@node_modules/.bin/jscs lib
-
-clean:
-	@-rm -rf $(TMPDIR)/duo
-	@rm -rf build.js components integrations.js node_modules test/tests.js
+SRCS_DIR = lib
+SRCS = index.js $(wildcard $(SRCS_DIR)/*/index.js)
+TESTS_DIR = test
+TESTS = $(wildcard $(SRCS_DIR)/*/test.js)
 
 #
-# Targets.
+# Task config.
 #
 
-build.js: node_modules integrations.js $(src)
-	@-rm -rf $(TMPDIR)/duo
-	@node bin/tests
-	@$(duo) --development test/index.js > build.js
+# TODO: Can't we replace this with GREP?
+integration ?= *
+browser ?= ie10
+INTEGRATION ?= $(integration)
+BROWSER ?= $(browser)
 
-integrations.js: $(wildcard lib/*)
-	@node bin/integrations
+#
+# Chore tasks.
+#
 
-node_modules: package.json
+# Install node dependencies.
+node_modules: package.json $(wildcard node_modules/*/package.json)
 	@npm install
 
+# Remove temporary files and build artifacts.
+clean:
+	@rm -rf build.js integrations.js test/tests.js
+.PHONY: clean
+
+# Remove temporary files, build artifacts, and vendor dependencies.
+distclean: clean
+	@rm -rf components node_modules
+.PHONY: distclean
+
 #
-# Phonies.
+# Build tasks.
 #
 
-.PHONY: clean
+# Build all integrations, tests, and dependencies together for testing.
+build.js: node_modules component.json test/tests.js integrations.js $(SRCS)
+	@$(DUO) --stdout --development test/index.js > $@
+
+# Build a list of all current integrations and the path to their index.js.
+integrations.js: node_modules $(SRCS)
+	@node bin/integrations
+
+# Build a list of all current integration tests and the path to their test.js.
+test/tests.js: node_modules $(TESTS)
+	@node bin/tests
+
+#
+# Test tasks.
+#
+
+# Lint JavaScript source.
+lint: node_modules
+	@$(JSCS) $(SRCS) $(TESTS)
+.PHONY: lint
+
+# Test locally in PhantomJS.
+test: node_modules lint build.js test/tests.js
+	@$(DUOT) phantomjs $(TESTS_DIR) args: \
+		local-to-remote-url-access=true \
+		web-security=false
 .PHONY: test
+.DEFAULT_GOAL = test
+
+# Test locally in the browser.
+test-browser: node_modules lint build.js test/tests.js
+	@$(DUOT) browser chrome --commands "make build.js" $(TESTS_DIR)
 .PHONY: test-browser
-.PHONY: test-coverage
+
+# Test in Sauce Labs. Note that you must set the SAUCE_USERNAME and
+# SAUCE_ACCESS_KEY environment variables using your Sauce Labs credentials.
+test-sauce: node_modules lint build.js test/tests.js
+	@$(DUOT) saucelabs $(TESTS_DIR) \
+		--name analytics.js-integrations \
+		--browser $(BROWSER)
 .PHONY: test-sauce
-.PHONY: test-style
