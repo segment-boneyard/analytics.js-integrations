@@ -66,12 +66,12 @@ test/tests.js: node_modules $(TESTS)
 #
 
 # Lint JavaScript source.
-lint:
-	@$(JSCS) lib
+lint: node_modules
+	@$(JSCS) $(SRCS) $(TESTS)
 .PHONY: lint
 
 # Test locally in PhantomJS.
-test: lint build.js test/tests.js
+test: node_modules lint build.js test/tests.js
 	@$(DUOT) phantomjs $(TESTS_DIR) args: \
 		local-to-remote-url-access=true \
 		web-security=false
@@ -79,12 +79,13 @@ test: lint build.js test/tests.js
 .DEFAULT_GOAL = test
 
 # Test locally in the browser.
-test-browser: build.js test/tests.js
-	@$(DUOT) browser chrome --commands "make build.js"
+test-browser: node_modules lint build.js test/tests.js
+	@$(DUOT) browser chrome --commands "make build.js" $(TESTS_DIR)
 .PHONY: test-browser
 
-# Test in Sauce Labs.
-test-sauce: node_modules build.js test/tests.js
+# Test in Sauce Labs. Note that you must set the SAUCE_USERNAME and
+# SAUCE_ACCESS_KEY environment variables using your Sauce Labs credentials.
+test-sauce: node_modules lint build.js test/tests.js
 	@$(DUOT) saucelabs $(TESTS_DIR) \
 		--name analytics.js-integrations \
 		--browser $(BROWSER)
