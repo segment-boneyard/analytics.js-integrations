@@ -1,6 +1,15 @@
 {
   "name": "integrations",
+  "author": "Segment.io <friends@segment.io>",
+  "license": "MIT",
+  "description": "Analytics.js integrations.",
   "private": true,
+  "engines": {
+    "node": ">= 0.11"
+  },
+  "scripts": {
+    "test": "make test"
+  },
   "devDependencies": {
     "duo": "^0.11.4",
     "duo-test": "^0.4.0",
@@ -8,8 +17,5 @@
     "phantomjs": "^1.9.16",
     "mocha": "~1.18.2",
     "jscs": "^1.3.0"
-  },
-  "engines": {
-    "node": ">= 0.11"
   }
 }
