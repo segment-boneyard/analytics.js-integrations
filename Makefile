@@ -13,9 +13,9 @@ MOCHA = $(NPM_BINS_DIR)/mocha
 #
 
 SRCS_DIR = lib
-SRCS = index.js $(shell find $(SRCS_DIR) -type f -name index.js)
+SRCS = index.js $(wildcard $(SRCS_DIR)/*/index.js)
 TESTS_DIR = test
-TESTS = $(shell find $(SRCS_DIR) -type f -name test.js)
+TESTS = $(wildcard $(SRCS_DIR)/*/test.js)
 
 #
 # Task config.
@@ -49,16 +49,16 @@ distclean: clean
 # Build tasks.
 #
 
+# Build all integrations, tests, and dependencies together for testing.
+build.js: node_modules component.json test/tests.js integrations.js $(SRCS)
+	@$(DUO) --stdout --development test/index.js > $@
+
 # Build a list of all current integrations and the path to their index.js.
 integrations.js: node_modules $(SRCS)
 	@node bin/integrations
 
-# Build all integrations, tests, and dependencies together for testing.
-build.js: node_modules test/tests.js integrations.js $(SRCS)
-	@$(DUO) --stdout --development test/index.js > $@
-
 # Build a list of all current integration tests and the path to their test.js.
-test/tests.js: $(TESTS)
+test/tests.js: node_modules $(TESTS)
 	@node bin/tests
 
 #
