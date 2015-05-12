@@ -5,9 +5,9 @@
  */
 
 var fs = require('fs');
-var path = require('path');
-var write = fs.writeFileSync;
+var join = require('path').join;
 var readdir = fs.readdirSync;
+var write = fs.writeFileSync;
 var i = process.env.integration;
 
 /**
@@ -23,7 +23,7 @@ write(__dirname + '/../test/tests.js', [
   "",
   readdir(__dirname + '/../lib')
     .filter(function(slug){ return i ? slug == i : true; })
-    .map(function(slug){ return path.join('./lib', slug, 'test.js'); })
+    .map(function(slug){ return join('./lib', slug, 'test.js'); })
     .filter(function(file){ return fs.existsSync(file); })
     .map(function(file){ return "require('../" + file + "');"; })
     .join('\n'),
