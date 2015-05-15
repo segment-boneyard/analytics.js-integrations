@@ -17,10 +17,10 @@ This repository relies on a couple dependencies that help make our lives easier 
 
   - [`analytics.js-integration-tester`](https://github.com/segmentio/analytics.js-integration-tester), which is a testing helper that wraps an integration and simplifies lots of the testing logic. It's similar to how [`supertest`](https://github.com/visionmedia/supertest) works for [Superagent](https://github.com/visionmedia/superagent).
 
-To get started with development, you need to be running node 0.11.x, an easy way to get it is
+To get started with development, you need to be running node 0.12. An easy way to get it is:
 
     $ npm install -g n
-    $ n 0.11
+    $ n 0.12
 
 Make sure you have `~/.netrc` setup like:
 
