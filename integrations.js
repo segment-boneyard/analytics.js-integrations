@@ -26,6 +26,7 @@ module.exports = [
   require('./lib/curebit'),
   require('./lib/customerio'),
   require('./lib/drip'),
+  require('./lib/elevio'),
   require('./lib/errorception'),
   require('./lib/evergage'),
   require('./lib/extole'),
