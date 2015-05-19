@@ -4,7 +4,7 @@
 
 DUO = node_modules/.bin/duo
 DUOT = node_modules/.bin/duo-test
-JSCS = node_modules/.bin/jscs
+ESLINT = node_modules/.bin/eslint
 
 #
 # Files.
@@ -64,7 +64,7 @@ test/tests.js: node_modules $(TESTS)
 
 # Lint JavaScript source.
 lint: node_modules
-	@$(JSCS) $(SRCS) $(TESTS)
+	@$(ESLINT) $(SRCS) $(TESTS)
 .PHONY: lint
 
 # Test locally in PhantomJS.

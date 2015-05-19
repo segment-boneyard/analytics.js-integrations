@@ -1,0 +1,27 @@
+{
+  "extends": "segment/browser",
+
+  "rules": {
+    "global-strict": 0,
+    "max-len": 0,
+    "strict": 0
+  },
+
+  "globals": {
+    "exports": true,
+    "module": true,
+    "require": true,
+
+    // FIXME: Ideally we wouldn't need to put these here--we'd be able to silo
+    // them off to a test directory. But because of how the repo is structured
+    // we can't. Restructure the repos or the Makefile to fix this
+    "after": true,
+    "afterEach": true,
+    "before": true,
+    "beforeEach": true,
+    "describe": true,
+    "it": true,
+    "xdescribe": true,
+    "xit": true
+  }
+}
