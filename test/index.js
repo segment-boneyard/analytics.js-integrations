@@ -1,7 +1,6 @@
 
 var assert = require('assert');
 var Integrations = require('../index.js');
-var sandbox = require('clear-env');
 var object = require('object');
 
 /**
@@ -37,10 +36,8 @@ require('./tests');
 
 if (window.mochaPhantomJS) {
   mochaPhantomJS.run();
+} else if (window.saucelabs) {
+  saucelabs(mocha.run());
 } else {
-  if (window.saucelabs) {
-    saucelabs(mocha.run());
-  } else {
-    mocha.run();
-  }
+  mocha.run();
 }
