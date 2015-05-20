@@ -71,6 +71,8 @@ lint: node_modules
 test: node_modules lint build.js test/tests.js
 	@$(DUOT) phantomjs $(TESTS_DIR) args: \
 		--setting local-to-remote-url-access=true \
+		--setting ignore-ssl-errors=true \
+		--setting ssl-protocol=any \
 		--setting web-security=false \
 		--path node_modules/.bin/phantomjs
 .PHONY: test
