@@ -31,6 +31,7 @@
     "ianstormtaylor/to-camel-case": "0.2.1",
     "ianstormtaylor/to-snake-case": "0.1.2",
     "ndhoule/foldl": "1.0.1",
+    "ndhoule/includes": "1.0.0",
     "segmentio/ad-params": "0.0.2",
     "segmentio/alias": "0.2.1",
     "segmentio/analytics.js-integration": "0.3.x",
