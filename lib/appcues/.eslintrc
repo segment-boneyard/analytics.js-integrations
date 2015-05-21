@@ -1,0 +1,6 @@
+// TODO: Fix linting errors and remove this file
+{
+  "rules": {
+    "no-use-before-define": 1
+  }
+}
