@@ -76,6 +76,7 @@ module.exports = [
   require('./lib/snapengage'),
   require('./lib/spinnakr'),
   require('./lib/supporthero'),
+  require('./lib/taplytics'),
   require('./lib/tapstream'),
   require('./lib/trakio'),
   require('./lib/twitter-ads'),
