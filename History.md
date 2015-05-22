@@ -1,18 +1,10 @@
 
-1.3.65 / 2015-05-15
+1.3.66 / 2015-05-22
 ===================
 
-
-
-1.3.64 / 2015-05-15
-===================
-
-
-
-1.3.63 / 2015-05-08
-===================
-
-
+  * Clean up Makefile, correct linting errors
+  * Outbound.io: Adding anonymous id and aliasing
+  * Nudgespot: Change apiKey name to enable direct integration
 
 1.3.62 / 2015-05-02
 ===================
