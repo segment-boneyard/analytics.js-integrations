@@ -20,7 +20,7 @@
     "component/select": "0.0.1",
     "component/throttle": "0.0.2",
     "component/type": "1.0.0",
-    "component/url": "0.1.0",
+    "component/url": "0.2.0",
     "gjohnson/uuid": "0.0.1",
     "harrietgrace/omit": "0.1.0",
     "ianstormtaylor/bind": "0.0.2",
