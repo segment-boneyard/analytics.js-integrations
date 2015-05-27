@@ -12,7 +12,7 @@ describe('Integration', function(){
 
   describe('before loading', function(){
     beforeEach(function(){
-      analytics = new Analytics;
+      analytics = new Analytics();
       analytics.use(plugin);
       analytics.use(tester);
       analytics.spy(Integration.prototype, 'load');
@@ -28,7 +28,7 @@ describe('Integration', function(){
 
   describe('after loading', function(){
     before(function(done){
-      analytics = new Analytics;
+      analytics = new Analytics();
       analytics.use(plugin);
       analytics.use(tester);
       analytics.once('ready', done);
