@@ -1,4 +1,12 @@
 
+1.3.67 / 2015-05-27
+===================
+
+  * Taplytics: Add integration
+  * Wootric: Add integration
+  * Bing Ads: Fix revenue parameter
+  * Add linter and refactor out linting errors
+
 1.3.66 / 2015-05-22
 ===================
 
