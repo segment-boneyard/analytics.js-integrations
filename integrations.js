@@ -69,6 +69,7 @@ module.exports = [
   require('./lib/qualaroo'),
   require('./lib/quantcast'),
   require('./lib/rollbar'),
+  require('./lib/route'),
   require('./lib/saasquatch'),
   require('./lib/satismeter'),
   require('./lib/segmentio'),
