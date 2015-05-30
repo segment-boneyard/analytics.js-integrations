@@ -68,6 +68,7 @@ module.exports = [
   require('./lib/preact'),
   require('./lib/qualaroo'),
   require('./lib/quantcast'),
+  require('./lib/ramen'),
   require('./lib/rollbar'),
   require('./lib/route'),
   require('./lib/saasquatch'),
