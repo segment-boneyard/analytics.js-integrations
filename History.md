@@ -1,4 +1,10 @@
 
+1.3.68 / 2015-06-01
+===================
+
+  *  GoSquared: Auto-tag visitors on the back-end
+  *  Route.to: Add integration
+
 1.3.67 / 2015-05-27
 ===================
 
