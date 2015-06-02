@@ -1,0 +1,6 @@
+// FIXME: Remove this file when issues are fixed
+{
+  "rules": {
+    "consistent-return": 1
+  }
+}
