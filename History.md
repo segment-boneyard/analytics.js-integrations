@@ -1,4 +1,12 @@
 
+1.3.69 / 2015-06-03
+===================
+
+  * Optimizely: Roots fix
+  * Elevio: Add integration
+  * Refactor: Lint compliance
+  * Chore: Pin ESLint at minor version
+
 1.3.68 / 2015-06-01
 ===================
 
