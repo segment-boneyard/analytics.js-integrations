@@ -1,5 +1,0 @@
-{
-  "rules": {
-    "new-cap": [2, { capIsNewExceptions: ["ClickTale", "ClickTaleSetUID", "ClickTaleField", "ClickTaleEvent"] }]
-  }
-}

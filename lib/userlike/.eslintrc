@@ -1,6 +1,0 @@
-// TODO: Fix linter warnings and remove this file
-{
-  "rules": {
-    "no-undef": 1
-  }
-}
