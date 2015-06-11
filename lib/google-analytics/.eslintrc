@@ -1,7 +1,0 @@
-// TODO: Fix linting errors and remove this file
-{
-  "rules": {
-    "consistent-return": 1,
-    "no-use-before-define": 1
-  }
-}
