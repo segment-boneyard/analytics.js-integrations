@@ -20,7 +20,7 @@ mocha.setup({
 
 describe('integrations', function(){
   it('should export our integrations', function(){
-    assert.equal(86, object.length(Integrations));
+    assert.equal(87, object.length(Integrations));
   });
 });
 

@@ -63,6 +63,7 @@ module.exports = [
   require('./lib/olark'),
   require('./lib/optimizely'),
   require('./lib/outbound'),
+  require('./lib/parsely'),
   require('./lib/perfect-audience'),
   require('./lib/pingdom'),
   require('./lib/piwik'),
